@@ -26,7 +26,7 @@
    <title>大数据Beginner</title>
    <link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml"/>
    <link href="http://localhost:4000" rel="alternate" type="text/html" />
-   <updated>2017-03-28T09:31:31+08:00</updated>
+   <updated>2017-03-28T09:43:34+08:00</updated>
    <id>http://localhost:4000</id>
    <author>
      <name></name>
@@ -135,7 +135,7 @@ producerThread.start();
 &lt;img src=&quot;http://img.blog.csdn.net/20161226195407346?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast&quot; alt=&quot;运行生产者类&quot; /&gt;
 &lt;img src=&quot;http://img.blog.csdn.net/20161226195350341?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast&quot; alt=&quot;运行spark充当消费者&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://img.blog.csdn.net/20161227103155846?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast&quot; alt=&quot;这里写图片描述&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;weibo.com/234601929&quot;&gt;&lt;img src=&quot;http://img.blog.csdn.net/20161227103155846?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast&quot; alt=&quot;这里写图片描述&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 </content>
    </entry>
    
