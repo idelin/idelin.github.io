@@ -1,0 +1,97 @@
+<p>#java8下spark-streaming结合kafka编程（spark 2.0 &amp; kafka 0.10）
+前面有说道<a href="http://blog.csdn.net/jacklin929/article/details/53689365">spark-streaming的简单demo</a>，也有说到<a href="http://blog.csdn.net/jacklin929/article/details/53767622">kafka成功跑通的例子</a>，这里就结合二者，也是常用的使用之一。</p>
+
+<p>1.相关组件版本
+首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。</p>
+
+<p>2.引入maven包
+网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。</p>
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+	  <span class="nt">&lt;groupId&gt;</span>org.apache.spark<span class="nt">&lt;/groupId&gt;</span>
+	  <span class="nt">&lt;artifactId&gt;</span>spark-streaming-kafka-0-10_2.11<span class="nt">&lt;/artifactId&gt;</span>
+	  <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre>
+</div>
+<p>网上能找到的不带kafka版本号的包最新是1.6.3，我试过，已经无法在spark2下成功运行了，所以找到的是对应kafka0.10的版本，注意spark2.0的scala版本已经是2.11，所以包括之前必须后面跟2.11，表示scala版本。</p>
+
+<p>3.SparkSteamingKafka类
+需要注意的是引入的包路径是org.apache.spark.streaming.kafka010.xxx，所以这里把import也放进来了。其他直接看注释。</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.HashSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.kafka.clients.consumer.ConsumerRecord</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.kafka.common.TopicPartition</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.SparkConf</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.api.java.JavaSparkContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.streaming.Durations</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.streaming.api.java.JavaInputDStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.streaming.api.java.JavaPairDStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.streaming.api.java.JavaStreamingContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.streaming.kafka010.ConsumerStrategies</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.streaming.kafka010.KafkaUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.spark.streaming.kafka010.LocationStrategies</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">scala.Tuple2</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SparkSteamingKafka</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+		<span class="n">String</span> <span class="n">brokers</span> <span class="o">=</span> <span class="s">"master2:6667"</span><span class="o">;</span>
+	    <span class="n">String</span> <span class="n">topics</span> <span class="o">=</span> <span class="s">"topic1"</span><span class="o">;</span>
+		<span class="n">SparkConf</span> <span class="n">conf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SparkConf</span><span class="o">().</span><span class="na">setMaster</span><span class="o">(</span><span class="s">"local[2]"</span><span class="o">).</span><span class="na">setAppName</span><span class="o">(</span><span class="s">"streaming word count"</span><span class="o">);</span>
+		<span class="n">JavaSparkContext</span> <span class="n">sc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JavaSparkContext</span><span class="o">(</span><span class="n">conf</span><span class="o">);</span>
+		<span class="n">sc</span><span class="o">.</span><span class="na">setLogLevel</span><span class="o">(</span><span class="s">"WARN"</span><span class="o">);</span>
+		<span class="n">JavaStreamingContext</span> <span class="n">ssc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JavaStreamingContext</span><span class="o">(</span><span class="n">sc</span><span class="o">,</span> <span class="n">Durations</span><span class="o">.</span><span class="na">seconds</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
+		
+		<span class="n">Collection</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">topicsSet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;&gt;(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">topics</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">)));</span>
+	    <span class="c1">//kafka相关参数，必要！缺了会报错</span>
+		<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">kafkaParams</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+	    <span class="n">kafkaParams</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"metadata.broker.list"</span><span class="o">,</span> <span class="n">brokers</span><span class="o">)</span> <span class="o">;</span>
+	    <span class="n">kafkaParams</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"bootstrap.servers"</span><span class="o">,</span> <span class="n">brokers</span><span class="o">);</span>
+	    <span class="n">kafkaParams</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"group.id"</span><span class="o">,</span> <span class="s">"group1"</span><span class="o">);</span>
+	    <span class="n">kafkaParams</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"key.serializer"</span><span class="o">,</span> <span class="s">"org.apache.kafka.common.serialization.StringSerializer"</span><span class="o">);</span>
+	    <span class="n">kafkaParams</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"key.deserializer"</span><span class="o">,</span> <span class="s">"org.apache.kafka.common.serialization.StringDeserializer"</span><span class="o">);</span>
+	    <span class="n">kafkaParams</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"value.deserializer"</span><span class="o">,</span> <span class="s">"org.apache.kafka.common.serialization.StringDeserializer"</span><span class="o">);</span>
+	    <span class="c1">//Topic分区</span>
+	    <span class="n">Map</span><span class="o">&lt;</span><span class="n">TopicPartition</span><span class="o">,</span> <span class="n">Long</span><span class="o">&gt;</span> <span class="n">offsets</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+	    <span class="n">offsets</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="k">new</span> <span class="n">TopicPartition</span><span class="o">(</span><span class="s">"topic1"</span><span class="o">,</span> <span class="mi">0</span><span class="o">),</span> <span class="mi">2L</span><span class="o">);</span> 
+	    <span class="c1">//通过KafkaUtils.createDirectStream(...)获得kafka数据，kafka相关参数由kafkaParams指定</span>
+	    <span class="n">JavaInputDStream</span><span class="o">&lt;</span><span class="n">ConsumerRecord</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">,</span><span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">KafkaUtils</span><span class="o">.</span><span class="na">createDirectStream</span><span class="o">(</span>
+	            <span class="n">ssc</span><span class="o">,</span>
+	            <span class="n">LocationStrategies</span><span class="o">.</span><span class="na">PreferConsistent</span><span class="o">(),</span>
+	            <span class="n">ConsumerStrategies</span><span class="o">.</span><span class="na">Subscribe</span><span class="o">(</span><span class="n">topicsSet</span><span class="o">,</span> <span class="n">kafkaParams</span><span class="o">,</span> <span class="n">offsets</span><span class="o">)</span>
+	        <span class="o">);</span>
+	    <span class="c1">//这里就跟之前的demo一样了，只是需要注意这边的lines里的参数本身是个ConsumerRecord对象</span>
+		<span class="n">JavaPairDStream</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;</span> <span class="n">counts</span> <span class="o">=</span> 
+				<span class="n">lines</span><span class="o">.</span><span class="na">flatMap</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">value</span><span class="o">().</span><span class="na">toString</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s">" "</span><span class="o">)).</span><span class="na">iterator</span><span class="o">())</span>
+				<span class="o">.</span><span class="na">mapToPair</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="n">Tuple2</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Integer</span><span class="o">&gt;(</span><span class="n">x</span><span class="o">,</span> <span class="mi">1</span><span class="o">))</span>
+				<span class="o">.</span><span class="na">reduceByKey</span><span class="o">((</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">);</span>	
+		<span class="n">counts</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+<span class="c1">//	可以打印所有信息，看下ConsumerRecord的结构</span>
+<span class="c1">//	    lines.foreachRDD(rdd -&gt; {</span>
+<span class="c1">//	        rdd.foreach(x -&gt; {</span>
+<span class="c1">//	          System.out.println(x);</span>
+<span class="c1">//	        });</span>
+<span class="c1">//	      });</span>
+		<span class="n">ssc</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="n">ssc</span><span class="o">.</span><span class="na">awaitTermination</span><span class="o">();</span>
+		<span class="n">ssc</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>4.运行测试
+这里使用上一篇kafka初探里写的producer类，put数据到kafka服务端，我这是master2节点上部署的kafka，本地测试跑spark2。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>UserKafkaProducer producerThread = new UserKafkaProducer(KafkaProperties.topic);
+producerThread.start();
+</code></pre>
+</div>
+<p>再运行3里的SparkSteamingKafka类，可以看到已经成功。
+<img src="http://img.blog.csdn.net/20161226195407346?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="运行生产者类" />
+<img src="http://img.blog.csdn.net/20161226195350341?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="运行spark充当消费者" /></p>
+
+<p><img src="http://img.blog.csdn.net/20161227103155846?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /></p>
