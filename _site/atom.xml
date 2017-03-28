@@ -24,10 +24,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
    <title>大数据Beginner</title>
-   <link href="http://idelin.github.io/atom.xml" rel="self" type="application/atom+xml"/>
-   <link href="http://idelin.github.io" rel="alternate" type="text/html" />
-   <updated>2017-03-28T10:24:08+08:00</updated>
-   <id>http://idelin.github.io</id>
+   <link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml"/>
+   <link href="http://localhost:4000" rel="alternate" type="text/html" />
+   <updated>2017-03-28T17:37:36+08:00</updated>
+   <id>http://localhost:4000</id>
    <author>
      <name></name>
      <email></email>
@@ -39,14 +39,14 @@
      <link href="/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B(spark-2.0-&-kafka-0.10)"/>
      <updated>2016-12-26T00:00:00+08:00</updated>
      <id>/java8下spark-streaming结合kafka编程(spark 2.0 & kafka 0.10)</id>
-     <content type="html">&lt;p&gt;#java8下spark-streaming结合kafka编程（spark 2.0 &amp;amp; kafka 0.10）
-前面有说道&lt;a href=&quot;http://blog.csdn.net/jacklin929/article/details/53689365&quot;&gt;spark-streaming的简单demo&lt;/a&gt;，也有说到&lt;a href=&quot;http://blog.csdn.net/jacklin929/article/details/53767622&quot;&gt;kafka成功跑通的例子&lt;/a&gt;，这里就结合二者，也是常用的使用之一。&lt;/p&gt;
+     <content type="html">&lt;h1 id=&quot;java8下spark-streaming结合kafka编程spark-20--kafka-010&quot;&gt;java8下spark-streaming结合kafka编程（spark 2.0 &amp;amp; kafka 0.10）&lt;/h1&gt;
+&lt;p&gt;前面有说道&lt;a href=&quot;http://blog.csdn.net/jacklin929/article/details/53689365&quot;&gt;spark-streaming的简单demo&lt;/a&gt;，也有说到&lt;a href=&quot;http://blog.csdn.net/jacklin929/article/details/53767622&quot;&gt;kafka成功跑通的例子&lt;/a&gt;，这里就结合二者，也是常用的使用之一。&lt;/p&gt;
 
-&lt;p&gt;1.相关组件版本
-首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。&lt;/p&gt;
+&lt;h2 id=&quot;1相关组件版本&quot;&gt;1.相关组件版本&lt;/h2&gt;
+&lt;p&gt;首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。&lt;/p&gt;
 
-&lt;p&gt;2.引入maven包
-网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。&lt;/p&gt;
+&lt;h2 id=&quot;2引入maven包&quot;&gt;2.引入maven包&lt;/h2&gt;
+&lt;p&gt;网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。&lt;/p&gt;
 &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
 	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.apache.spark&lt;span class=&quot;nt&quot;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
 	  &lt;span class=&quot;nt&quot;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;spark-streaming-kafka-0-10_2.11&lt;span class=&quot;nt&quot;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
@@ -56,8 +56,8 @@
 &lt;/div&gt;
 &lt;p&gt;网上能找到的不带kafka版本号的包最新是1.6.3，我试过，已经无法在spark2下成功运行了，所以找到的是对应kafka0.10的版本，注意spark2.0的scala版本已经是2.11，所以包括之前必须后面跟2.11，表示scala版本。&lt;/p&gt;
 
-&lt;p&gt;3.SparkSteamingKafka类
-需要注意的是引入的包路径是org.apache.spark.streaming.kafka010.xxx，所以这里把import也放进来了。其他直接看注释。&lt;/p&gt;
+&lt;h2 id=&quot;3sparksteamingkafka类&quot;&gt;3.SparkSteamingKafka类&lt;/h2&gt;
+&lt;p&gt;需要注意的是引入的包路径是org.apache.spark.streaming.kafka010.xxx，所以这里把import也放进来了。其他直接看注释。&lt;/p&gt;
 &lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Arrays&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Collection&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.HashMap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
@@ -125,8 +125,8 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;4.运行测试
-这里使用上一篇kafka初探里写的producer类，put数据到kafka服务端，我这是master2节点上部署的kafka，本地测试跑spark2。&lt;/p&gt;
+&lt;h2 id=&quot;4运行测试&quot;&gt;4.运行测试&lt;/h2&gt;
+&lt;p&gt;这里使用上一篇kafka初探里写的producer类，put数据到kafka服务端，我这是master2节点上部署的kafka，本地测试跑spark2。&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;UserKafkaProducer producerThread = new UserKafkaProducer(KafkaProperties.topic);
 producerThread.start();
 &lt;/code&gt;&lt;/pre&gt;
@@ -144,9 +144,9 @@ producerThread.start();
      <link href="/ambari%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8Ahadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B"/>
      <updated>2016-10-14T00:00:00+08:00</updated>
      <id>/ambari离线安装以及hadoop环境搭建详细过程</id>
-     <content type="html">&lt;p&gt;#ambari离线安装以及hadoop环境搭建详细过程
-##一、安装环境
-六台相同配置的虚拟机
+     <content type="html">&lt;h1 id=&quot;ambari离线安装以及hadoop环境搭建详细过程&quot;&gt;ambari离线安装以及hadoop环境搭建详细过程&lt;/h1&gt;
+&lt;h2 id=&quot;一安装环境&quot;&gt;一、安装环境&lt;/h2&gt;
+&lt;p&gt;六台相同配置的虚拟机
 OS:CentOS release 6.5 (Final)(x86_64)
 Cores (CPU):8 (8)
 Disk:50GB 
@@ -154,14 +154,14 @@ Memory:8GB&lt;/p&gt;
 
 &lt;p&gt;最好先安装自己的jdk，配置好环境变量。&lt;/p&gt;
 
-&lt;p&gt;##二、安装包下载
-安装包过大(最大的hdp包3GB)，虚拟机环境外网网络不稳定，在线安装太耗时，只能用制作离线源方式进行安装，so，先下载以下安装包，备用。
+&lt;h2 id=&quot;二安装包下载&quot;&gt;二、安装包下载&lt;/h2&gt;
+&lt;p&gt;安装包过大(最大的hdp包3GB)，虚拟机环境外网网络不稳定，在线安装太耗时，只能用制作离线源方式进行安装，so，先下载以下安装包，备用。
 http://public-repo-1.hortonworks.com/ambari/centos6/ambari-1.7.0-centos6.tar.gz
 http://public-repo-1.hortonworks.com/HDP/centos6/HDP-2.2.0.0-centos6-rpm.tar.gz
 http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz&lt;/p&gt;
 
-&lt;p&gt;##三、配置hostname以及hosts
-以便节点间通讯，hadoop集群管理。&lt;/p&gt;
+&lt;h2 id=&quot;三配置hostname以及hosts&quot;&gt;三、配置hostname以及hosts&lt;/h2&gt;
+&lt;p&gt;以便节点间通讯，hadoop集群管理。&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vi /etc/sysconfig/network ，修改 HOSTNAME=master1
 
@@ -177,24 +177,24 @@ vi /etc/hosts
 
 &lt;p&gt;以master1节点为例，其他同理。&lt;/p&gt;
 
-&lt;p&gt;##四、关闭iptables，关闭SELinux
-避免节点间通讯问题，关闭iptables&amp;amp;SELinux。&lt;/p&gt;
+&lt;h2 id=&quot;四关闭iptables关闭selinux&quot;&gt;四、关闭iptables，关闭SELinux&lt;/h2&gt;
+&lt;p&gt;避免节点间通讯问题，关闭iptables&amp;amp;SELinux。&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;service iptables stop
 setenforce 0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;##五、安装ntp服务
-节点间需要时间同步，否则会失败&lt;/p&gt;
+&lt;h2 id=&quot;五安装ntp服务&quot;&gt;五、安装ntp服务&lt;/h2&gt;
+&lt;p&gt;节点间需要时间同步，否则会失败&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum install ntp
 service ntpd start
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;##六、ssh无密码登陆配置
-只需设置ambari安装节点（这里选取slave4为安装节点）到其他节点的无密码登陆即可。
+&lt;h2 id=&quot;六ssh无密码登陆配置&quot;&gt;六、ssh无密码登陆配置&lt;/h2&gt;
+&lt;p&gt;只需设置ambari安装节点（这里选取slave4为安装节点）到其他节点的无密码登陆即可。
 在slave4上依次执行：&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh-keygen
@@ -216,8 +216,8 @@ scp ~/.ssh/authorized_keys root@slave3:/root/.ssh/authorized_keys
 
 &lt;p&gt;至此，slave4对其他节点ssh无密码登陆配置成功，可以ssh下对应节点尝试是否成功。&lt;/p&gt;
 
-&lt;p&gt;##七、制作离线安装源
-选一台机器，作为离线源服务器，这里同样是slave4（ps.为什么都是slave4，主要是之前其他机子都有点问题，手动苦笑ing）。&lt;/p&gt;
+&lt;h2 id=&quot;七制作离线安装源&quot;&gt;七、制作离线安装源&lt;/h2&gt;
+&lt;p&gt;选一台机器，作为离线源服务器，这里同样是slave4（ps.为什么都是slave4，主要是之前其他机子都有点问题，手动苦笑ing）。&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;yum install httpd
 service httpd start
@@ -266,8 +266,8 @@ tar  zxvf  HDP-UTILS-1.1.0.20-centos6.tar.gz  -C /var/www/html/ambari
 
 &lt;p&gt;至此，离线源制作部分成功。&lt;/p&gt;
 
-&lt;p&gt;##八、安装ambari
-vim  /etc/yum.repos.d/ambari.repo  添加以下内容&lt;/p&gt;
+&lt;h2 id=&quot;八安装ambari&quot;&gt;八、安装ambari&lt;/h2&gt;
+&lt;p&gt;vim  /etc/yum.repos.d/ambari.repo  添加以下内容&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[ambari-1.7]
 name=Ambari 1.7
@@ -303,8 +303,8 @@ Success后，可以启动了：&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;##九、给ambari配置本地hadoop
-进入目录：/var/lib/ambari-server/resources/stacks/HDP/2.2/repos&lt;/p&gt;
+&lt;h2 id=&quot;九给ambari配置本地hadoop&quot;&gt;九、给ambari配置本地hadoop&lt;/h2&gt;
+&lt;p&gt;进入目录：/var/lib/ambari-server/resources/stacks/HDP/2.2/repos&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vi repoinfo.xml
 &amp;lt;os type=&quot;redhat6&quot;&amp;gt;
@@ -325,8 +325,8 @@ Success后，可以启动了：&lt;/p&gt;
 &lt;p&gt;修改redhat6中的配置，node3为ambari安装的节点，根据自己安装的实际节点配置
 这样在ambari执行hadoop安装时，会将本地源地址配置到所有主机上，在为所有主机安装ambari-agent时，会将ambari节点下的/etc/yum.repo/ambari.repo文件复制到所有主机源地址。&lt;/p&gt;
 
-&lt;p&gt;##十、安装hadoop集群环境以及各组件
-浏览器进入http://slave4:8080/
+&lt;h2 id=&quot;十安装hadoop集群环境以及各组件&quot;&gt;十、安装hadoop集群环境以及各组件&lt;/h2&gt;
+&lt;p&gt;浏览器进入http://slave4:8080/
 账户：admin 密码：admin
 接下来一步步按提示即可，有一些要注意的点：
 第三步手动设置下redhat6的源地址为之前做的离线源：

@@ -1,5 +1,5 @@
-#ambari离线安装以及hadoop环境搭建详细过程
-##一、安装环境
+# ambari离线安装以及hadoop环境搭建详细过程
+## 一、安装环境
 六台相同配置的虚拟机
 OS:CentOS release 6.5 (Final)(x86_64)
 Cores (CPU):8 (8)
@@ -8,14 +8,14 @@ Memory:8GB
 
 最好先安装自己的jdk，配置好环境变量。
 
-##二、安装包下载
+## 二、安装包下载
 安装包过大(最大的hdp包3GB)，虚拟机环境外网网络不稳定，在线安装太耗时，只能用制作离线源方式进行安装，so，先下载以下安装包，备用。
 http://public-repo-1.hortonworks.com/ambari/centos6/ambari-1.7.0-centos6.tar.gz
 http://public-repo-1.hortonworks.com/HDP/centos6/HDP-2.2.0.0-centos6-rpm.tar.gz
 http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz
 
 
-##三、配置hostname以及hosts
+## 三、配置hostname以及hosts
 以便节点间通讯，hadoop集群管理。
 
 ```
@@ -32,7 +32,7 @@ vi /etc/hosts
 
 以master1节点为例，其他同理。
 
-##四、关闭iptables，关闭SELinux
+## 四、关闭iptables，关闭SELinux
 避免节点间通讯问题，关闭iptables&SELinux。
 
 ```
@@ -40,7 +40,7 @@ service iptables stop
 setenforce 0
 ```
 
-##五、安装ntp服务
+## 五、安装ntp服务
 节点间需要时间同步，否则会失败
 
 ```
@@ -48,7 +48,7 @@ yum install ntp
 service ntpd start
 ```
 
-##六、ssh无密码登陆配置
+## 六、ssh无密码登陆配置
 只需设置ambari安装节点（这里选取slave4为安装节点）到其他节点的无密码登陆即可。
 在slave4上依次执行：
 
@@ -71,7 +71,7 @@ scp ~/.ssh/authorized_keys root@slave3:/root/.ssh/authorized_keys
 
 至此，slave4对其他节点ssh无密码登陆配置成功，可以ssh下对应节点尝试是否成功。
 
-##七、制作离线安装源
+## 七、制作离线安装源
 选一台机器，作为离线源服务器，这里同样是slave4（ps.为什么都是slave4，主要是之前其他机子都有点问题，手动苦笑ing）。
 
 ```
@@ -122,7 +122,7 @@ hadoop本地源制作完成
 
 至此，离线源制作部分成功。
 
-##八、安装ambari
+## 八、安装ambari
 vim  /etc/yum.repos.d/ambari.repo  添加以下内容
 
 ```
@@ -159,7 +159,7 @@ Success后，可以启动了：
 ambari-server start
 ```
 
-##九、给ambari配置本地hadoop
+## 九、给ambari配置本地hadoop
 进入目录：/var/lib/ambari-server/resources/stacks/HDP/2.2/repos
 
 ```
@@ -181,7 +181,7 @@ vi repoinfo.xml
 修改redhat6中的配置，node3为ambari安装的节点，根据自己安装的实际节点配置
 这样在ambari执行hadoop安装时，会将本地源地址配置到所有主机上，在为所有主机安装ambari-agent时，会将ambari节点下的/etc/yum.repo/ambari.repo文件复制到所有主机源地址。
 
-##十、安装hadoop集群环境以及各组件
+## 十、安装hadoop集群环境以及各组件
 浏览器进入http://slave4:8080/
 账户：admin 密码：admin
 接下来一步步按提示即可，有一些要注意的点：

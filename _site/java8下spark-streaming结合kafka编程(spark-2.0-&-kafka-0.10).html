@@ -1,11 +1,11 @@
-<p>#java8下spark-streaming结合kafka编程（spark 2.0 &amp; kafka 0.10）
-前面有说道<a href="http://blog.csdn.net/jacklin929/article/details/53689365">spark-streaming的简单demo</a>，也有说到<a href="http://blog.csdn.net/jacklin929/article/details/53767622">kafka成功跑通的例子</a>，这里就结合二者，也是常用的使用之一。</p>
+<h1 id="java8下spark-streaming结合kafka编程spark-20--kafka-010">java8下spark-streaming结合kafka编程（spark 2.0 &amp; kafka 0.10）</h1>
+<p>前面有说道<a href="http://blog.csdn.net/jacklin929/article/details/53689365">spark-streaming的简单demo</a>，也有说到<a href="http://blog.csdn.net/jacklin929/article/details/53767622">kafka成功跑通的例子</a>，这里就结合二者，也是常用的使用之一。</p>
 
-<p>1.相关组件版本
-首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。</p>
+<h2 id="1相关组件版本">1.相关组件版本</h2>
+<p>首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。</p>
 
-<p>2.引入maven包
-网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。</p>
+<h2 id="2引入maven包">2.引入maven包</h2>
+<p>网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。</p>
 <div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
 	  <span class="nt">&lt;groupId&gt;</span>org.apache.spark<span class="nt">&lt;/groupId&gt;</span>
 	  <span class="nt">&lt;artifactId&gt;</span>spark-streaming-kafka-0-10_2.11<span class="nt">&lt;/artifactId&gt;</span>
@@ -15,8 +15,8 @@
 </div>
 <p>网上能找到的不带kafka版本号的包最新是1.6.3，我试过，已经无法在spark2下成功运行了，所以找到的是对应kafka0.10的版本，注意spark2.0的scala版本已经是2.11，所以包括之前必须后面跟2.11，表示scala版本。</p>
 
-<p>3.SparkSteamingKafka类
-需要注意的是引入的包路径是org.apache.spark.streaming.kafka010.xxx，所以这里把import也放进来了。其他直接看注释。</p>
+<h2 id="3sparksteamingkafka类">3.SparkSteamingKafka类</h2>
+<p>需要注意的是引入的包路径是org.apache.spark.streaming.kafka010.xxx，所以这里把import也放进来了。其他直接看注释。</p>
 <div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.Collection</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
@@ -84,8 +84,8 @@
 </code></pre>
 </div>
 
-<p>4.运行测试
-这里使用上一篇kafka初探里写的producer类，put数据到kafka服务端，我这是master2节点上部署的kafka，本地测试跑spark2。</p>
+<h2 id="4运行测试">4.运行测试</h2>
+<p>这里使用上一篇kafka初探里写的producer类，put数据到kafka服务端，我这是master2节点上部署的kafka，本地测试跑spark2。</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>UserKafkaProducer producerThread = new UserKafkaProducer(KafkaProperties.topic);
 producerThread.start();
 </code></pre>

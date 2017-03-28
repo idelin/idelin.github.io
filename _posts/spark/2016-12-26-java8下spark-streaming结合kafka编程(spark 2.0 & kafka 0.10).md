@@ -1,10 +1,10 @@
-#java8下spark-streaming结合kafka编程（spark 2.0 & kafka 0.10）
+# java8下spark-streaming结合kafka编程（spark 2.0 & kafka 0.10）
 前面有说道[spark-streaming的简单demo](http://blog.csdn.net/jacklin929/article/details/53689365)，也有说到[kafka成功跑通的例子](http://blog.csdn.net/jacklin929/article/details/53767622)，这里就结合二者，也是常用的使用之一。
 
-1.相关组件版本
+## 1.相关组件版本
 首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。
 
-2.引入maven包
+## 2.引入maven包
 网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。
 ```xml
 <dependency>
@@ -15,7 +15,7 @@
 ```
 网上能找到的不带kafka版本号的包最新是1.6.3，我试过，已经无法在spark2下成功运行了，所以找到的是对应kafka0.10的版本，注意spark2.0的scala版本已经是2.11，所以包括之前必须后面跟2.11，表示scala版本。
 
-3.SparkSteamingKafka类
+## 3.SparkSteamingKafka类
 需要注意的是引入的包路径是org.apache.spark.streaming.kafka010.xxx，所以这里把import也放进来了。其他直接看注释。
 ```java
 import java.util.Arrays;
@@ -84,7 +84,7 @@ public class SparkSteamingKafka {
 }
 ```
 
-4.运行测试
+## 4.运行测试
 这里使用上一篇kafka初探里写的producer类，put数据到kafka服务端，我这是master2节点上部署的kafka，本地测试跑spark2。
 ```
 UserKafkaProducer producerThread = new UserKafkaProducer(KafkaProperties.topic);
