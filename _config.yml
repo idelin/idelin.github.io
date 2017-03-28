@@ -18,7 +18,8 @@ myblog:
   linkedin: http://www.linkedin.com/in/zhangdelin
   github: https://github.com/idelin
   email: mailto:zdl0929@gmail.com
+  weibo: http://weibo.com/234601929
   coverimgs: []
   postbgimg: []
 
-categories: [python, books]
+categories: [python, books, hadoop, java, note]
