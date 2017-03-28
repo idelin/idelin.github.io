@@ -30,3 +30,8 @@ body .hide{display:none;}
     font-family: monospace;
     word-wrap: break-word;
 }
+
+.center.circle {
+    /* background-position: 50% 50%; */
+    background-size: cover;
+}
