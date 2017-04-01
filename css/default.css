@@ -35,3 +35,7 @@ body .hide{display:none;}
     /* background-position: 50% 50%; */
     background-size: cover;
 }
+ 
+.cloud-tie-wrapper {
+  width: 68%
+}
