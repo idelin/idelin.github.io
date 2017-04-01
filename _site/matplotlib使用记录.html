@@ -1,0 +1,43 @@
+<h1 id="matplotlib使用记录">matplotlib使用记录</h1>
+
+<h2 id="1linux服务器没有gui的情况下使用matplotlib绘图">1.Linux服务器没有GUI的情况下使用matplotlib绘图</h2>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">'Agg'</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>必须添加在import matplotlib.pyplot之前</p>
+
+<h2 id="2解决matplotlib中文乱码">2.解决matplotlib中文乱码</h2>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'font.sans-serif'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'SimSun'</span><span class="p">,</span> <span class="s">'SimHei'</span><span class="p">,</span> <span class="s">'SimKai'</span><span class="p">,</span> <span class="s">'PingFang SC'</span><span class="p">]</span>  
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'font.serif'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">'SimSun'</span><span class="p">,</span> <span class="s">'SimHei'</span><span class="p">,</span> <span class="s">'SimKai'</span><span class="p">,</span> <span class="s">'PingFang SC'</span><span class="p">]</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'font.family'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'sans-serif'</span>
+</code></pre>
+</div>
+
+<h2 id="3解决matplotlib保存图像是负号-显示为方块的问题">3.解决matplotlib保存图像是负号’-‘显示为方块的问题</h2>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">'axes.unicode_minus'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+</code></pre>
+</div>
+
+<h2 id="4-matplotlib保存图片时不截取图表内容">4. matplotlib保存图片时不截取图表内容</h2>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">"xxx.png"</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">'png'</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">'tight'</span><span class="p">)</span>
+</code></pre>
+</div>
+<blockquote>
+  <p>bbox_inches=’tight’可控制所画图表被完整保存下来，而不被截取掉。</p>
+</blockquote>
+
+<p>使用前
+<img src="http://ongpr9izg.bkt.clouddn.com/2017-04-01-024436.jpg" alt="" />
+使用后
+<img src="http://ongpr9izg.bkt.clouddn.com/2017-04-01-024349.jpg" alt="" /></p>
+
+<h2 id="5matplotlib控制图例位置">5.matplotlib控制图例位置</h2>
+<blockquote>
+  <p>plt.legend(bbox_to_anchor=(0.9, 0.9), fontsize=”x-small”)</p>
+</blockquote>
+
+<h2 id="6控制图像边缘留白量">6.控制图像边缘留白量</h2>
+<blockquote>
+  <p>plt.subplots_adjust(top=0.9, right=0.85)</p>
+</blockquote>
