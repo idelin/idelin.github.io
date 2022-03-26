@@ -1089,9 +1089,12 @@
 ]]></content>
       <categories>
         <category>编程</category>
+        <category>接口</category>
       </categories>
       <tags>
-        <tag>restapi,接口规范,代码</tag>
+        <tag>restapi</tag>
+        <tag>接口规范</tag>
+        <tag>代码</tag>
       </tags>
   </entry>
 </search>
