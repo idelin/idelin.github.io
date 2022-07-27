@@ -5,6 +5,8 @@
     <url>/2022/03/26/AiLPHA-REST-API%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h2 id="1-摘要"><a href="#1-摘要" class="headerlink" title="1. 摘要"></a>1. 摘要</h2><p>AiLPHA REST API指南作为一种设计规范，鼓励开发同学通过RESTful HTTP接口访问资源。</p>
 <p>本文档建立了AiLPHA REST API应该遵循的指导原则，以便开发统一一致的RESTful接口。</p>
+<span id="more"></span>
+
 <h2 id="2-引言"><a href="#2-引言" class="headerlink" title="2. 引言"></a>2. 引言</h2><p>为了给开发同学提供更流畅的开发体验，让API遵循统一的设计准则很重要，这些准则能让API简单且直观。</p>
 <p>API一致性的好处在于使团队拥有统一的代码、模式、文档风格和设计策略。</p>
 <p>这些准则旨在达成如下目标：</p>
@@ -15,8 +17,6 @@
 <li>接口测试层面，让测试同学可以按照标准更容易地去进行自动化接口测试；</li>
 <li>让其他部门、合作伙伴使用这些准则来设计自己的REST API。</li>
 </ul>
-<span id="more"></span>
-
 <h3 id="2-1-推荐阅读"><a href="#2-1-推荐阅读" class="headerlink" title="2.1 推荐阅读"></a>2.1 推荐阅读</h3><p>了解REST架构风格背后的理念，更有助于开发优秀的基于 HTTP 的服务。 如果您对 RESTful 设计不熟悉，请参阅以下优秀资源：</p>
 <ul>
 <li><a href="https://tools.ietf.org/html/rfc7231">RFC7231</a> – 定义HTTP&#x2F;1.1 语义规范的权威文档</li>
