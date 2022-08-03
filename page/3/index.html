@@ -123,7 +123,7 @@
 <p>COMMIT。即执行COMMIT时，必须等待log buffer进行flushing操作(可能产生log file sync等待事件)，写入磁盘中的联机日志文件。但一般上述1&#x2F;3满的条件触发LGWR，几乎强制LGWR实时写，因此当需要执行COMMIT，可能没有任何redo entry需要写入了。</p>
 <p>4、3秒触发LGWR的规则，事实上，这个超时是DBWR的，但是因为LGWR总在DBWR调用之前执行，因此效果上也相当于LGWR的超时是3秒即调用。</p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/12/28/%E3%80%90Oracle%E3%80%91LGWR/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/28/%E3%80%90Oracle%E3%80%91LGWR/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -145,7 +145,7 @@
 <p>再运行3里的SparkSteamingKafka类，可以看到已经成功。<br><img src="http://img.blog.csdn.net/20161226195407346?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="运行生产者类"><br><img src="http://img.blog.csdn.net/20161226195350341?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="运行spark充当消费者"></p>
 <p><img src="http://img.blog.csdn.net/20161227103155846?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/12/26/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B%EF%BC%88spark%202.0%20&%20kafka%200.10%EF%BC%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/26/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B%EF%BC%88spark%202.0%20&%20kafka%200.10%EF%BC%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -166,7 +166,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        UserKafkaProducer producerThread = new UserKafkaProducer(KafkaProperties.topic);</span><br><span class="line">        producerThread.start();</span><br><span class="line">        UserKafkaConsumer consumerThread = new UserKafkaConsumer(KafkaProperties.topic);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>运行即可。</p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -267,7 +267,7 @@ We don't have a executor management UI at this point of Time. Executors need to 
 Insert all executors into the mysql DB for executor setups. Verify that correct executors are active in executors table.<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">insert
  into executors(host,port) values(&quot;EXECUTOR_PORT&quot;,EXECUTOR_PORT);</code></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -353,7 +353,7 @@ http://www.apache.wiki/pages/viewpage.action?pageId=2887869<br>
 </div>
 <p></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/12/19/Spark%E9%9B%86%E7%BE%A4%E7%A1%AC%E4%BB%B6%E6%8C%91%E9%80%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/19/Spark%E9%9B%86%E7%BE%A4%E7%A1%AC%E4%BB%B6%E6%8C%91%E9%80%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -484,7 +484,7 @@ HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和
 <div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1; color:gray">
 <small>来源：&nbsp;<a target="_blank" href="http://www.aboutyun.com/thread-6549-1-1.html">http://www.aboutyun.com/thread-6549-1-1.html</a></small></div>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/12/19/Hadoop%20%E9%9B%86%E7%BE%A4%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%A1%AC%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/19/Hadoop%20%E9%9B%86%E7%BE%A4%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%A1%AC%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -501,7 +501,7 @@ HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和
 <p>3.建立服务端<br>找台linux服务器，运行netcat小工具：<br><code>nc -lk 9999</code><br>也就是上面代码里socketTextStream的参数.</p>
 <p>4.运行测试<br>本地启动java代码后，控制台会循环打印时间戳。<br>在nc那边随意输入，本地即可实时看到统计结果。<br><img src="http://img.blog.csdn.net/20161216095839430?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/12/16/java8%E5%AE%9E%E7%8E%B0spark%20streaming%E7%9A%84wordcount/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/16/java8%E5%AE%9E%E7%8E%B0spark%20streaming%E7%9A%84wordcount/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -512,7 +512,7 @@ HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和
 
 <p>   最近在学习spark，本来应该是使用scala编程，但是无奈scala没接触过，还得学，就先使用java的spark api练练手，其实发现java8的函数式编程跟scala很多地方异曲同工啊，搞定spark的java api后面学scala应该事半功倍！<br>最开始当然是万年不变的wordcount，加了个排序输出，具体看注释(^o^)&#x2F;</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SparkConf conf = new SparkConf().setMaster(&quot;local&quot;).setAppName(&quot;word count&quot;);</span><br><span class="line">JavaSparkContext sc = new JavaSparkContext(conf);</span><br><span class="line">JavaRDD&lt;String&gt; lines = sc.textFile(&quot;xxx.txt&quot;);</span><br><span class="line">//使用java8提供的lambda表达式</span><br><span class="line">//一句可以完成wordcount</span><br><span class="line">JavaPairRDD&lt;String, Integer&gt; counts = </span><br><span class="line">	lines</span><br><span class="line">	//根据&#x27;\001&#x27;分割来源行</span><br><span class="line">	.flatMap(line -&gt; Arrays.asList(line.split(&quot;\\001&quot;)).iterator())</span><br><span class="line">	//map输出 (单词,1)</span><br><span class="line">	.mapToPair(w -&gt; new Tuple2&lt;String, Integer&gt;(w, 1)) </span><br><span class="line">	//通过reduce相同key，value值相加</span><br><span class="line">	.reduceByKey((x, y) -&gt; x + y); </span><br><span class="line">		</span><br><span class="line">//根据得到的value值排序而不是key，默认只提供了根据key排序</span><br><span class="line">//那么想到的思路是，交换key、value，进行key排序，交换回来，完成value排序</span><br><span class="line">counts</span><br><span class="line">	//交换key-value，注意类型</span><br><span class="line">	.mapToPair(s -&gt; new Tuple2&lt;Integer, String&gt;(s._2, s._1))</span><br><span class="line">	//倒序</span><br><span class="line">	.sortByKey(false)</span><br><span class="line">	//交换key-value，注意类型</span><br><span class="line">	.mapToPair(s -&gt; new Tuple2&lt;String, Integer&gt;(s._2, s._1))</span><br><span class="line">	//转成集合</span><br><span class="line">	.collect()</span><br><span class="line">	//输出</span><br><span class="line">	.forEach(tuple -&gt; System.out.println(tuple._1() + &quot;: &quot; + tuple._2()));</span><br></pre></td></tr></table></figure></p>
-      <div class="post-button"><a class="btn" href="/2016/12/14/java8%E5%AE%9E%E7%8E%B0spark%20wordcount%E5%B9%B6%E4%B8%94%E6%8C%89%E7%85%A7value%E6%8E%92%E5%BA%8F%E8%BE%93%E5%87%BA/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/14/java8%E5%AE%9E%E7%8E%B0spark%20wordcount%E5%B9%B6%E4%B8%94%E6%8C%89%E7%85%A7value%E6%8E%92%E5%BA%8F%E8%BE%93%E5%87%BA/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -528,7 +528,7 @@ HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和
 <p>linux启动后，会默认打开3个文件描述符，分别是：<br>标准输入standard input 0,<br>正确输出standard output 1,<br>错误输出error output 2。</p>
 </blockquote>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/11/14/%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%EF%BC%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E6%96%87%E4%BB%B6%E5%8C%B9%E9%85%8D%E5%8F%91%E7%94%9F%E9%94%99%E8%AF%AF%20binary%20operator%20expected/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/11/14/%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%EF%BC%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E6%96%87%E4%BB%B6%E5%8C%B9%E9%85%8D%E5%8F%91%E7%94%9F%E9%94%99%E8%AF%AF%20binary%20operator%20expected/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -543,7 +543,7 @@ HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和
 <p>Go to the Oracle Java SE download page <a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a><br>Scroll down … Under “Additional Resources” section you will find “Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy File”<br>Download the version that matches your installed JVM E.g. UnlimitedJCEPolicyJDK7.zip<br>Unzip the downloaded zip<br>Copy local_policy.jar and US_export_policy.jar to the $JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;security (Note: these jars will be already there so you have to overwrite them)<br>Then restart your application to get rid of this exception.</p>
 <p><a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html</a></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/11/14/Encryption%20raised%20an%20exception/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/11/14/Encryption%20raised%20an%20exception/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
 
@@ -585,18 +585,18 @@ HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>
