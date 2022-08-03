@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>sqoop使用 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2017-10-28</span>
+        <h2>sqoop使用</h2>
+        
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+<ol>
+<li><p>list-databases  列出数据库<br>sqoop list-databases –connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs</p>
+</li>
+<li><p>list-tables  列出某数据库下的表<br>sqoop list-tables–connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs</p>
+</li>
+<li><p>eval 可以快速地使用SQL语句对关系数据库进行操作，这可以使得在使用import这种工具进行数据导入的时候，可以预先了解相关的SQL语句是否正确，并能将结果显示在控制台<br>sqoop eval –connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs -e “select * from b_code”</p>
+</li>
+<li><p>create-hive-table 生成与关系数据库表的表结构对应的HIVE表<br>sqoop create-hive-table –connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs -table B_CODE -hive-table h_b_code(注：oracle导入的时候表名需要使用大写！！！)</p>
+</li>
+<li><p>导入oracle表到hive中<br>sqoop import –connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs –table B_CODE –hive-table h_b_code  –hive-import<br>Hive arguments: &#96;&#96;&#96; Argument    Description</p>
+</li>
+</ol>
+<p>–hive-home <dir>    Override $HIVE_HOME<br>–hive-import    Import tables into Hive (Uses Hive’s default delimiters if none are set.)<br>–hive-overwrite    Overwrite existing data in the Hive table.<br>–create-hive-table    If set, then the job will fail if the target hive<br>table exits. By default this property is false.<br>–hive-table <table-name>    Sets the table name to use when importing to Hive.<br>–hive-drop-import-delims    Drops \n, \r, and \01 from string fields when importing to Hive.<br>–hive-delims-replacement    Replace \n, \r, and \01 from string fields with user defined string when importing to Hive.<br>–hive-partition-key    Name of a hive field to partition are sharded on<br>–hive-partition-value <v>    String-value that serves as partition key for this imported into hive in this job.<br>–map-column-hive <map>    Override default mapping from SQL type to Hive type for configured columns.&#96;&#96;&#96;</p>
+<ol start="6">
+<li>sqoop list-databases –connect jdbc:mysql:&#x2F;&#x2F;172.21.80.123:3306&#x2F; –username root –password 1234<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sqoop import --connect jdbc:mysql://172.21.80.123:3306/hadoop --username root --password 1234 --table lsemp --hbase-table lsemp --hbase-create-table --hbase-row-key empno --column-family info</span><br><span class="line">HBase arguments:```</span><br><span class="line"></span><br><span class="line">Argument	Description</span><br><span class="line">--column-family &lt;family&gt;	Sets the target column family for the import</span><br><span class="line">--hbase-create-table	If specified, create missing HBase tables</span><br><span class="line">--hbase-row-key &lt;col&gt;	Specifies which input column to use as the row key</span><br><span class="line">In case, if input table contains composite</span><br><span class="line">key, then &lt;col&gt; must be in the form of a</span><br><span class="line">comma-separated list of composite key</span><br><span class="line">attributes</span><br><span class="line">--hbase-table &lt;table-name&gt;	Specifies an HBase table to use as the target instead of HDFS</span><br><span class="line">--hbase-bulkload	Enables bulk loading</span><br></pre></td></tr></table></figure></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql相关</span><br><span class="line">1.执行sql</span><br><span class="line">sqoop eval --connect jdbc:mysql://localhost:3306/hive --username root --password 123456 -e &#x27;show tables&#x27;</span><br><span class="line">2.列出库</span><br><span class="line">sqoop list-databases --connect jdbc:mysql://localhost:3306/ --username root --password 123456</span><br><span class="line">3.导入mysql数据到hive</span><br><span class="line">sqoop import --connect jdbc:mysql://localhost:3306/test --username root --password 123456 --table student --hive-table student  --hive-import --hive-database test</span><br><span class="line">4.导出hive数据到mysql</span><br><span class="line">sqoop export --connect jdbc:mysql://localhost:3306/test --username root --password 123456  --table word_count -export-dir  /user/hive/warehouse/test.db/word_count --input-fields-terminated-by &#x27;\001&#x27;</span><br></pre></td></tr></table></figure>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2017/11/11/Storm%E5%8D%95%E6%9C%BA%E5%AE%89%E8%A3%85/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>Storm单机安装</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2017/10/25/hive2.1.1%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>hive2.1...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

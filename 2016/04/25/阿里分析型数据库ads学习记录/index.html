@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>阿里分析型数据库ads学习记录 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-04-25</span>
+        <h2>阿里分析型数据库ads学...</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/%E9%98%BF%E9%87%8Cads-ads-%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">阿里ads ads 分析型数据库</a></div>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+
+<p><span style="font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto"></span></p>
+<div style="margin:0px; font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto">
+</div>
+<p style="margin:0px; font-size:15px; line-height:24px; widows:auto"><span style="widows:auto"><span style="font-family:Microsoft YaHei">1.ads中非分区表关联问题</span></span></p>
+<div style="margin:0px; font-size:15px; line-height:24px; widows:auto"><span style="font-family:Microsoft YaHei">无法关联或关联出结果不对，主要因为ads目前的非分区表之间的关联仅支持分区列，且分区数相同，<span style="line-height:1.6">主因为ads关联首先根据分区对应，所以所关联的表与当前表分区字段必须一致，分区数也必须一致，否则得到的结果会跟你想象中差很多。而与分区表关联则不受此限制。</span><br style="line-height:1.6">
+<span style="line-height:1.6">使用ads中的维度表</span></span></div>
+<div style="margin:0px; font-size:15px; line-height:24px; widows:auto"><span style="font-family:Microsoft YaHei"><span style="line-height:1.6">可以与任意表关联，无需对应分区，无需相同分区数。</span><br>
+<span style="line-height:1.6">实际上数据量不大的表优先考虑建成维度表，特别是需要与其他表要关联的表。</span><br>
+</span>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">维度表的劣势：查询性能不随着扩容提升，浪费更多存储空间，但是对于数据量不大的情况下都不是问题。</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+</span></div>
+<p style="margin:0px"><span style="font-family:Microsoft YaHei">2.ads不支持带偏移量的limit</span></p>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">实际上无法做成真实分页，而且最多只能取出前1w条数据。可以使用dump方式解决，但是不建议那么做，ads主要关注快速获得查询结果，并不适用此场景。</span></div>
+<p style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+3.ads支持count(distinct columnName)<br>
+需修改后台配置，<br>
+/global/config/query --&gt;新增enableUdfSysGroupDistinctConcat&nbsp;<span style="line-height:1.6">bool类型，&#20540;false，然后count distinct可以即时生效</span></span></p>
+<p style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+4.UNION无法使用或结果错误</span></p>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">目前仅支持分区列UNION，所以带group by的聚合函数结果或查询出的非分区列结果都不可以使用union。</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">注：以上基于0.8.18版本，后续版本有所更新，会另写文详解。</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">之后更新会说明版本。</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">=====20160805更新===========</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">版本0.9.10</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">ads性能优化</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"></span>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<span style="line-height:1.6">1.</span><span style="line-height:1.6">注意过滤条件加上表别名</span><br>
+</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+2.<span style="line-height:1.6">打平关联语句</span><span style="line-height:1.6">（采用直接关联表而非关联子查询的方式）</span></div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+3.将关联条件设置为表聚集列</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<br>
+</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+为什么打平（直接关联表而不采用关联子查询的方式）会比子查询快，这里面涉及什么原理？
+<div style="margin:0px">打平之后，关联的维度表成为右表，join的时候走索引，所以很快；而子查询情况下，维度表就只能作为左表（子查询会自动将其处理为左表），实时表成为右表。实时部分的数据因为没有强大的索引，所以只能走扫描，这样就慢了。</div>
+</div>
+<br>
+</div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">遇到一个坑！！！强调下！！！</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">select ... a join b where xrsj&gt;....&nbsp;</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">（a为大表，上百亿数据，b为维度表，上万数据）</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">这种语句执行的时候，当xrsj这个字段只有a或者b表的时候是完全没问题的，碰巧就是a、b表都有xrsj这个字段的时候，按常理来说，应该报错的！怎么都应该报错才对，然后秀逗了，居然没有报错，还欢快地跑起来了，以至于我一个月都没找到为什么语句那么慢！</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">所以优化第一句就是过滤条件要加上表别名。</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">这个bug已经提交给ads开发经理了，不过回复我优先级不会很高，什么时候修复再说。</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
+</span></div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei"><span style="font-family:&quot;Microsoft YaHei&quot;; font-size:15px; line-height:24px">=====201608011更新===========</span></span></div>
+<div style="margin:0px"><br>
+</div>
+<div style="margin:0px"><span style="font-family:Microsoft YaHei">分区表与Group-By、Order-By查询<br>
+</span>
+<ul>
+<li>Group-By条件包含分区列，则应该放到第一列，此时结果是精确的且查询性能很好</li><li>Group-By表达式如果不包含分区列（或第一列不是分区列），则分组数量在范围内（&lt;5000），结果是精确的，但性能随分组数量增加而降低</li><li>Group-By表达式如果不包含分区列（或第一列不是分区列），且分组数量不在范围内（&gt;=5000），此时结果是不精确的且性能随分组数量增加而降低</li><li>如果Group-By表达式第一列不是按分区列，则Having语句不支持</li><li>全局分组TOP(N)：Group-By表达式包含分区列，则应该放到第一列，同时包含Order-By表达式，如果分组数量在范围内（&lt;1000），结果是精确的，但性能随分组数量增加而较大降低</li><li>全局模糊分组TOP(N)：Group-By表达式第一列如果不是分区列且包含Order-By表达式，而且分组</li><li>数量不在范围内（&gt;=1000），此时结果是不精确的且性能随分组数量增加而较大降低</li><li>全数据排序：Order-By表达式第一列如果不是分区列，性能会随排序列或表达式取&#20540;增加而较大降</li></ul>
+<div><span style="font-family:&quot;Microsoft YaHei&quot;; font-size:15px; line-height:24px">使用新引擎不受限制，我估计以后的问题，新引擎都不受限制，毕竟就是为了最大化兼容sql，但是效率较低，最重要的是我现在私有云没有新引擎：)</span><br>
+</div>
+<div><span style="font-family:&quot;Microsoft YaHei&quot;; font-size:15px; line-height:24px"><br>
+</span></div>
+</div>
+<div style="margin:0px"><span style="font-family:&quot;Microsoft YaHei&quot;">持续更新中...</span></div>
+</div>
+<div style="margin:0px; font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto">
+<div style="margin:0px"></div>
+</div>
+<div style="margin:0px; font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto">
+</div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>win10 驱...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>分析型数据库 ...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>ambari离线安装以及hadoop环境搭建详细过程 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-10-14</span>
+        <h2>ambari离线安装以及...</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/hadoop-ambari/" rel="tag">hadoop ambari</a></div>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+<p>一、安装环境<br>六台相同配置的虚拟机<br>OS:CentOS release 6.5 (Final)(x86_64)<br>Cores (CPU):8 (8)<br>Disk:50GB<br>Memory:8GB</p>
+<p>最好先安装自己的jdk，配置好环境变量。</p>
+<p>二、安装包下载<br>安装包过大(最大的hdp包3GB)，虚拟机环境外网网络不稳定，在线安装太耗时，只能用制作离线源方式进行安装，so，先下载以下安装包，备用。<br><a target="_blank" rel="noopener" href="http://public-repo-1.hortonworks.com/ambari/centos6/ambari-1.7.0-centos6.tar.gz">http://public-repo-1.hortonworks.com/ambari/centos6/ambari-1.7.0-centos6.tar.gz</a><br><a target="_blank" rel="noopener" href="http://public-repo-1.hortonworks.com/HDP/centos6/HDP-2.2.0.0-centos6-rpm.tar.gz">http://public-repo-1.hortonworks.com/HDP/centos6/HDP-2.2.0.0-centos6-rpm.tar.gz</a><br><a target="_blank" rel="noopener" href="http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz">http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz</a></p>
+<p>三、配置hostname以及hosts<br>以便节点间通讯，hadoop集群管理。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network ，修改 HOSTNAME=master1</span><br><span class="line"></span><br><span class="line">vi /etc/hosts</span><br><span class="line">172.16.1.137 master1</span><br><span class="line">172.16.1.138 master2</span><br><span class="line">172.16.1.139 slave1</span><br><span class="line">172.16.1.140 slave2</span><br><span class="line">172.16.1.149 slave3</span><br><span class="line">172.16.1.136 slave4</span><br></pre></td></tr></table></figure>
+
+<p>以master1节点为例，其他同理。</p>
+<p>四、关闭iptables，关闭SELinux<br>避免节点间通讯问题，关闭iptables&amp;SELinux。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service iptables stop</span><br><span class="line">setenforce 0</span><br></pre></td></tr></table></figure>
+
+<p>五、安装ntp服务<br>节点间需要时间同步，否则会失败</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install ntp</span><br><span class="line">service ntpd start</span><br></pre></td></tr></table></figure>
+
+<p>六、ssh无密码登陆配置<br>只需设置ambari安装节点（这里选取slave4为安装节点）到其他节点的无密码登陆即可。<br>在slave4上依次执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line">chmod 700 ~/.ssh  </span><br><span class="line">chmod 600 ~/.ssh/authorized_keys </span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>至此，本机ssh无密码登陆配置成功，可以ssh slave4尝试下是否成功，接下来将生成的authorized_keys复制到其他节点对应位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.ssh/authorized_keys root@master1:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@master2:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@slave1:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@slave2:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@slave3:/root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>至此，slave4对其他节点ssh无密码登陆配置成功，可以ssh下对应节点尝试是否成功。</p>
+<p>七、制作离线安装源<br>选一台机器，作为离线源服务器，这里同样是slave4（ps.为什么都是slave4，主要是之前其他机子都有点问题，手动苦笑ing）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install httpd</span><br><span class="line">service httpd start</span><br></pre></td></tr></table></figure>
+
+<p>访问slave4的80端口</p>
+<p>启动成功，<br>接着，创建两个目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir  /var/www/html/ambari</span><br><span class="line">mkdir  /var/www/html/hdp</span><br></pre></td></tr></table></figure>
+
+<p>解压ambari-1.7.0-centos6.tar.gz 和HDP-UTILS-1.1.0.20-centos6.tar.gz 到目录 &#x2F;var&#x2F;www&#x2F;html&#x2F;ambari<br>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar  zxvf  ambari-1.7.0-centos6.tar.gz  -C /var/www/html/ambari</span><br><span class="line">tar  zxvf  HDP-UTILS-1.1.0.20-centos6.tar.gz  -C /var/www/html/ambari</span><br></pre></td></tr></table></figure>
+
+<p>进入&#x2F;var&#x2F;www&#x2F;html&#x2F;ambari 目录，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createrepo  ./ </span><br></pre></td></tr></table></figure>
+
+<p>ambari本地源制作完成</p>
+<p>解压HDP-2.2.0.0-centos6-rpm.tar.gz 到目录 &#x2F;var&#x2F;www&#x2F;html&#x2F;hdp<br>命令：<code>tar  zxvf  HDP-2.2.0.0-centos6-rpm.tar.gz  -C /var/www/html/hdp</code><br>进入&#x2F;var&#x2F;www&#x2F;html&#x2F;hdp 目录，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createrepo  ./ </span><br></pre></td></tr></table></figure>
+
+<p>hadoop本地源制作完成</p>
+<p>进入<a target="_blank" rel="noopener" href="http://slave4/ambari/">http://slave4/ambari/</a></p>
+<p>以及<a target="_blank" rel="noopener" href="http://slave4/hdp/">http://slave4/hdp/</a></p>
+<p>至此，离线源制作部分成功。</p>
+<p>八、安装ambari<br>vim  &#x2F;etc&#x2F;yum.repos.d&#x2F;ambari.repo  添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[ambari-1.7]</span><br><span class="line">name=Ambari 1.7</span><br><span class="line">baseurl=http://slave4/ambari/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line"></span><br><span class="line">[HDP-UTILS-1.1.0.20]</span><br><span class="line">name=Hortonworks Data Platform Utils Version - HDP-UTILS-1.1.0.20</span><br><span class="line">baseurl=http://slave4/ambari/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure>
+
+<p>slave4为上一步制作离线源的主机。<br>执行安装ambari 命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install ambari-server</span><br></pre></td></tr></table></figure>
+
+<p>开始配置ambari 服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ambari-server setup</span><br></pre></td></tr></table></figure>
+
+<p>最好选择3，jdk提前自己安装，只需要设置JAVA_HOME的路径即可，否则选择1、2的话，需要通过网络下载，速度很慢。<br>Success后，可以启动了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ambari-server start</span><br></pre></td></tr></table></figure>
+
+<p>九、给ambari配置本地hadoop<br>进入目录：&#x2F;var&#x2F;lib&#x2F;ambari-server&#x2F;resources&#x2F;stacks&#x2F;HDP&#x2F;2.2&#x2F;repos</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vi repoinfo.xml</span><br><span class="line">&lt;os type=&quot;redhat6&quot;&gt;</span><br><span class="line">    &lt;repo&gt;</span><br><span class="line">      &lt;baseurl&gt;http://slave4/hdp&lt;/baseurl&gt;</span><br><span class="line">      &lt;repoid&gt;HDP-2.2&lt;/repoid&gt;</span><br><span class="line">      &lt;reponame&gt;HDP&lt;/reponame&gt;</span><br><span class="line">    &lt;/repo&gt;</span><br><span class="line">    &lt;repo&gt;</span><br><span class="line">      &lt;baseurl&gt;http://slave4/ambari&lt;/baseurl&gt;</span><br><span class="line">      &lt;repoid&gt;HDP-UTILS-1.1.0.20&lt;/repoid&gt;</span><br><span class="line">      &lt;reponame&gt;HDP-UTILS&lt;/reponame&gt;</span><br><span class="line">    &lt;/repo&gt;</span><br><span class="line">  &lt;/os&gt;</span><br></pre></td></tr></table></figure>
+
+<p>修改redhat6中的配置，node3为ambari安装的节点，根据自己安装的实际节点配置<br>这样在ambari执行hadoop安装时，会将本地源地址配置到所有主机上，在为所有主机安装ambari-agent时，会将ambari节点下的&#x2F;etc&#x2F;yum.repo&#x2F;ambari.repo文件复制到所有主机源地址。</p>
+<p>十、安装hadoop集群环境以及各组件<br>浏览器进入<a target="_blank" rel="noopener" href="http://slave4:8080/">http://slave4:8080/</a><br>账户：admin 密码：admin<br>接下来一步步按提示即可，有一些要注意的点：<br>第三步手动设置下redhat6的源地址为之前做的离线源：<br>redhat6 (HDP-2.2):<br><a target="_blank" rel="noopener" href="http://slave4/hdp/HDP/centos6/2.x/GA/2.2.0.0/">http://slave4/hdp/HDP/centos6/2.x/GA/2.2.0.0/</a></p>
+<p>redhat6 (HDP-UTILS-1.1.0.20):<br><a target="_blank" rel="noopener" href="http://slave4/ambari/HDP-UTILS-1.1.0.20/repos/centos6/">http://slave4/ambari/HDP-UTILS-1.1.0.20/repos/centos6/</a></p>
+<p>第四步INSTALL OPTION<br>配置hosts里的节点hostname<br>把slave4下生成的私钥导入</p>
+<p>然后第五步会检查是否可以跟各节点通讯，可能会失败，查看详情，但无非是防火墙没禁，ntp服务没装之类的，warm尽量全部解决掉，要不然可能会影响后面的安装。</p>
+<p>最后第二步，会开始到个节点安装各组件，此处出现问题可能性最大，有两个很明显的问题<br>①遇到的关于yum的错误(异常当时忘记记录了orz)，无法连接映像地址等，解决办法：<br>清空&amp;重建yum缓存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean</span><br><span class="line">yum	makecache</span><br></pre></td></tr></table></figure>
+
+<p>②(‘ERROR 2015-02-06 20:09:43,441 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group<br>ERROR 2015-02-06 20:09:43,442 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions.<br>这是openssl版本导致的错误<br>解决办法：<code>yum upgrade openssl</code></p>
+<p>Bingo</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/10/14/ambari%E5%9D%91%E8%AE%B0%E5%BD%95/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>ambari坑记录</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/09/12/mysql%20%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%98%8E%E5%8F%B7%E7%A0%81%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>mysql 身...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

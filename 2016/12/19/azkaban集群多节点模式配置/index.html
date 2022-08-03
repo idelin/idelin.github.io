@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>azkaban集群多节点模式配置 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-12-19</span>
+        <h2>azkaban集群多节点...</h2>
+        
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+
+<h3 style="margin:20px 0px 10px; padding:0px; font-weight:500; font-size:24px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+<span style="line-height:1.1"><br>
+<br>
+</span>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+配置多节点执行服务器的时候，需要在<span style="line-height:22.4px">AzkabanWebServer的配置文件</span><code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code><span style="line-height:22.4px">里添加</span></p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; background-color:rgb(245,245,245); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204)">azkaban.use.multiple.executors=true
+azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
+azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
+azkaban.executorselector.comparator.Memory=1
+azkaban.executorselector.comparator.LastDispatched=1
+azkaban.executorselector.comparator.CpuUsage=1
+</pre>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+以确认使用的是分布式方式，随后提交的job会根据情况自行选择执行服务器，否则默认只使用本地执行服务器，切记！</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+之后需要在mysql的azkaban库中添加各个执行服务器的ip/域名和端口：</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+<span style="color:rgb(199,37,78); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)">insert into executors(host,port) values(&quot;EXECUTOR_PORT&quot;,EXECUTOR_PORT);</span></div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<span style="font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)"><span style="font-family:微软雅黑"><span style="font-size:1rem">至此，azkaban的分布式配置才算成功。</span></span></span></div>
+<br>
+</h3>
+<div><span style="line-height:1.1"></span>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+配置多节点执行服务器的时候，需要在<span style="line-height:22.4px">AzkabanWebServer的配置文件</span><code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code><span style="line-height:22.4px">里添加</span></p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; background-color:rgb(245,245,245); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204)">azkaban.use.multiple.executors=true
+azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
+azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
+azkaban.executorselector.comparator.Memory=1
+azkaban.executorselector.comparator.LastDispatched=1
+azkaban.executorselector.comparator.CpuUsage=1
+</pre>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+以确认使用的是分布式方式，随后提交的job会根据情况自行选择执行服务器，否则默认只使用本地执行服务器，切记！</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+之后需要在mysql的azkaban库中添加各个执行服务器的ip/域名和端口：</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+<span style="color:rgb(199,37,78); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)">insert into executors(host,port) values(&quot;EXECUTOR_PORT&quot;,EXECUTOR_PORT);</span></div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<span style="font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)"><span style="font-family:微软雅黑"><span style="font-size:1rem">至此，azkaban的分布式配置才算成功。</span></span></span></div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<span style="font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)"><span style="font-family:微软雅黑"><span style="font-size:1rem"><br>
+</span></span></span></div>
+<br>
+<span style="color:rgb(128,128,128); font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:12.5px; line-height:20px">以下来源官网文档：&nbsp;</span><a target="_blank" target="_blank" href="http://azkaban.github.io/azkaban/docs/latest/" style="font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:12.5px; line-height:20px; widows:1">http://azkaban.github.io/azkaban/docs/latest/</a><br>
+</div>
+<h3 style="margin:20px 0px 10px; padding:0px; font-weight:500; font-size:24px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+<span style="line-height:1.1">Configuring AzabanWebServer and AzkabanExecutorServer clients</span><br>
+</h3>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+The Executor server needs to be setup with a port, and the AzabanWebServer will need to know what this port is.</p>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+The following properties need to be set on AzkabanExecutorServer's&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code>.</p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204); background-color:rgb(245,245,245)"># Azkaban Executor settings
+executor.maxThreads=50
+executor.port=12321
+executor.flow.threads=30
+</pre>
+<h4 style="margin:10px 0px; padding:0px; font-weight:500; font-size:18px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+Single Executor Mode</h4>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+By default the&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">executor.port</code>&nbsp;is set to&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">12321</code>.
+ The AzkabanWebServer will have to point to this port as well.</p>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+This is done by setting the following property in AzkabanWebServer's&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code>.</p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204); background-color:rgb(245,245,245)">executor.port=12321
+</pre>
+<h4 style="margin:10px 0px; padding:0px; font-weight:500; font-size:18px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+Multiple Executor Mode</h4>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+We need to enable multiple executor mode in webserver configuration if we want to run in multiple executor mode. Please verify that you have following properties in azkaban.properties. azkaban.use.multiple.executors and azkaban.executorselector.comparator.*
+ are required properties. Please note that&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.use.multiple.executors</code>&nbsp;is
+ not honoured in multiple exeutor mode.</p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204); background-color:rgb(245,245,245)">azkaban.use.multiple.executors=true
+azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
+azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
+azkaban.executorselector.comparator.Memory=1
+azkaban.executorselector.comparator.LastDispatched=1
+azkaban.executorselector.comparator.CpuUsage=1
+</pre>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+These changes are only picked up after restarting the servers.</p>
+<h2 id="multipleExecutors-config" style="margin:20px 0px 10px; padding:0px; font-weight:500; font-size:30px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+Configure executors for Multiple Executor Mode</h2>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+We don't have a executor management UI at this point of Time. Executors need to be configured in database. For examples:-</p>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+Insert all executors into the mysql DB for executor setups. Verify that correct executors are active in executors table.<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">insert
+ into executors(host,port) values(&quot;EXECUTOR_PORT&quot;,EXECUTOR_PORT);</code></p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>kafka初探...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/12/19/Spark%E9%9B%86%E7%BE%A4%E7%A1%AC%E4%BB%B6%E6%8C%91%E9%80%89/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Spark集群...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

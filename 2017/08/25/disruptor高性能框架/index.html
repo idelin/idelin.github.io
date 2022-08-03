@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>disruptor高性能框架 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2017-08-25</span>
+        <h2>disruptor高性能框架</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/%E9%AB%98%E6%80%A7%E8%83%BD/" rel="tag">高性能</a></div>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+<p>最近项目里需要写模型，然后数据是从es取，不同人负责写不同模型，这里遇到一个问题，就是数据的读其实公用，没必要各自取一次数据浪费带宽、内存、cpu…遂想是否可以提取公用部分做数据读，下发给各个模型，然后开发老大说用disruptor试试，调研了下确实可行，就稍加记录下。</p>
+<p>disruptor项目地址：<a target="_blank" rel="noopener" href="https://github.com/LMAX-Exchange/disruptor">https://github.com/LMAX-Exchange/disruptor</a><br>简单来说disruptor是一个高性能的异步的消息处理框架。</p>
+<p>disruptor最核心的概念是ringbuffer（环形缓冲队列），下图解释所有↓<br><img src="http://img.blog.csdn.net/20170828102904174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>ringbuffer就如上一个环形队列，生产者往队列写数据，消费者读取数据处理，如果生产者追到消费者，那么生产者会停止生产，阻塞，等待它完成；同样的，消费者消费完了所有数据，消费者还未来得及消费，前者一样阻塞等待。</p>
+<p>disruptor采用的就是ringbuffer数据结构，之所以采用这种结构，官网是这样描述的：<br><em>之所以采用ringbuffer，是因为它在可靠消息传递方面有很好的性能。这就够了，不过它还有一些其他的优点。<br>首先，因为它是数组，所以要比链表快，而且有一个容易预料到的数据访问的内存地址。这是对CPU缓存友好的—也就是说，在硬件级别，数组中的元素是会被预加载的，因此在ringbuffer当中，cpu无需时不时去主存加载数组中的下一个元素。（校对注：因为只要一个元素被加载到缓存行，其他相邻的几个元素也会被加载进同一个缓存行）<br>其次，你可以为数组预先分配内存，使得数组对象一直存在（除非程序终止）。这就意味着不需要花大量的时间用于垃圾回收。此外，不像链表那样，需要为每一个添加到其上面的对象创造节点对象—对应的，当删除节点时，需要执行相应的内存清理操作。</em></p>
+<p>其他概念就不详细描述了，直接照例代码上。<br>引入包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.lmax&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;disruptor&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.3.6&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>Event类获取用于填充数据，data类型按需定义。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class MessageEvent &#123;</span><br><span class="line">    private List&lt;Map&lt;String, Object&gt;&gt; data;</span><br><span class="line"></span><br><span class="line">    public void setData(List&lt;Map&lt;String, Object&gt;&gt; data) &#123;</span><br><span class="line">        this.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public List&lt;Map&lt;String, Object&gt;&gt; getData() &#123;</span><br><span class="line">        return data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数据工厂类，实现EventFactory接口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class MessageEventFactory implements EventFactory&lt;MessageEvent&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public MessageEvent newInstance() &#123;</span><br><span class="line">        return new MessageEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生产者类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class MessageEventProducer &#123;</span><br><span class="line">    private static Logger logger = LoggerFactory.getLogger(MessageEventProducer.class);</span><br><span class="line"></span><br><span class="line">    private final RingBuffer&lt;MessageEvent&gt; ringBuffer;</span><br><span class="line"></span><br><span class="line">    public MessageEventProducer(RingBuffer&lt;MessageEvent&gt; ringBuffer) &#123;</span><br><span class="line">        this.ringBuffer = ringBuffer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void onData(List&lt;Map&lt;String, Object&gt;&gt; datas) &#123;</span><br><span class="line">        long sequence = ringBuffer.next(); </span><br><span class="line">        try &#123;</span><br><span class="line">            MessageEvent event = ringBuffer.get(sequence);</span><br><span class="line">            event.setData(datas);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            ringBuffer.publish(sequence);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>消费者类，handler，具体逻辑数据类，实现EventHandler接口即可，实现其onEvent方法，可通过event.getData()拿到数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class MessageEventHandler implements EventHandler&lt;MessageEvent&gt;</span><br><span class="line">&#123;</span><br><span class="line">    public void onEvent(MessageEvent event, long sequence, boolean endOfBatch)</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(&quot;Event: &quot; + event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主类，启动类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class MessageEventMain extends Thread &#123;</span><br><span class="line">    private static Logger logger = LoggerFactory.getLogger(MessageEventMain.class);</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        ThreadFactory threadFactory = Executors.defaultThreadFactory();</span><br><span class="line"></span><br><span class="line">        // 创建消息工厂类</span><br><span class="line">        MessageEventFactory factory = new MessageEventFactory();</span><br><span class="line"></span><br><span class="line">        // ringbuffer size，一般为2的指数倍</span><br><span class="line">        int bufferSize = 1024;</span><br><span class="line"></span><br><span class="line">        // 定义 Disruptor</span><br><span class="line">        Disruptor&lt;MessageEvent&gt; disruptor =</span><br><span class="line">                new Disruptor&lt;&gt;(factory, bufferSize, threadFactory, ProducerType.SINGLE, new BlockingWaitStrategy());</span><br><span class="line"></span><br><span class="line">        // 关联消费者</span><br><span class="line">        disruptor.handleEventsWith(new MessageHandler());</span><br><span class="line">        disruptor.handleEventsWith(new xxxxHandler());</span><br><span class="line"></span><br><span class="line">        // 启动disruptor框架</span><br><span class="line">        disruptor.start();</span><br><span class="line"></span><br><span class="line">        // 获得ringbuffer用于消息发布</span><br><span class="line">        RingBuffer&lt;MessageEvent&gt; ringBuffer = disruptor.getRingBuffer();</span><br><span class="line">        MessageEventProducer producer = new MessageEventProducer(ringBuffer);</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">	             List list = getData();//自己的取数逻辑</span><br><span class="line">                 producer.onData(list);</span><br><span class="line">                Thread.sleep(60 * 10 * 1000);</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>打完收工<br>另外讲几点：<br>1.handler会在producer.onData后对框架通知消费数据；<br>2.消费数据最好按最简单类型处理，性能更好，我上面用list实在是业务框定，所有后续造成了一个严重问题；<br>3.handler消费完对应ringbuffer数据并不会马上被清理，是直到生产者填充环形队列再到这个位置才会覆盖数据，所以问题2就是这样出现，如果定义复杂类型，一格存储大量数据，会操作jvm内存不够，程序运行一段数据会出现大量full fc或者oom，解决办法是，要么换成一条条数据发送，要么减小ringbuffer size，我这里业务限定，只能改小了ringbuffer size；<br>4.框架有阻塞等待机制，具体使用算法可以自行查，也就是说，如果某一个消费者太慢，生产者太快，到生产者追上消费者的那一格，生产者会阻塞，直到最慢的那个消费者消费完成，同样的，如果消费者很快，消费到了最新的一份数据，一样会阻塞等待生成者再次生成数据。所以这里要注意，如果某一个handler一直太慢，你可能要处理下这个handler效率，必要时撤掉，起码不能影响其他handler正常运行。</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2017/08/25/es%20%20UpdateByQuery%20%E5%87%BA%E7%8E%B0%20VersionConflictEngineException/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>es  Upd...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2017/06/26/%E3%80%90Storm%E5%88%9D%E6%8E%A2%E3%80%91wordcount%20demo/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>【Storm初...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

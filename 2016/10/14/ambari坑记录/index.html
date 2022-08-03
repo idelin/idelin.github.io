@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>ambari坑记录 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-10-14</span>
+        <h2>ambari坑记录</h2>
+        
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+<p>问题一：<br>此问题是在安装注册主机时遇到的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(&#x27;ERROR 2015-02-06 20:09:43,441 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group</span><br><span class="line">ERROR 2015-02-06 20:09:43,442 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions. </span><br><span class="line">Refer to: https://bugzilla.redhat.com/show_bug.cgi?id=1022468 for more details.</span><br><span class="line">INFO 2015-02-06 20:09:43,442 NetUtil.py:81 - Server at https://Master.domain.dev:8440 is not reachable, sleeping for 10 seconds...</span><br><span class="line">INFO 2015-02-06 20:09:45,343 main.py:83 - loglevel=logging.INFO</span><br><span class="line">INFO 2015-02-06 20:09:45,343 main.py:55 - signal received, exiting.</span><br><span class="line">INFO 2015-02-06 20:09:45,343 ProcessHelper.py:39 - Removing pid file</span><br><span class="line">INFO 2015-02-06 20:09:45,344 ProcessHelper.py:46 - Removing temp files</span><br><span class="line">INFO 2015-02-06 20:10:19,815 main.py:83 - loglevel=logging.INFO</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:36 - Data cleanup thread started</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:71 - Data cleanup started</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:73 - Data cleanup finished</span><br><span class="line">INFO 2015-02-06 20:10:19,973 PingPortListener.py:51 - Ping port listener started on port: 8670</span><br><span class="line">INFO 2015-02-06 20:10:19,973 main.py:227 - Connecting to the server at: https://Master.domain.dev:8440</span><br><span class="line">INFO 2015-02-06 20:10:19,974 NetUtil.py:72 - DEBUG: Trying to connect to the server at https://Master.domain.dev:8440</span><br><span class="line">INFO 2015-02-06 20:10:19,974 NetUtil.py:42 - Connecting to the following url https://Master.domain.dev:8440/cert/ca</span><br><span class="line">ERROR 2015-02-06 20:10:20,023 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group</span><br><span class="line">ERROR 2015-02-06 20:10:20,023 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions. </span><br><span class="line">Refer to: https://bugzilla.redhat.com/show_bug.cgi?id=1022468 for more details.</span><br><span class="line">INFO 2015-02-06 20:10:20,023 NetUtil.py:81 - Server at https://Master.domain.dev:8440 is not reachable, sleeping for 10 seconds...</span><br><span class="line">&#x27;, None)</span><br><span class="line"></span><br><span class="line">Connection to Slave5.domain.dev closed.</span><br><span class="line">SSH command execution finished</span><br><span class="line">host=Slave5.domain.dev, exitcode=0</span><br><span class="line">Command end time 2015-02-06 12:07:47</span><br><span class="line"></span><br><span class="line">Registering with the server...</span><br><span class="line">Registration with the server failed.</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：<br>一下是官方论坛中给出的方法，很好</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Platforms:</span><br><span class="line"></span><br><span class="line">RHEL / CentOS 6.5</span><br><span class="line">Ambari 1.4 or later</span><br><span class="line">Root Cause: The OpenSSL library available and installed by default on RHEL/CentOS 6.5 has a bug. Refer to https://bugzilla.redhat.com/show_bug.cgi?id=1025598 for detailed information on the bug.</span><br><span class="line"></span><br><span class="line">Remedy:</span><br><span class="line"></span><br><span class="line">Check the OpenSSL library version installed on your host(s):</span><br><span class="line">rpm -qa | grep openssl</span><br><span class="line"></span><br><span class="line">openssl-1.0.1e-15.el6.x86_64</span><br><span class="line"></span><br><span class="line">If the output says openssl-1.0.1e-15.x86_64 (1.0.1 build 15) you will need to upgrade the OpenSSL library by running the following command:</span><br><span class="line">yum upgrade openssl</span><br><span class="line"></span><br><span class="line">Verify you have the newer version of OpenSSL (1.0.1 build 16):</span><br><span class="line">rpm -qa | grep openssl</span><br><span class="line"></span><br><span class="line">openssl-1.0.1e-16.el6.x86_64</span><br><span class="line"></span><br><span class="line">Restart Ambari Agent(s) and Click Retry Failed�0�9 on the Wizard</span><br></pre></td></tr></table></figure>
+
+<p>问题二</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.hadoop.security.AccessControlException: org.apache.hadoop.security.AccessControlException: Permission denied: user=Administrator, access=WRITE, inode=&quot;hadoop&quot;: hadoop:supergroup:rwxr-xr-x</span><br></pre></td></tr></table></figure>
+
+<p>其实这个错误的原因很容易看出来，用户Administator在hadoop上执行写操作时被权限系统拒绝.<br>dfs.permissions修改为False</p>
+<p>问题三<br>启动namenode报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;/var/lib/ambari-agent/cache/stacks/HDP/2.0.6/services/HDFS/package/scripts/namenode.py&quot;, line 134, in &lt;module&gt;</span><br><span class="line">    NameNode().execute()</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/libraries/script/script.py&quot;, line 123, in execute</span><br><span class="line">    method(env)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/libraries/script/script.py&quot;, line 233, in restart</span><br><span class="line">    self.start(env)</span><br><span class="line">  File &quot;/var/lib/ambari-agent/cache/stacks/HDP/2.0.6/services/HDFS/package/scripts/namenode.py&quot;, line 46, in start</span><br><span class="line">    namenode(action=&quot;start&quot;)</span><br><span class="line">  File &quot;/var/lib/ambari-agent/cache/stacks/HDP/2.0.6/services/HDFS/package/scripts/hdfs_namenode.py&quot;, line 60, in namenode</span><br><span class="line">    only_if=dfs_check_nn_status_cmd #skip when HA not active</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/base.py&quot;, line 148, in __init__</span><br><span class="line">    self.env.run()</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/environment.py&quot;, line 149, in run</span><br><span class="line">    self.run_action(resource, action)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/environment.py&quot;, line 115, in run_action</span><br><span class="line">    provider_action()</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/providers/system.py&quot;, line 237, in action_run</span><br><span class="line">    path=self.resource.path)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/shell.py&quot;, line 36, in checked_call</span><br><span class="line">    return _call(command, logoutput, True, cwd, env, preexec_fn, user, wait_for_finish, timeout, path)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/shell.py&quot;, line 101, in _call</span><br><span class="line">    err_msg = Logger.get_protected_text((&quot;Execution of &#x27;%s&#x27; returned %d. %s&quot;) % (command, code, out))</span><br><span class="line">UnicodeDecodeError: &#x27;ascii&#x27; codec can&#x27;t decode byte 0xe6 in position 116: ordinal not in range(128)</span><br></pre></td></tr></table></figure>
+
+<p>在你python的安装目录下的Lib目录,找到site.py,<br>修改def setencoding()方法 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def setencoding():</span><br><span class="line"> ..... .... if 0:</span><br><span class="line"> #Enabletosupportlocaleawaredefaultstringencodings. </span><br></pre></td></tr></table></figure>
+
+<p> 把那个if 0改为if 1</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/10/20/centos%E4%B8%8Bwget!%20%E6%97%A0%E6%B3%95%E8%A7%A3%E6%9E%90%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%9D%80/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>centos下...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/10/14/ambari%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8Ahadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>ambari离...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

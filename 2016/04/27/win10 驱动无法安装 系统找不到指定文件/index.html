@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>win10 驱动无法安装 系统找不到指定文件 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-04-27</span>
+        <h2>win10 驱动无法安装...</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/windows/" rel="tag">windows</a></div>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+<p>明明指定了下载的驱动文件夹，但是报错，“系统找不到指定文件”，<br>然后查看C:\Windows\INF\setupapi.dev.log文件，这是驱动安装的日志，查看信息发现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;  [Device Install (DiShowUpdateDevice) - USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001]</span><br><span class="line">&gt;&gt;&gt;  Section start 2016/04/27 10:10:28.324</span><br><span class="line">      cmd: &quot;C:\WINDOWS\system32\mmc.exe&quot; &quot;C:\WINDOWS\system32\compmgmt.msc&quot; /s</span><br><span class="line">     dvi: &#123;DIF_UPDATEDRIVER_UI&#125; 10:10:28.328</span><br><span class="line">     dvi:      Default installer: Enter 10:10:28.332</span><br><span class="line">     dvi:      Default installer: Exit</span><br><span class="line">     dvi: &#123;DIF_UPDATEDRIVER_UI - exit(0xe000020e)&#125; 10:10:28.339</span><br><span class="line">     ndv: &#123;Update Driver Software Wizard for USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125;</span><br><span class="line">     ndv:      Driver package &#x27;c:\users\dl\desktop\usb_driver\android_winusb.inf&#x27; exists under &#x27;C:\WINDOWS\System32\DriverStore\FileRepository\android_winusb.inf_amd64_bd75d06c56998078\android_winusb.inf&#x27; (oem87.inf).</span><br><span class="line">     dvi:      Searching for hardware ID(s):</span><br><span class="line">     dvi:           usb\vid_18d1&amp;pid_4ee2&amp;rev_0310&amp;mi_01</span><br><span class="line">     dvi:           usb\vid_18d1&amp;pid_4ee2&amp;mi_01</span><br><span class="line">     dvi:      Searching for compatible ID(s):</span><br><span class="line">     dvi:           usb\class_ff&amp;subclass_42&amp;prot_01</span><br><span class="line">     dvi:           usb\class_ff&amp;subclass_42</span><br><span class="line">     dvi:           usb\class_ff</span><br><span class="line">     dvi:      Class GUID of device changed to: &#123;3f966bd9-fa04-4ec5-991c-d326973b5128&#125;.</span><br><span class="line">     dvi:      &#123;Plug and Play Service: Device Install for USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125;</span><br><span class="line">     ndv:           Driver INF Path: C:\WINDOWS\INF\oem87.inf</span><br><span class="line">     ndv:           Driver Node Name: android_winusb.inf:e5735744df83a689:USB_Install:11.0.0.0:usb\vid_18d1&amp;pid_4ee2&amp;mi_01</span><br><span class="line">     ndv:           Driver Store Path: C:\WINDOWS\System32\DriverStore\FileRepository\android_winusb.inf_amd64_bd75d06c56998078\android_winusb.inf</span><br><span class="line">     dvi:           Searching for hardware ID(s):</span><br><span class="line">     dvi:                usb\vid_18d1&amp;pid_4ee2&amp;rev_0310&amp;mi_01</span><br><span class="line">     dvi:                usb\vid_18d1&amp;pid_4ee2&amp;mi_01</span><br><span class="line">     dvi:           Searching for compatible ID(s):</span><br><span class="line">     dvi:                usb\class_ff&amp;subclass_42&amp;prot_01</span><br><span class="line">     dvi:                usb\class_ff&amp;subclass_42</span><br><span class="line">     dvi:                usb\class_ff</span><br><span class="line">     dvi:           Class GUID of device changed to: &#123;3f966bd9-fa04-4ec5-991c-d326973b5128&#125;.</span><br><span class="line">     ndv:           &#123;Core Device Install&#125; 10:10:31.409</span><br><span class="line">     ndv:                &#123;Install Device - USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125; 10:10:31.412</span><br><span class="line">     ndv:                     Parent device: USB\VID_18D1&amp;PID_4EE2\ENU7N15A20008134</span><br><span class="line">!    ndv:                     Device class &#123;3f966bd9-fa04-4ec5-991c-d326973b5128&#125; is not configurable.</span><br><span class="line">     dvi:                     &#123;DIF_ALLOW_INSTALL&#125; 10:10:31.420</span><br><span class="line">!!!  dvi:                          Loading module &#x27;C:\WINDOWS\system32\USBCoInstaller.dll&#x27; failed.</span><br><span class="line">!!!  dvi:                          Error 193: %1 is not a valid Win32 application.</span><br><span class="line">!!!  dvi:                          Error 193 loading CoInstaller(USBCoInstaller.dll,Zoom2_CoInstaller)</span><br><span class="line">!!!  dvi:                          Error 193: %1 is not a valid Win32 application.</span><br><span class="line">     dvi:                          Default installer: Enter 10:10:31.425</span><br><span class="line">     dvi:                          Default installer: Exit</span><br><span class="line">     dvi:                     &#123;DIF_ALLOW_INSTALL - exit(0xe000020e)&#125; 10:10:31.427</span><br><span class="line">     dvi:                     &#123;DIF_INSTALLDEVICEFILES&#125; 10:10:31.428</span><br><span class="line">     dvi:                          Default installer: Enter 10:10:31.429</span><br><span class="line">     dvi:                          Default installer: Exit</span><br><span class="line">     dvi:                     &#123;DIF_INSTALLDEVICEFILES - exit(0x00000000)&#125; 10:10:31.436</span><br><span class="line">     flq:                     File &#x27;C:\WINDOWS\system32\WinUSBCoInstaller2.dll&#x27; pruned from copy.</span><br><span class="line">     flq:                     File &#x27;C:\WINDOWS\system32\WdfCoInstaller01009.dll&#x27; pruned from copy.</span><br><span class="line">!!!  flq:                     *Source Media: SPFQOPERATION_ABORT (C:\WINDOWS\System32\DriverStore\FileRepository\winusb.inf_amd64_1921d43d747bdc1c\winusb.sys).*</span><br><span class="line">!!!  flq:                     Error 2: The system cannot find the file specified.</span><br><span class="line">!!!  flq:                     FileQueueCommit aborting!</span><br><span class="line">!!!  flq:                     Error 2: The system cannot find the file specified.</span><br><span class="line">!    ndv:                     Queueing up error report since device installation failed...</span><br><span class="line">     ndv:                &#123;Install Device - exit(0x00000002)&#125; 10:10:31.589</span><br><span class="line">     ndv:           &#123;Core Device Install - exit(0x00000002)&#125; 10:10:31.589</span><br><span class="line">     ump:      &#123;Plug and Play Service: Device Install exit(00000002)&#125;</span><br><span class="line">!!!  ndv:      Device install failed for device.</span><br><span class="line">!!!  ndv:      Error 2: The system cannot find the file specified.</span><br><span class="line">     ndv:      Installing NULL driver.</span><br><span class="line">     dvi:      &#123;Plug and Play Service: Device Install for USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125;</span><br><span class="line">!    ndv:           Installing NULL driver!</span><br><span class="line">     dvi:           &#123;DIF_ALLOW_INSTALL&#125; 10:10:31.705</span><br><span class="line">     dvi:                Default installer: Enter 10:10:31.706</span><br><span class="line">     dvi:                Default installer: Exit</span><br><span class="line">     dvi:           &#123;DIF_ALLOW_INSTALL - exit(0xe000020e)&#125; 10:10:31.708</span><br><span class="line">     dvi:           &#123;DIF_REGISTER_COINSTALLERS&#125; 10:10:31.709</span><br><span class="line">     dvi:                Default installer: Enter 10:10:31.710</span><br><span class="line">     dvi:                Default installer: Exit</span><br><span class="line">     dvi:           &#123;DIF_REGISTER_COINSTALLERS - exit(0x00000000)&#125; 10:10:31.711</span><br><span class="line">     dvi:           &#123;DIF_INSTALLDEVICE&#125; 10:10:31.712</span><br><span class="line">     dvi:                Default installer: Enter 10:10:31.713</span><br><span class="line">!    dvi:                     Installing NULL driver!</span><br><span class="line">     dvi:                     Install Null Driver: Removing device sub-tree. 10:10:31.718</span><br><span class="line">     dvi:                     Install Null Driver: Removing device sub-tree completed. 10:10:31.762</span><br><span class="line">     dvi:                     Install Null Driver: Restarting device. 10:10:31.777</span><br><span class="line">     dvi:                     Install Null Driver: Restarting device completed. 10:10:31.800</span><br><span class="line">     dvi:                     Install Device: Starting device. 10:10:31.805</span><br><span class="line">     dvi:                     Install Device: Starting device completed. 10:10:31.916</span><br><span class="line">     dvi:                Default installer: Exit</span><br><span class="line">     dvi:           &#123;DIF_INSTALLDEVICE - exit(0x00000000)&#125; 10:10:31.918</span><br><span class="line">     ump:      &#123;Plug and Play Service: Device Install exit(00000000)&#125;</span><br><span class="line">     ndv: &#123;Update Driver Software Wizard exit(00000002)&#125;</span><br><span class="line">&lt;&lt;&lt;  Section end 2016/04/27 10:10:33.104</span><br><span class="line">&lt;&lt;&lt;  [Exit status: FAILURE(0x00000002)]</span><br></pre></td></tr></table></figure>
+<p>关注这段：<br> !!!  flq:                     <em><strong>Source Media: SPFQOPERATION_ABORT (C:\WINDOWS\System32\DriverStore\FileRepository\winusb.inf_amd64_1921d43d747bdc1c\winusb.sys).</strong></em><br>!!!  flq:                     Error 2: The system cannot find the file specified.<br>!!!  flq:                     FileQueueCommit aborting!<br>!!!  flq:                     Error 2: The system cannot find the file specified.</p>
+<p>C:\WINDOWS\System32\DriverStore\FileRepository\winusb.inf_amd64_1921d43d747bdc1c\winusb.sys<br>报错指这个文件找不到，然后去找了下，果然没有，连winusb.inf_amd64_XXX文件夹都没有，不过找到个类似的，只是后面的XXX部分不同，然后修改FileRepository文件夹权限，改为管理员可写可修改，原本是只读，然后到FileRepository文件夹下复制存在的winusb.inf_amd64_XXX增加一个副本，改名为报错的不存在的那个文件夹名。<br>再试着装下驱动，是不是就ok了？<br>本质上所有报此类错误的驱动安装不上的问题都可以这样解决，如果找不到报错里描述的类似文件夹，可以到其他计算机上copy过来再重命名</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/05/12/hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>hadoop伪...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/04/25/%E9%98%BF%E9%87%8C%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93ads%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>阿里分析型数据...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

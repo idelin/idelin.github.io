@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>渗透学习：SQL盲注 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2019-03-18</span>
+        <h2>渗透学习：SQL盲注</h2>
+        
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+
+<h2 id="SQL-盲注"><a href="#SQL-盲注" class="headerlink" title="SQL 盲注"></a>SQL 盲注</h2><p>可能会查看、修改或删除数据库条目和表</p>
+<h3 id="可能原因"><a href="#可能原因" class="headerlink" title="可能原因"></a>可能原因</h3><p>未对用户输入正确执行危险字符清理</p>
+<h3 id="技术描述"><a href="#技术描述" class="headerlink" title="技术描述"></a>技术描述</h3><p>该软件使用受外部影响的输入来构造 SQL 命令的全部或一部分，但是它未能对可能在 SQL 命令发送到数据库时修改该命令的元素进行无害化处理。如果在用户可控制的输入中没有对 SQL 语法充分地除去或加上引号，那么生成的 SQL 查询可能会导致将这些输入解释为 SQL 而不是普通用户数据。这可用于修改查询逻辑以绕过安全性检查，或者插入其他用于修改后端数据库的语句，可能包括执行系统命令。<br>例如，假设有一个带有登录表单的 HTML 页面，该页面最终使用用户输入对数据库运行以下 SQL 查询：   <code>SELECT * FROM accounts WHERE username=&#39;$user&#39; AND password=&#39;$pass&#39;</code></p>
+<p>这两个变量（$user 和 $pass）包含了用户在登录表单中输入的用户凭证。如果用户输入“jsmith”作为用户名，并输入“Demo1234”作为密码，那么 SQL 查询将如下所示：<br>  <code>SELECT * FROM accounts WHERE username=&#39;jsmith&#39; AND password=&#39;Demo1234&#39;</code></p>
+<p>但如果用户输入“’”（单引号）作为用户名，输入“’”（单引号）作为密码，那么 SQL 查询将如下所示：<br>  <code>SELECT * FROM accounts WHERE username=&#39;&#39;&#39; AND password=&#39;&#39;&#39;</code></p>
+<p>当然，这是格式错误的 SQL 查询，并将调用错误消息，而 HTTP 响应中可能会返回此错误消息。通过此类错误，攻击者会知道 SQL 注入已成功，这样攻击者就会尝试进一步的攻击媒介。SQL 盲注类似于 SQL 注入。不同之处在于，要利用该攻击，攻击者无需寻找响应中的 SQL 错误。因此，AppScan 用于识别该攻击的方法也不同。AppScan 会查找易受 SQL 注入（通过多个请求来操纵应用程序的逻辑，而不是尝试调用 SQL 错误）影响的脚本。</p>
+<p>该技巧需要发送特定请求，其中易受攻击的参数（嵌入在 SQL 查询中的参数）进行了相应修改，以便响应中会指示是否在 SQL 查询上下文中使用数据。该修改涉及将 AND 布尔表达式与原始字符串一起使用，使其一时求值为 True，一时求值为 False。在一种情况下，净结果应该与原始结果相同（登录成功），而在另一种情况下，结果应该完全不同（登录失败）。在某些少见的情况下，求值为 True 的 OR 表达式也可能很有用。如果原始数据是数字，可以使用更简单的花招。假设原始数据为 123。此数据可以在一个请求中替换为 0+123，而在另一个请求中替换为 456+123。第一个请求的结果应该与原始结果相同，第二个请求的结果应该不同（因为得出的数字是 579）。在某些情况中，我们仍需要上面所说明的攻击版本（使用 AND 和 OR），但并不转义字符串上下文。</p>
+<p>SQL 盲注背后的概念是，即使不直接从数据库接收数据（以错误消息或泄漏的信息的形式），也可能从数据库中抽取数据（每次一个比特），或以恶意方式修改查询。其原理在于，应用程序的行为（返回与原始响应相同或不同的响应）可以提供有关所求值的（已修改）查询的单比特信息，也就是说，攻击者有可能设计出一个 SQL 布尔表达式，其求值（单比特）通过应用程序行为（与原始行为相同&#x2F;不同）来造成破坏。</p>
+<h3 id="引用和相关链接"><a href="#引用和相关链接" class="headerlink" title="引用和相关链接"></a>引用和相关链接</h3><blockquote>
+<p>“Web Application Disassembly with ODBC Error Messages”（作者：David Litchfield）<br> “Using Binary Search with SQL Injection”（作者：Sverre H. Huseby）<br> Blind SQL Injection Training Module </p>
+</blockquote>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2021/10/08/202110-%E8%AE%B0%E5%BD%95/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>202110-记录</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2018/06/13/jekins%E5%87%BA%E7%8E%B0%E6%97%A0%E6%B3%95%E6%89%93%E5%8C%85/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>jekins出...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

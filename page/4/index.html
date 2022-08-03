@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div id="page">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/cover.min.jpeg)">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="featured">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>DELIN</span>
+        <h1>DELIN</h1>
+        <span>TO LEARN WELL,TO LIVE WELL.</span>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/10/20/Hive%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">Hive常用优化方法</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-20 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
+      <p><span id="more"></span>
+
+<p>1、join连接时的优化：当三个或多个以上的表进行join操作时，如果每个on使用相同的字段连接时只会产生一个mapreduce。<br>2、join连接时的优化：当多个表进行查询时，从左到右表的大小顺序应该是从小到大。原因：hive在对每行记录操作时会把其他表先缓存起来，直到扫描最后的表进行计算<br>3、在where字句中增加分区过滤器。<br>4、当可以使用left semi join 语法时不要使用inner join，前者效率更高。原因：对于左表中指定的一条记录，一旦在右表中找到立即停止扫描。<br>5、如果所有表中有一张表足够小，则可置于内存中，这样在和其他表进行连接的时候就能完成匹配，省略掉reduce 过程。设置属性即可实现，set hive.auto.covert.join&#x3D;true; 用户可以配置希望被优化的小表的大小 set hive.mapjoin.smalltable.size&#x3D;2500000; 如果需要使用这两个配置可置入$HOME&#x2F;.hiverc文件中。<br>6、同一种数据的多种处理：从一个数据源产生的多个数据聚合，无需每次聚合都需要重新扫描一次。<br>例如：insert overwrite table student select *　from employee; insert overwrite table person select * from employee;<br>可以优化成：from employee insert overwrite table student select * insert overwrite table person select *<br>7、limit调优：limit语句通常是执行整个语句后返回部分结果。set hive.limit.optimize.enable&#x3D;true;<br>8、开启并发执行。某个job任务中可能包含众多的阶段，其中某些阶段没有依赖关系可以并发执行，开启并发执行后job任务可以更快的完成。设置属性：set hive.exec.parallel&#x3D;true;<br>9、hive提供的严格模式，禁止3种情况下的查询模式。<br>a：当表为分区表时，where字句后没有分区字段和限制时，不允许执行。<br>b：当使用order by语句时，必须使用limit字段，因为order by 只会产生一个reduce任务。<br>c：限制笛卡尔积的查询。<br>10、合理的设置map和reduce数量。<br>11、jvm重用。可在hadoop的mapred-site.xml中设置jvm被重用的次数。</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/10/20/Hive%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/10/20/centos%E4%B8%8Bwget!%20%E6%97%A0%E6%B3%95%E8%A7%A3%E6%9E%90%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%9D%80/">centos下wget无法解析主机地址</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-20</span>
+      <p><span id="more"></span>
+
+<p>wget -4<br>强制使用ipv4</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/10/20/centos%E4%B8%8Bwget!%20%E6%97%A0%E6%B3%95%E8%A7%A3%E6%9E%90%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%9D%80/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/10/14/ambari%E5%9D%91%E8%AE%B0%E5%BD%95/">ambari坑记录</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
+      <p><span id="more"></span>
+
+<p>问题一：<br>此问题是在安装注册主机时遇到的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(&#x27;ERROR 2015-02-06 20:09:43,441 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group</span><br><span class="line">ERROR 2015-02-06 20:09:43,442 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions. </span><br><span class="line">Refer to: https://bugzilla.redhat.com/show_bug.cgi?id=1022468 for more details.</span><br><span class="line">INFO 2015-02-06 20:09:43,442 NetUtil.py:81 - Server at https://Master.domain.dev:8440 is not reachable, sleeping for 10 seconds...</span><br><span class="line">INFO 2015-02-06 20:09:45,343 main.py:83 - loglevel=logging.INFO</span><br><span class="line">INFO 2015-02-06 20:09:45,343 main.py:55 - signal received, exiting.</span><br><span class="line">INFO 2015-02-06 20:09:45,343 ProcessHelper.py:39 - Removing pid file</span><br><span class="line">INFO 2015-02-06 20:09:45,344 ProcessHelper.py:46 - Removing temp files</span><br><span class="line">INFO 2015-02-06 20:10:19,815 main.py:83 - loglevel=logging.INFO</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:36 - Data cleanup thread started</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:71 - Data cleanup started</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:73 - Data cleanup finished</span><br><span class="line">INFO 2015-02-06 20:10:19,973 PingPortListener.py:51 - Ping port listener started on port: 8670</span><br><span class="line">INFO 2015-02-06 20:10:19,973 main.py:227 - Connecting to the server at: https://Master.domain.dev:8440</span><br><span class="line">INFO 2015-02-06 20:10:19,974 NetUtil.py:72 - DEBUG: Trying to connect to the server at https://Master.domain.dev:8440</span><br><span class="line">INFO 2015-02-06 20:10:19,974 NetUtil.py:42 - Connecting to the following url https://Master.domain.dev:8440/cert/ca</span><br><span class="line">ERROR 2015-02-06 20:10:20,023 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group</span><br><span class="line">ERROR 2015-02-06 20:10:20,023 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions. </span><br><span class="line">Refer to: https://bugzilla.redhat.com/show_bug.cgi?id=1022468 for more details.</span><br><span class="line">INFO 2015-02-06 20:10:20,023 NetUtil.py:81 - Server at https://Master.domain.dev:8440 is not reachable, sleeping for 10 seconds...</span><br><span class="line">&#x27;, None)</span><br><span class="line"></span><br><span class="line">Connection to Slave5.domain.dev closed.</span><br><span class="line">SSH command execution finished</span><br><span class="line">host=Slave5.domain.dev, exitcode=0</span><br><span class="line">Command end time 2015-02-06 12:07:47</span><br><span class="line"></span><br><span class="line">Registering with the server...</span><br><span class="line">Registration with the server failed.</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：<br>一下是官方论坛中给出的方法，很好</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Platforms:</span><br><span class="line"></span><br><span class="line">RHEL / CentOS 6.5</span><br><span class="line">Ambari 1.4 or later</span><br><span class="line">Root Cause: The OpenSSL library available and installed by default on RHEL/CentOS 6.5 has a bug. Refer to https://bugzilla.redhat.com/show_bug.cgi?id=1025598 for detailed information on the bug.</span><br><span class="line"></span><br><span class="line">Remedy:</span><br><span class="line"></span><br><span class="line">Check the OpenSSL library version installed on your host(s):</span><br><span class="line">rpm -qa | grep openssl</span><br><span class="line"></span><br><span class="line">openssl-1.0.1e-15.el6.x86_64</span><br><span class="line"></span><br><span class="line">If the output says openssl-1.0.1e-15.x86_64 (1.0.1 build 15) you will need to upgrade the OpenSSL library by running the following command:</span><br><span class="line">yum upgrade openssl</span><br><span class="line"></span><br><span class="line">Verify you have the newer version of OpenSSL (1.0.1 build 16):</span><br><span class="line">rpm -qa | grep openssl</span><br><span class="line"></span><br><span class="line">openssl-1.0.1e-16.el6.x86_64</span><br><span class="line"></span><br><span class="line">Restart Ambari Agent(s) and Click Retry Failed�0�9 on the Wizard</span><br></pre></td></tr></table></figure>
+
+<p>问题二</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.hadoop.security.AccessControlException: org.apache.hadoop.security.AccessControlException: Permission denied: user=Administrator, access=WRITE, inode=&quot;hadoop&quot;: hadoop:supergroup:rwxr-xr-x</span><br></pre></td></tr></table></figure>
+
+<p>其实这个错误的原因很容易看出来，用户Administator在hadoop上执行写操作时被权限系统拒绝.<br>dfs.permissions修改为False</p>
+<p>问题三<br>启动namenode报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;/var/lib/ambari-agent/cache/stacks/HDP/2.0.6/services/HDFS/package/scripts/namenode.py&quot;, line 134, in &lt;module&gt;</span><br><span class="line">    NameNode().execute()</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/libraries/script/script.py&quot;, line 123, in execute</span><br><span class="line">    method(env)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/libraries/script/script.py&quot;, line 233, in restart</span><br><span class="line">    self.start(env)</span><br><span class="line">  File &quot;/var/lib/ambari-agent/cache/stacks/HDP/2.0.6/services/HDFS/package/scripts/namenode.py&quot;, line 46, in start</span><br><span class="line">    namenode(action=&quot;start&quot;)</span><br><span class="line">  File &quot;/var/lib/ambari-agent/cache/stacks/HDP/2.0.6/services/HDFS/package/scripts/hdfs_namenode.py&quot;, line 60, in namenode</span><br><span class="line">    only_if=dfs_check_nn_status_cmd #skip when HA not active</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/base.py&quot;, line 148, in __init__</span><br><span class="line">    self.env.run()</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/environment.py&quot;, line 149, in run</span><br><span class="line">    self.run_action(resource, action)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/environment.py&quot;, line 115, in run_action</span><br><span class="line">    provider_action()</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/providers/system.py&quot;, line 237, in action_run</span><br><span class="line">    path=self.resource.path)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/shell.py&quot;, line 36, in checked_call</span><br><span class="line">    return _call(command, logoutput, True, cwd, env, preexec_fn, user, wait_for_finish, timeout, path)</span><br><span class="line">  File &quot;/usr/lib/python2.6/site-packages/resource_management/core/shell.py&quot;, line 101, in _call</span><br><span class="line">    err_msg = Logger.get_protected_text((&quot;Execution of &#x27;%s&#x27; returned %d. %s&quot;) % (command, code, out))</span><br><span class="line">UnicodeDecodeError: &#x27;ascii&#x27; codec can&#x27;t decode byte 0xe6 in position 116: ordinal not in range(128)</span><br></pre></td></tr></table></figure>
+
+<p>在你python的安装目录下的Lib目录,找到site.py,<br>修改def setencoding()方法 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def setencoding():</span><br><span class="line"> ..... .... if 0:</span><br><span class="line"> #Enabletosupportlocaleawaredefaultstringencodings. </span><br></pre></td></tr></table></figure>
+
+<p> 把那个if 0改为if 1</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/10/14/ambari%E5%9D%91%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/10/14/ambari%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8Ahadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B/">ambari离线安装以及hadoop环境搭建详细过程</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
+      <p><span id="more"></span>
+
+<p>一、安装环境<br>六台相同配置的虚拟机<br>OS:CentOS release 6.5 (Final)(x86_64)<br>Cores (CPU):8 (8)<br>Disk:50GB<br>Memory:8GB</p>
+<p>最好先安装自己的jdk，配置好环境变量。</p>
+<p>二、安装包下载<br>安装包过大(最大的hdp包3GB)，虚拟机环境外网网络不稳定，在线安装太耗时，只能用制作离线源方式进行安装，so，先下载以下安装包，备用。<br><a target="_blank" rel="noopener" href="http://public-repo-1.hortonworks.com/ambari/centos6/ambari-1.7.0-centos6.tar.gz">http://public-repo-1.hortonworks.com/ambari/centos6/ambari-1.7.0-centos6.tar.gz</a><br><a target="_blank" rel="noopener" href="http://public-repo-1.hortonworks.com/HDP/centos6/HDP-2.2.0.0-centos6-rpm.tar.gz">http://public-repo-1.hortonworks.com/HDP/centos6/HDP-2.2.0.0-centos6-rpm.tar.gz</a><br><a target="_blank" rel="noopener" href="http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz">http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.20/repos/centos6/HDP-UTILS-1.1.0.20-centos6.tar.gz</a></p>
+<p>三、配置hostname以及hosts<br>以便节点间通讯，hadoop集群管理。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network ，修改 HOSTNAME=master1</span><br><span class="line"></span><br><span class="line">vi /etc/hosts</span><br><span class="line">172.16.1.137 master1</span><br><span class="line">172.16.1.138 master2</span><br><span class="line">172.16.1.139 slave1</span><br><span class="line">172.16.1.140 slave2</span><br><span class="line">172.16.1.149 slave3</span><br><span class="line">172.16.1.136 slave4</span><br></pre></td></tr></table></figure>
+
+<p>以master1节点为例，其他同理。</p>
+<p>四、关闭iptables，关闭SELinux<br>避免节点间通讯问题，关闭iptables&amp;SELinux。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service iptables stop</span><br><span class="line">setenforce 0</span><br></pre></td></tr></table></figure>
+
+<p>五、安装ntp服务<br>节点间需要时间同步，否则会失败</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install ntp</span><br><span class="line">service ntpd start</span><br></pre></td></tr></table></figure>
+
+<p>六、ssh无密码登陆配置<br>只需设置ambari安装节点（这里选取slave4为安装节点）到其他节点的无密码登陆即可。<br>在slave4上依次执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line">chmod 700 ~/.ssh  </span><br><span class="line">chmod 600 ~/.ssh/authorized_keys </span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>至此，本机ssh无密码登陆配置成功，可以ssh slave4尝试下是否成功，接下来将生成的authorized_keys复制到其他节点对应位置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scp ~/.ssh/authorized_keys root@master1:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@master2:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@slave1:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@slave2:/root/.ssh/authorized_keys</span><br><span class="line">scp ~/.ssh/authorized_keys root@slave3:/root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<p>至此，slave4对其他节点ssh无密码登陆配置成功，可以ssh下对应节点尝试是否成功。</p>
+<p>七、制作离线安装源<br>选一台机器，作为离线源服务器，这里同样是slave4（ps.为什么都是slave4，主要是之前其他机子都有点问题，手动苦笑ing）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install httpd</span><br><span class="line">service httpd start</span><br></pre></td></tr></table></figure>
+
+<p>访问slave4的80端口</p>
+<p>启动成功，<br>接着，创建两个目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir  /var/www/html/ambari</span><br><span class="line">mkdir  /var/www/html/hdp</span><br></pre></td></tr></table></figure>
+
+<p>解压ambari-1.7.0-centos6.tar.gz 和HDP-UTILS-1.1.0.20-centos6.tar.gz 到目录 &#x2F;var&#x2F;www&#x2F;html&#x2F;ambari<br>命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar  zxvf  ambari-1.7.0-centos6.tar.gz  -C /var/www/html/ambari</span><br><span class="line">tar  zxvf  HDP-UTILS-1.1.0.20-centos6.tar.gz  -C /var/www/html/ambari</span><br></pre></td></tr></table></figure>
+
+<p>进入&#x2F;var&#x2F;www&#x2F;html&#x2F;ambari 目录，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createrepo  ./ </span><br></pre></td></tr></table></figure>
+
+<p>ambari本地源制作完成</p>
+<p>解压HDP-2.2.0.0-centos6-rpm.tar.gz 到目录 &#x2F;var&#x2F;www&#x2F;html&#x2F;hdp<br>命令：<code>tar  zxvf  HDP-2.2.0.0-centos6-rpm.tar.gz  -C /var/www/html/hdp</code><br>进入&#x2F;var&#x2F;www&#x2F;html&#x2F;hdp 目录，执行命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">createrepo  ./ </span><br></pre></td></tr></table></figure>
+
+<p>hadoop本地源制作完成</p>
+<p>进入<a target="_blank" rel="noopener" href="http://slave4/ambari/">http://slave4/ambari/</a></p>
+<p>以及<a target="_blank" rel="noopener" href="http://slave4/hdp/">http://slave4/hdp/</a></p>
+<p>至此，离线源制作部分成功。</p>
+<p>八、安装ambari<br>vim  &#x2F;etc&#x2F;yum.repos.d&#x2F;ambari.repo  添加以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[ambari-1.7]</span><br><span class="line">name=Ambari 1.7</span><br><span class="line">baseurl=http://slave4/ambari/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br><span class="line"></span><br><span class="line">[HDP-UTILS-1.1.0.20]</span><br><span class="line">name=Hortonworks Data Platform Utils Version - HDP-UTILS-1.1.0.20</span><br><span class="line">baseurl=http://slave4/ambari/</span><br><span class="line">gpgcheck=0</span><br><span class="line">enabled=1</span><br></pre></td></tr></table></figure>
+
+<p>slave4为上一步制作离线源的主机。<br>执行安装ambari 命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install ambari-server</span><br></pre></td></tr></table></figure>
+
+<p>开始配置ambari 服务：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ambari-server setup</span><br></pre></td></tr></table></figure>
+
+<p>最好选择3，jdk提前自己安装，只需要设置JAVA_HOME的路径即可，否则选择1、2的话，需要通过网络下载，速度很慢。<br>Success后，可以启动了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ambari-server start</span><br></pre></td></tr></table></figure>
+
+<p>九、给ambari配置本地hadoop<br>进入目录：&#x2F;var&#x2F;lib&#x2F;ambari-server&#x2F;resources&#x2F;stacks&#x2F;HDP&#x2F;2.2&#x2F;repos</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">vi repoinfo.xml</span><br><span class="line">&lt;os type=&quot;redhat6&quot;&gt;</span><br><span class="line">    &lt;repo&gt;</span><br><span class="line">      &lt;baseurl&gt;http://slave4/hdp&lt;/baseurl&gt;</span><br><span class="line">      &lt;repoid&gt;HDP-2.2&lt;/repoid&gt;</span><br><span class="line">      &lt;reponame&gt;HDP&lt;/reponame&gt;</span><br><span class="line">    &lt;/repo&gt;</span><br><span class="line">    &lt;repo&gt;</span><br><span class="line">      &lt;baseurl&gt;http://slave4/ambari&lt;/baseurl&gt;</span><br><span class="line">      &lt;repoid&gt;HDP-UTILS-1.1.0.20&lt;/repoid&gt;</span><br><span class="line">      &lt;reponame&gt;HDP-UTILS&lt;/reponame&gt;</span><br><span class="line">    &lt;/repo&gt;</span><br><span class="line">  &lt;/os&gt;</span><br></pre></td></tr></table></figure>
+
+<p>修改redhat6中的配置，node3为ambari安装的节点，根据自己安装的实际节点配置<br>这样在ambari执行hadoop安装时，会将本地源地址配置到所有主机上，在为所有主机安装ambari-agent时，会将ambari节点下的&#x2F;etc&#x2F;yum.repo&#x2F;ambari.repo文件复制到所有主机源地址。</p>
+<p>十、安装hadoop集群环境以及各组件<br>浏览器进入<a target="_blank" rel="noopener" href="http://slave4:8080/">http://slave4:8080/</a><br>账户：admin 密码：admin<br>接下来一步步按提示即可，有一些要注意的点：<br>第三步手动设置下redhat6的源地址为之前做的离线源：<br>redhat6 (HDP-2.2):<br><a target="_blank" rel="noopener" href="http://slave4/hdp/HDP/centos6/2.x/GA/2.2.0.0/">http://slave4/hdp/HDP/centos6/2.x/GA/2.2.0.0/</a></p>
+<p>redhat6 (HDP-UTILS-1.1.0.20):<br><a target="_blank" rel="noopener" href="http://slave4/ambari/HDP-UTILS-1.1.0.20/repos/centos6/">http://slave4/ambari/HDP-UTILS-1.1.0.20/repos/centos6/</a></p>
+<p>第四步INSTALL OPTION<br>配置hosts里的节点hostname<br>把slave4下生成的私钥导入</p>
+<p>然后第五步会检查是否可以跟各节点通讯，可能会失败，查看详情，但无非是防火墙没禁，ntp服务没装之类的，warm尽量全部解决掉，要不然可能会影响后面的安装。</p>
+<p>最后第二步，会开始到个节点安装各组件，此处出现问题可能性最大，有两个很明显的问题<br>①遇到的关于yum的错误(异常当时忘记记录了orz)，无法连接映像地址等，解决办法：<br>清空&amp;重建yum缓存</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum clean</span><br><span class="line">yum	makecache</span><br></pre></td></tr></table></figure>
+
+<p>②(‘ERROR 2015-02-06 20:09:43,441 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group<br>ERROR 2015-02-06 20:09:43,442 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions.<br>这是openssl版本导致的错误<br>解决办法：<code>yum upgrade openssl</code></p>
+<p>Bingo</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/10/14/ambari%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8Ahadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/09/12/mysql%20%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%98%8E%E5%8F%B7%E7%A0%81%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">mysql 身份证明号码 正则表达式</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-09-12 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/mysql/">mysql</a></span>
+      <p><span id="more"></span>
+
+<p>匹配15和18位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from sfzmhm_table where sfzmhm regexp &#x27;^[1-9][[:digit:]]&#123;7&#125;((0[[:digit:]])|(1[0-2]))(([0|1|2][[:digit:]])|3[0-1])[[:digit:]]&#123;3&#125;$|^[1-9][[:digit:]]&#123;5&#125;[1-9][[:digit:]]&#123;3&#125;((0[[:digit:]])|(1[0-2]))(([0|1|2][[:digit:]])|3[0-1])[[:digit:]]&#123;3&#125;([0-9]|X)$&#x27;</span><br></pre></td></tr></table></figure>
+
+
+</p>
+      <div class="post-button"><a class="btn" href="/2016/09/12/mysql%20%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%98%8E%E5%8F%B7%E7%A0%81%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/08/11/%E5%BB%BA%E6%A8%A1%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0/">建模交流学习</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-08-11 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91-%E5%BB%BA%E6%A8%A1/">阿里云 建模</a></span>
+      <p><span id="more"></span>
+
+<p>以下是今天（20160811）跟阿里的同学交流的关于建模方面的心得。</p>
+<p>1.规则-经验-机器学习<br>有的时候规则其实更简单，只不过这是人为的经验成分<br>机器学习其实是想通过大数据学习这种人为经验</p>
+<p>2.模型是注重性能还是可解释性？<br>（1）如果可解释性要强的话就要牺牲性能（预测的结果好坏），如果只追求性能的话可以用一些非线性（gbdt，dnn等）<br>（2）如果要求可解释性最好用一些线性的模型（最简单的最常用的也就是LR逻辑回归）</p>
+<p>3.特征筛选<br>不管什么模型，特征的筛选和数据预处理都很重要！<br>woe简单的反应了一个特征跟label之间的强弱关系<br>但是有的时候特征是相关的，比如判断一个人的经济能力（特征1：他有房，特征二： 他有存款） ，这2个特征某种程度上是相关的，一起放进来会有影响的。我们正常理解的是有房个数越多越有钱，存款越多越有钱，但是实际可能出来 有房是正的，存款是负的，这种不合常理的情况&#x3D;&#x3D;》结果显示存款越多越没有钱，这种就是相关导致的，如果2个特征的相关系统超过0.8了，就可以去掉一个了，结果影响倒不会太大，但是你的模型肯定性不好。</p>
+<p>4.数据的预处理，简单的说归一化离散化<br>一般来说离散化比归一化性能要好<br>因为离散化数据更碎，一定程度上可以模拟出非线性的关系</p>
+<p>5.iv<br>iv 是 看特征跟label的关系，一般iv比较强的，优先加入特征队列，能看出特征的重要程度。</p>
+<p>6.关于pai的使用<br>数据可以拿训练出来的模型直接预测<br>预测有2个输入：一个是模型，一个是预测数据<br>评估的输入是预测的输出</p>
+<p>7.关于计算auc<br>auc要看训练集（得出模型的数据集）、验证集（验证模型是否正确的数据集）、测试集上的值<br>训练集和验证集不要过拟合忒严重</p>
+<p>8.模型调优实例<br>根据baseline验证当前模型性能<br>把数据根据用户和时间维度划分一下<br>用你第一次的结果当做baseline，然后后面逐步优化<br>比如要预测违章，label是近三个月是否有违章记录（有1，无0），那么划分维度为就是时间，label定义三个月，那时间就是3个月的间隔，好比用1-3月的数据作为训练数据，那么一般我们把4-6月的数据作为预测数据，而1-3月份里的用户可以在用户维度拆分为训练集和验证集。<br>以上都是数据预处理的部分。</p>
+<p>9.建模理解<br>其实建模真正耗费的时间是分析数据上，第一要清洗数据，第二选择特征，pai无非就是根据你选择的特征 跑出一个模型，训练集与特征的好坏是pai不能选择的，好比，你都选择的是无关痛痒的特征，模型肯定不会好。<br>还有脏数据也要记得处理，对模型结果有影响。</p>
+<p>10.训练集和验证集<br>训练集、验证集比例一般分为7：3。<br>数据的处理很重要，直接决定模型的结果，至于用什么，其实差别不大，训练集得出的模型，在验证集上看看，如果验证集的性能比训练集的好太多，那就说明模型过拟合了（99%成功），一般情况下，验证集跟训练集结果差不多就可以了。<br>预测一般是预测相对于训练而言未来的事件<br>验证集可以看出模型的稳定性<br>训练集和验证集最好随机拆分</p>
+<p>11.关于特征<br>建模其实是个蛮精细的活，特征多我们需要根据特征重要程度剔除特征，有得时候特征少，我们需要创建特征。<br>常见的就是特征相乘，这个就是指数级别的增长，比如你有100个特征，两两相乘就是10000个特征，比如是否有车是一个特征，然后是否有稳定的工作也是一个特征，这2个特征交叉相乘就是 有车并且是否有稳定工作，特征意义就不一样了，类似的方法很多。</p>
+<p>14.关于指标加重权值<br>好比你有30w的数据，但是里面label&#x3D;1的只有100个，占比忒少，模型基本训练不出来好的结果，可以适当的让label&#x3D;1的样本多点，最简单的办法就是复制样本（但是要防止过拟合，举个最极端的例子，label&#x3D;1的只有一条数据，这个人是个男的，把这个人的样本复制100w份，导致过拟合，模型结果就会显示性别&#x3D;男的更容易出事故，但是事实并不是这样），但是复制需要适量。<br>比如一个正样本有效特征忒少，好比你有100个特征，但是这条正样本只有性别为男这一个特征，其他的特征都是空，你复制了100分，就会增加性别这个特征的权重，你复制正样本会导致无效特征权重增加。<br>比如酒驾对应与发生事故，模型计算出来，我们发现酒驾权重很小或vi值很小，但是我们认为醉酒这个特征权重应该是比较大的，这就是实际结果与预期的差异。但是我们需要加重酒驾的权重，这个时候就可以固定这个特征的权重，比如逻辑回归就是简单的加权求和，我这个特征我就给1.5。<br>就是每个特征 会有个自己的计算公式，100个特征每个都有一个，固定住了酒驾，相当于你先设定好,你原来要求解100个特征的权重值,现在我固定住一个了 他就是x&#x3D;1.5，有多少个特征，不就是求解多少个变量的权重值么，只不过是矩阵计算的，利用梯度求解最优解，只是你现在固定一个值，偷懒的做法就是：酒驾的特征不放进去，先训练99的特征 ，然后把你固定的酒驾特征权重加到模型输出里，但是这样结果不一定好，如果你的样本质量很高的话，这样没啥问题。</p>
+<p>真正建模得出一个好模型需要的时间很久的，不断的尝试不断的提升。</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/08/11/%E5%BB%BA%E6%A8%A1%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/08/05/xx%E7%9C%81%E9%A9%BE%E9%A9%B6%E5%91%98%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B/">xx省驾驶员信用评分模型</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-08-05</span>
+      <p><span id="more"></span>
+
+
+<p><span class="token md md-gt" style="font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap; outline:none!important">&gt;</span><span style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap">公安项目有签订保密协议，敏感字段和与技术无关字段我已删减</span></p>
+<p><span style="font-family:microsoft yahei; color:#808080"><span style="font-size:18px; line-height:29.7px; white-space:pre-wrap">&nbsp;采用的是&nbsp;信用评分卡模型，计算WOE&#20540;获得最终评分。</span></span></p>
+<p><span style="font-family:microsoft yahei; color:#808080"><span style="font-size:18px; line-height:29.7px; white-space:pre-wrap">所有计算过程在ODPS中完成！</span></span></p>
+<p><span style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap"></span></p>
+<h3>1.“Y”变量定义</h3>
+<p></p>
+<p>为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现：</p>
+<table border="0" cellspacing="0" cellpadding="0" width="197">
+<tbody>
+<tr>
+<td nowrap="nowrap" style="background:#BFBFBF">
+<p align="left">是否发生事故</p>
+</td>
+<td nowrap="nowrap" style="background:#BFBFBF">
+<p align="left">计数</p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left">0</p>
+</td>
+<td nowrap="nowrap">
+<p align="right">296058</p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left">1</p>
+</td>
+<td nowrap="nowrap">
+<p align="right">3942</p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" style="background:#DCE6F1">
+<p align="left"><strong>总计</strong></p>
+</td>
+<td nowrap="nowrap" style="background:#DCE6F1">
+<p align="right"><strong>300000</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><span style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap"></span></p>
+<h3>2.建模算法</h3>
+<p></p>
+<p>现在采用的是WOE变量方式建模进行驾驶员评分,首先是获得各指标woe&#20540;，公式：</p>
+<p><img src="" alt=""><img src="https://img-blog.csdn.net/20160806135813967" alt=""><br>
+</p>
+<p><img src="" alt="" style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap"></p>
+<p>(b­<sub>i</sub>：指标i纬度坏样本数，b<sub>c</sub>：总坏样本数，g­<sub>i</sub>：指标i纬度好样本数，g<sub>c</sub>：总好样本数)；</p>
+<p>然后获得初始分数(0-1之间)：</p>
+<p><img src="" alt=""><img src="" alt=""><img src="https://img-blog.csdn.net/20160806135831694" alt=""><br>
+</p>
+<p>(woe<sub>j</sub>：j指标woe&#20540;)</p>
+<p>根据讨论结果，最低分取30分，做相应线性变换，得到真实分数：</p>
+<p><img src="" alt=""><img src="" alt=""><img src="https://img-blog.csdn.net/20160806135840655" alt=""><br>
+</p>
+<p><br>
+</p>
+<p></p>
+<h3>3.单字段性能—IV指标</h3>
+<p></p>
+<p>进一步验证各字段的IV&#20540;：<span style="line-height:29.7px"> </span></p>
+<p>得到结果如下：</p>
+<p>
+<table border="0" cellpadding="0" cellspacing="0" width="144" style="border-collapse:collapse; width:108pt">
+<colgroup><col width="72" span="2" style="width:54pt"></colgroup>
+<tbody>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" width="72" style="height:17.25pt; width:54pt">序号</td>
+<td class="xl65" width="72" style="width:54pt"><span lang="EN-US">IV&#20540;</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">1</td>
+<td class="xl66"><span lang="EN-US">0.31722</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">2</td>
+<td class="xl66"><span lang="EN-US">0.27158</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">3</td>
+<td class="xl66"><span lang="EN-US">0.25169</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">4</td>
+<td class="xl66"><span lang="EN-US">0.19057</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">5</td>
+<td class="xl66"><span lang="EN-US">0.13439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">6</td>
+<td class="xl66"><span lang="EN-US">0.09315</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">7</td>
+<td class="xl66"><span lang="EN-US">0.09128</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">8</td>
+<td class="xl66"><span lang="EN-US">0.08199</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">9</td>
+<td class="xl66"><span lang="EN-US">0.07267</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">10</td>
+<td class="xl66"><span lang="EN-US">0.0669</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">11</td>
+<td class="xl66"><span lang="EN-US">0.04222</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">12</td>
+<td class="xl66"><span lang="EN-US">0.02809</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">13</td>
+<td class="xl66"><span lang="EN-US">0.02797</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">14</td>
+<td class="xl66"><span lang="EN-US">0.02783</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">15</td>
+<td class="xl66"><span lang="EN-US">0.02665</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">16</td>
+<td class="xl66"><span lang="EN-US">0.02352</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">17</td>
+<td class="xl66"><span lang="EN-US">0.02059</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">18</td>
+<td class="xl66"><span lang="EN-US">0.01752</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">19</td>
+<td class="xl66"><span lang="EN-US">0.01541</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">20</td>
+<td class="xl66"><span lang="EN-US">0.01458</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">21</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">22</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">23</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">24</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">25</td>
+<td class="xl66"><span lang="EN-US">0.0134</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">26</td>
+<td class="xl66"><span lang="EN-US">0.00827</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">27</td>
+<td class="xl66"><span lang="EN-US">0.00383</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">28</td>
+<td class="xl66"><span lang="EN-US">0.00139</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">29</td>
+<td class="xl66"><span lang="EN-US">0.00132</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">30</td>
+<td class="xl66"><span lang="EN-US">0.00044</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">31</td>
+<td class="xl66"><span lang="EN-US">0.00025</span></td>
+</tr>
+</tbody>
+</table>
+</p>
+<p><span style="line-height:29.7px">IV是全称InformationValue，是衡量单自变量对于应变量显著程度的指标，通常IV&#20540;越高，变量的显著性越强；</span></p>
+<p>此模型变量中IV&#20540;大于0.05以上的变量超过10个。</p>
+<h3>4.模型整体性能--KS指标</h3>
+<p>通过整体的评估，模型整体的KS指标如下：</p>
+<p>KS = 0.303768</p>
+<p><img src="https://img-blog.csdn.net/20160806140102398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>
+</p>
+<p><img src="" alt=""></p>
+<p>注：KS指标衡量的是好样本和坏样本的累计分布比例之间具体最大的差距。好样本和坏样本之间的距离越大，KS指标范围在0%-100%之间，KS指标越高，模型的区分能力越强；</p>
+<p>该模型的KS达到30%&#43;，性能OK。</p>
+<p>&nbsp;</p>
+<h3>5.模型整体性能—ROC指标</h3>
+<p>经计算：</p>
+<p>AUC=0.703637</p>
+<p><img src="" alt=""></p>
+<p><img src="https://img-blog.csdn.net/20160806140145508?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt=""><br>
+</p>
+<p>注：ROC曲线及AUC系数为评估模型对客户进行正确区分的指标。ROC曲线描述了在一定累计好客户比例下的累计坏客户的比例， ROC曲线越往左上角靠近，模型的分别能力越强。AUC系数为ROC曲线下方的面积，数&#20540;范围在0.5-1之间，AUC系数越高，模型的区分能力越强。</p>
+该模型的AUC&gt;=0.7，性能较好。
+</p>
+      <div class="post-button"><a class="btn" href="/2016/08/05/xx%E7%9C%81%E9%A9%BE%E9%A9%B6%E5%91%98%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/08/05/%E5%90%90%E6%A7%BD%E9%98%BF%E9%87%8C%E4%BA%91PAI/">吐槽阿里云PAI</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-08-05 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a></span>
+      <p><span id="more"></span>
+
+<p>之前在杭州培训的时候有接触过PAI，说实话是挺好用的。<br>直接接入ODPS数据，使用ODPS的引擎做机器学习，训练模型，体验还是不错的，基本的算法都有，满足基本预测挖掘数据的要求。</p>
+<p>一个完整的建模步骤包括以下6个步骤：<br>step1：数据准备<br>step2：数据预处理<br>step3：数据可视化<br>step4：算法建模<br>step5：多模型评估<br>step6：数据存储<br>PAI全部可以完成上述步骤，就我测试来说，得到的模型效果不错。</p>
+<p>然而，以上说的都是公网版本的PAI…<br>到了现在私有云的开发，PAI完全没办法干活，配合阿里PAI那边的技术人员，先是修复了跑不起来的情况，然后各种调参数，最终还是没跑起来，原因以下几点：<br>1.ODPS对应PAI的版本过低，造成各种参数不支持，毕竟PAI还是基于ODPS的；<br>2.PAI本身版本过低，造成很多公有云上有的组件，私有云上没有，诸如选项卡这类处理非数值型的组件没有。<br>然后就OVER了，只能自己默默建模，计算…</p>
+<p>详情见下一篇，评分模型建立…</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/08/05/%E5%90%90%E6%A7%BD%E9%98%BF%E9%87%8C%E4%BA%91PAI/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/06/14/%E4%B8%80%E4%BA%9B%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%A1%86%E6%9E%B6/">一些分布式计算框架</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-06-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
+      <p><span id="more"></span>
+
+<p>1） MapReduce:  这个框架人人皆知，它是一种离线计算框架，将一个算法抽象成Map和Reduce两个阶段进行处理，非常适合数据密集型计算。<br>2） Spark:  我们知道，MapReduce计算框架不适合（不是不能做，是不适合，效率太低）迭代计算（常见于machine learning领域，比如PageRank）和交互式计算（data mining领域，比如SQL查询），MapReduce是一种磁盘计算框架，而Spark则是一种内存计算框架，它将数据尽可能放到内存中以提高迭代应用和交互式应用的计算效率。官方首页：<a target="_blank" rel="noopener" href="http://spark-project.org/">http://spark-project.org/</a><br>3） Storm:  MapReduce也不适合进行流式计算、实时分析，比如广告点击计算等，而Storm则更擅长这种计算、它在实时性要远远好于MapReduce计算框架。官方首页：<a target="_blank" rel="noopener" href="http://storm-project.net/">http://storm-project.net/</a><br>4） S4: Yahoo开发的流式计算框架，与Storm较为类似。官方首页：<a target="_blank" rel="noopener" href="http://incubator.apache.org/s4/">http://incubator.apache.org/s4/</a><br>5） Open MPI: 非常经典的消息处理框架，非常适合高性能计算，现在仍被广泛使用。<br>6） HAMA:  基于BSP（bulk-synchronous parallel model）模型的分布式计算框架，与Google的Pregel类似，可用于大规模科学计算，如矩阵，图算法，网络算法等，官方首页：<a target="_blank" rel="noopener" href="http://hama.apache.org/%E3%80%82">http://hama.apache.org/。</a><br>7） Cloudera Impala&#x2F; Apache Drill: 基于Hadoop的更快的SQL查询引擎（比Hive快得多），Google Dremel的模仿者。Cloudera Impala官方首页：<a target="_blank" rel="noopener" href="https://github.com/cloudera/impala%EF%BC%8CApache">https://github.com/cloudera/impala，Apache</a> Drill官方首页：<a target="_blank" rel="noopener" href="http://incubator.apache.org/drill/">http://incubator.apache.org/drill/</a><br>8） Giraph：图算法处理框架，采用BSP模型，可用于计算pagerank，shared connections, personalization-based popularity等迭代类算法。官方首页：<a target="_blank" rel="noopener" href="http://giraph.apache.org/">http://giraph.apache.org/</a></p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/06/14/%E4%B8%80%E4%BA%9B%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%A1%86%E6%9E%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/05/25/Hbase%E5%AE%89%E8%A3%85/">Hbase安装</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-05-25 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
+      <p><span id="more"></span>
+
+
+<p>hbase安装<br><br>export HBASE_HOME&#x3D;&#x2F;home&#x2F;hadoop&#x2F;hbase-1.0.1<br><br>export PATH&#x3D;$PATH:$HBASE_HOME&#x2F;bin<br><br><br><br><br><br>vi conf&#x2F;hbase-env.sh<br><br>export JAVA_HOME&#x3D;&#x2F;usr&#x2F;java&#x2F;jdk1.7.0_65<br><br>export HBASE_MANAGES_ZK&#x3D;true<br><br><br><br><br><br>vi hbase-site.xml&amp;nbsp;<br><br>&lt;configuration&gt;<br><br>&amp;nbsp; &amp;nbsp; &lt;property&gt;<br><br>&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &lt;name&gt;hbase.rootdir&lt;&#x2F;name&gt;<br><br>&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &lt;value&gt;hdfs:&#x2F;&#x2F;hadoop:8020&#x2F;hbase&lt;&#x2F;value&gt;<br><br>&amp;nbsp; &amp;nbsp; &lt;&#x2F;property&gt;<br><br>&amp;nbsp; &amp;nbsp; &lt;property&gt;<br><br>&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &lt;name&gt;hbase.cluster.distributed&lt;&#x2F;name&gt;<br><br>&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &lt;value&gt;true&lt;&#x2F;value&gt;<br><br>&amp;nbsp; &amp;nbsp; &lt;&#x2F;property&gt;<br><br>&lt;&#x2F;configuration&gt;</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/05/25/Hbase%E5%AE%89%E8%A3%85/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+
+
+<div id="pagination">
+  <a class="extend prev" rel="prev" href="/page/3/"></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"></a>
+</div>
+
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+  </div>
+</div>
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

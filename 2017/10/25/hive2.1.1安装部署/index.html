@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>hive2.1.1安装部署 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2017-10-25</span>
+        <h2>hive2.1.1安装部署</h2>
+        
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+
+<h2 id="二、Hive-运行模式" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:-25px 0px 0.83em; font-size:2.15em; padding:40px 0px 0px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+转：</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+http://blog.csdn.net/reesun/article/details/8556078<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+http://blog.csdn.net/zhongguozhichuang/article/details/52702476</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+http://blog.csdn.net/huoyuyan/article/details/50769104</p>
+</h2>
+<h2 id="二、Hive-运行模式" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:-25px 0px 0.83em; font-size:2.15em; padding:40px 0px 0px">
+一、Hive 运行模式</h2>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+与&nbsp;<a target="_blank" target="_blank" href="http://lib.csdn.net/base/hadoop" class="replace_word" title="Hadoop知识库" style="background:transparent; color:rgb(223,52,52); margin:0px; padding:0px; font-weight:bold; outline:none">Hadoop</a>&nbsp;类&#20284;，<a target="_blank" target="_blank" href="http://lib.csdn.net/base/hive" class="replace_word" title="Hive知识库" style="background:transparent; color:rgb(223,52,52); margin:0px; padding:0px; font-weight:bold; outline:none">Hive</a>&nbsp;也有
+ 3 种运行模式：</p>
+<blockquote style="padding:10px 20px; margin:0px 0px 20px; border-left:5px solid rgb(238,238,238); color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+1. 内嵌模式</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+将元数据保存在本地内嵌的 Derby&nbsp;<a target="_blank" target="_blank" href="http://lib.csdn.net/base/mysql" class="replace_word" title="MySQL知识库" style="background:transparent; color:rgb(223,52,52); margin:0px; padding:0px; font-weight:bold; outline:none">数据库</a>中，这是使用 Hive
+ 最简单的方式。但是这种方式缺点也比较明显，因为一个内嵌的 Derby 数据库每次只能访问一个数据文件，这也就意味着它不支持多会话连接。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+2. 本地模式</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+这种模式是将元数据保存在本地独立的数据库中（一般是&nbsp;<a target="_blank" target="_blank" href="http://lib.csdn.net/base/mysql" class="replace_word" title="MySQL知识库" style="background:transparent; color:rgb(223,52,52); margin:0px; padding:0px; font-weight:bold; outline:none">MySQL</a>），这用就可以支持多会话和多用户连接了。</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+3. 远程模式</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+此模式应用于 Hive 客户端较多的情况。把 MySQL 数据库独立出来，将元数据保存在远端独立的 MySQL 服务中，避免了在每个客户端都安装 MySQL 服务从而造成冗余浪费的情况。</p>
+</blockquote>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+二、下载安装 Hive</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+http://hive.apache.org/downloads.html<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+tar -xzvf apache-hive-2.1.1-bin.tar.gz &nbsp; &nbsp;##解压<br style="">
+</p>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<a target="_blank" target="_blank" name="t2" style="background:transparent; color:rgb(79,161,219); margin:0px; padding:0px; outline:none"></a><span style="margin:0px; padding:0px; font-size:18px">三、配置系统环境变量</span></h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+修改 /etc/profile 文件 &nbsp;vi&nbsp;/etc/profile&nbsp;来修改（root用户操作）：<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:857px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">设置&nbsp;Hive环境变量&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">#&nbsp;Hive&nbsp;environment&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">export&nbsp;<span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">HIVE_HOME</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=/home/hadoop/cloud/apache-hive-2.1.1-bin&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">export&nbsp;<span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">PATH</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=$HIVE_HOME/bin:$HIVE_HOME/conf:$PATH&nbsp;&nbsp;</span></span></li></ol>
+</div>
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:978px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">使环境变量生效:&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">source&nbsp;/etc/profile&nbsp;&nbsp;</span></li></ol>
+</div>
+<br style="">
+<br style="">
+</h6>
+<h2 id="五、内嵌模式" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:-25px 0px 0.83em; font-size:2.15em; padding:40px 0px 0px">
+<a target="_blank" target="_blank" name="t1" style="background:transparent; color:rgb(79,161,219); margin:0px; padding:0px; outline:none"></a>四、内嵌模式</h2>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+（1）修改 Hive 配置文件</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+$HIVE_HOME/conf 对应的是 Hive 的配置文件路径，类&#20284;于之前学习的<a target="_blank" target="_blank" href="http://lib.csdn.net/base/hbase" class="replace_word" title="Hbase知识库" style="background:transparent; color:rgb(223,52,52); margin:0px; padding:0px; font-weight:bold; outline:none">Hbase</a>,
+ 该路径下的 hive-site.xml 是 Hive 工程的配置文件。默认情况下，该文件并不存在，我们需要拷贝它的模版来实现：</p>
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:1281px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">cp&nbsp;hive-default.xml.template&nbsp;hive-site.xml&nbsp;&nbsp;</span></span></li></ol>
+</div>
+<br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">hive-site.xml 的主要配置有：</span>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px">
+<a target="_blank" target="_blank" href="https://dn-anything-about-doc.qbox.me/userid46108labid766time1427423801808" title="图片描述信息" class="fancybox" rel="gallery0" style="background:transparent; color:rgb(202,12,22); margin:0px; padding:0px; outline:none"><img src="https://dn-anything-about-doc.qbox.me/userid46108labid766time1427423801808" alt="图片描述信息" style="border:0px; vertical-align:middle; outline:none; max-width:97.5%; margin:15px auto; display:block; height:auto"></a></p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px">
+<a target="_blank" target="_blank" href="https://dn-anything-about-doc.qbox.me/userid46108labid766time1427423813828" title="图片描述信息" class="fancybox" rel="gallery0" style="background:transparent; color:rgb(202,12,22); margin:0px; padding:0px; outline:none"><img src="https://dn-anything-about-doc.qbox.me/userid46108labid766time1427423813828" alt="图片描述信息" style="border:0px; vertical-align:middle; outline:none; max-width:97.5%; margin:15px auto; display:block; height:auto"></a></p>
+<blockquote style="padding:10px 20px; margin:0px 0px 20px; border-left:5px solid rgb(238,238,238)">
+<ul style="margin:0px; padding:0px; list-style-position:initial">
+<li style="margin:0px 0px 0px 40px; padding:0px; list-style:disc">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+hive.metastore.warehouse.dir<br style="">
+该参数指定了 Hive 的数据存储目录，默认位置在 HDFS 上面的 /user/hive/warehouse 路径下。</p>
+</li><li style="margin:0px 0px 0px 40px; padding:0px; list-style:disc">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; font-size:17.5px; line-height:1.25">
+hive.exec.scratchdir<br style="">
+该参数指定了 Hive 的数据临时文件目录，默认位置为 HDFS 上面的 /tmp/hive 路径下。</p>
+</li></ul>
+</blockquote>
+同时我们还要修改 Hive 目录下 /conf/hive-env.sh 文件（请根据自己的实际路径修改），该文件默认也不存在，同样是拷贝它的模版来修改：<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+cp hive-env.sh.template &nbsp;hive-env.sh<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:1922px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">#&nbsp;Set&nbsp;HADOOP_HOME&nbsp;to&nbsp;point&nbsp;to&nbsp;a&nbsp;specific&nbsp;hadoop&nbsp;install&nbsp;directory&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">HADOOP_HOME</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=/home/hadoop/cloud/hadoop-2.7.3&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">#&nbsp;Hive&nbsp;Configuration&nbsp;Directory&nbsp;can&nbsp;be&nbsp;controlled&nbsp;by:&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">export&nbsp;<span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">HIVE_CONF_DIR</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=/home/hadoop/cloud/apache-hive-2.1.1-bin/conf&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">#&nbsp;Folder&nbsp;containing&nbsp;extra&nbsp;ibraries&nbsp;required&nbsp;for&nbsp;hive&nbsp;compilation/execution&nbsp;can&nbsp;be&nbsp;controlled&nbsp;by:&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">export&nbsp;<span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">HIVE_AUX_JARS_PATH</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=/home/hadoop/cloud/apache-hive-2.1.1-bin/lib&nbsp;&nbsp;</span></span></li></ol>
+</div>
+<br style="">
+（2）创建必要目录<br style="">
+<br style="">
+<br style="">
+前面我们看到 hive-site.xml 文件中有两个重要的路径，切换到 hadoop 用户下查看 HDFS 是否有这些路径：<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:2203px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">hadoop&nbsp;fs&nbsp;-ls&nbsp;/&nbsp;&nbsp;</span></span></li></ol>
+</div>
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+没有发现上面提到的路径，因此我们需要自己新建这些目录，并且给它们赋予用户写（W）权限。<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:2302px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">$HADOOP_HOME/bin/hadoop&nbsp;fs&nbsp;-mkdir&nbsp;-p&nbsp;/user/hive/warehouse&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">$HADOOP_HOME/bin/hadoop&nbsp;fs&nbsp;-mkdir&nbsp;-p&nbsp;/tmp/hive/&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">hadoop&nbsp;fs&nbsp;-chmod&nbsp;777&nbsp;/user/hive/warehouse&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">hadoop&nbsp;fs&nbsp;-chmod&nbsp;777&nbsp;/tmp/hive&nbsp;&nbsp;</span></li></ol>
+</div>
+<br style="">
+检查是否新建成功 hadoop fs -ls / 以及 hadoop fs -ls /user/hive/ ：<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px">
+（3）修改 io.tmpdir/user.name</p>
+<p style="margin-top:0px; margin-bottom:10px; padding-top:0px; padding-bottom:0px">
+同时，要修改 hive-site.xml 中所有包含&nbsp;<span style="margin:0px; padding:0px; font-family:Menlo,&quot;Bitstream Vera Sans Mono&quot;,&quot;DejaVu Sans Mono&quot;,Monaco,Consolas,monospace; color:rgb(199,37,78)"><span style="margin:0px 2px; padding:0px 5px; font-size:15.12px; background:rgb(238,238,238); word-break:break-all">${system:j<a target="_blank" target="_blank" href="http://lib.csdn.net/base/javase" class="replace_word" title="Java SE知识库" style="background:transparent; color:rgb(223,52,52); margin:0px; padding:0px; font-weight:bold; outline:none">ava</a>.io.tmpdir}</span></span>&nbsp;字段的
+ value 即路径（vim下 / 表示搜索，后面跟你的关键词，比如搜索 hello，则为&nbsp;<span style="margin:0px; padding:0px; font-family:Menlo,&quot;Bitstream Vera Sans Mono&quot;,&quot;DejaVu Sans Mono&quot;,Monaco,Consolas,monospace; color:rgb(199,37,78)"><span style="margin:0px 2px; padding:0px 5px; font-size:15.12px; background:rgb(238,238,238); word-break:break-all">/hello</span></span>&nbsp;,
+ 再回车即可），你可以自己新建一个目录来替换它，例如&nbsp;<span style="margin:0px; padding:0px; font-family:Menlo,&quot;Bitstream Vera Sans Mono&quot;,&quot;DejaVu Sans Mono&quot;,Monaco,Consolas,monospace; color:rgb(199,37,78)"><span style="margin:0px 2px; padding:0px 5px; font-size:15.12px; background:rgb(238,238,238); word-break:break-all">/home/hadoop/cloud/apache-hive-2.1.1-bin/iotmp</span></span></p>
+</h6>
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:2575px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">mkdir&nbsp;/home/hadoop/cloud/apache-hive-2.1.1-bin/iotmp&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">chmod&nbsp;777&nbsp;/home/hadoop/cloud/apache-hive-2.1.1-bin/iotmp&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">把hive-site.xml&nbsp;中所有包含&nbsp;${system:Java.io.tmpdir}替换成/home/hadoop/cloud/apache-hive-2.1.1-bin/iotmp&nbsp;&nbsp;</span></li></ol>
+</div>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+全局替换命令 先按Esc键 &nbsp;再同时按shift&#43;:把以下替换命令粘贴按回车即可全局替换</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:2710px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">%s#${system:java.io.tmpdir}#/home/hadoop/cloud/apache-hive-2.1.1-bin/iotmp#g&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit"></span></span>
+<p class="p1">%s#${system:user.name}#delin#g</p>
+</li></ol>
+</div>
+<br style="">
+（4）运行 Hive<br style="">
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:2823px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">./bin/hive&nbsp;&nbsp;</span></span></li></ol>
+</div>
+</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+报错</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<img src="https://img-blog.csdn.net/20170121180043170?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</h6>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">解决办法：./bin/schematool -initSchema -dbType derby</span>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+报错</h6>
+<h6 style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0px 0px 10px; font-size:0.8em; padding:0px">
+<img src="https://img-blog.csdn.net/20170121175046059?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</h6>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">解决方法：删除/home/hadoop/cloud/apache-hive-2.1.1-bin目录下 rm -rf metastore_db/ 在初始化：</span><span style="margin:0px; padding:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px"><strong>./bin/schematool
+ -initSchema -dbType derby</strong></span><br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">重新运行</span>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+./bin/hive<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+报错</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<img src="https://img-blog.csdn.net/20170121180226141?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+/tem/hive 没写的权限</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+Hive本身自带一个<a target="_blank" target="_blank" href="http://lib.csdn.net/base/mysql" class="replace_word" title="MySQL知识库" style="background:transparent; color:rgb(223,52,52); margin:0px; padding:0px; font-weight:bold; outline:none">数据库</a>，但是有弊端，hive本身数据库，每次只允许一个用户登录<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+mysql安装：http://blog.csdn.net/u014695188/article/details/51532410</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<h2 id="设置mysql关联hive" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0.8em 0px; font-size:2.15em; padding:0px">
+<a target="_blank" target="_blank" name="t2" style="background:transparent; color:rgb(79,161,219); margin:0px; padding:0px; outline:none"></a>设置mysql关联hive</h2>
+<h3 id="修改配置文件" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0.8em 0px; font-size:1.7em; padding:0px">
+<a target="_blank" target="_blank" name="t3" style="background:transparent; color:rgb(79,161,219); margin:0px; padding:0px; outline:none"></a><a target="_blank" target="_blank" name="t18" style="background:transparent; color:rgb(79,161,219); margin:0px; padding:0px; outline:none"></a>修改配置文件</h3>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">### 创建hive-site.xml文件&nbsp;</span><br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">在hive/conf/目录下创建hive-site.xml文件</span><br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:3916px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;?</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">xml</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;</span><span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">version</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=</span><span class="attribute-value" style="margin:0px; padding:0px; border:none; color:blue; background-color:inherit">&quot;1.0&quot;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;</span><span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">encoding</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=</span><span class="attribute-value" style="margin:0px; padding:0px; border:none; color:blue; background-color:inherit">&quot;UTF-8&quot;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;</span><span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">standalone</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=</span><span class="attribute-value" style="margin:0px; padding:0px; border:none; color:blue; background-color:inherit">&quot;no&quot;</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">?&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;?</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">xml-stylesheet</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;</span><span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">type</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=</span><span class="attribute-value" style="margin:0px; padding:0px; border:none; color:blue; background-color:inherit">&quot;text/xsl&quot;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;</span><span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">href</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=</span><span class="attribute-value" style="margin:0px; padding:0px; border:none; color:blue; background-color:inherit">&quot;configuration.xsl&quot;</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">?&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">configuration</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">javax.jdo.option.ConnectionURL</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">jdbc:mysql://localhost:3306/hive?</span></span>useSSL=false&amp;amp<span class="s1" style="color:rgb(69,69,69); background-color:inherit">;</span><span class="attribute" style="background-color:inherit; margin:0px; padding:0px; border:none; color:red">createDatabaseIfNotExist</span><span style="background-color:inherit; color:black; margin:0px; padding:0px; border:none">=</span><span class="attribute-value" style="background-color:inherit; margin:0px; padding:0px; border:none; color:blue">true</span><span class="tag" style="background-color:inherit; margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none">&lt;/</span><span class="tag-name" style="background-color:inherit; margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0)">value</span><span class="tag" style="background-color:inherit; margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none">&gt;</span><span style="background-color:inherit; color:black; margin:0px; padding:0px; border:none">&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">javax.jdo.option.ConnectionDriverName</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">com.mysql.jdbc.Driver</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">javax.jdo.option.ConnectionUserName</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">root</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">javax.jdo.option.ConnectionPassword</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">123456</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">hive.metastore.schema.verification</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">false</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">description</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;Enforce&nbsp;metastore&nbsp;schema&nbsp;version&nbsp;consistency.&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;Verify&nbsp;that&nbsp;version&nbsp;information&nbsp;stored&nbsp;in&nbsp;metastore&nbsp;matches&nbsp;with&nbsp;one&nbsp;from&nbsp;Hive&nbsp;jars.&nbsp;&nbsp;Also&nbsp;disable&nbsp;automatic&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;migration&nbsp;attempt.&nbsp;Users&nbsp;are&nbsp;required&nbsp;to&nbsp;manully&nbsp;migrate&nbsp;schema&nbsp;after&nbsp;Hive&nbsp;upgrade&nbsp;which&nbsp;ensures&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proper&nbsp;metastore&nbsp;schema&nbsp;migration.&nbsp;(Default)&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;Warn&nbsp;if&nbsp;the&nbsp;version&nbsp;information&nbsp;stored&nbsp;in&nbsp;metastore&nbsp;doesn't&nbsp;match&nbsp;with&nbsp;one&nbsp;from&nbsp;in&nbsp;Hive&nbsp;jars.&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">description</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">configuration</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;</span></span></li></ol>
+</div>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">报错：Caused by: MetaException(message:Version information not found in metastore. )</span>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+解决：hive-site.xml加入</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:4604px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">hive.metastore.schema.verification</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">name</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">false</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">value</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">description</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;Enforce&nbsp;metastore&nbsp;schema&nbsp;version&nbsp;consistency.&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;Verify&nbsp;that&nbsp;version&nbsp;information&nbsp;stored&nbsp;in&nbsp;metastore&nbsp;matches&nbsp;with&nbsp;one&nbsp;from&nbsp;Hive&nbsp;jars.&nbsp;&nbsp;Also&nbsp;disable&nbsp;automatic&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;schema&nbsp;migration&nbsp;attempt.&nbsp;Users&nbsp;are&nbsp;required&nbsp;to&nbsp;manully&nbsp;migrate&nbsp;schema&nbsp;after&nbsp;Hive&nbsp;upgrade&nbsp;which&nbsp;ensures&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proper&nbsp;metastore&nbsp;schema&nbsp;migration.&nbsp;(Default)&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;Warn&nbsp;if&nbsp;the&nbsp;version&nbsp;information&nbsp;stored&nbsp;in&nbsp;metastore&nbsp;doesn't&nbsp;match&nbsp;with&nbsp;one&nbsp;from&nbsp;in&nbsp;Hive&nbsp;jars.&nbsp;&nbsp;&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">description</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;<span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&lt;/</span><span class="tag-name" style="margin:0px; padding:0px; font-weight:bold; border:none; color:rgb(153,51,0); background-color:inherit">property</span><span class="tag" style="margin:0px; padding:0px; font-weight:bold; color:rgb(153,51,0); border:none; background-color:inherit">&gt;</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;&nbsp;&nbsp;</span></span></li></ol>
+</div>
+<br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+报错：缺少mysql jar包</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+解决：将其（如mysql-connector-java-5.1.15-bin.jar）拷贝到$HIVE_HOME/lib下即可。</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+报错：</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:5004px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">Exception&nbsp;in&nbsp;thread&nbsp;&quot;main&quot;&nbsp;java.lang.RuntimeException:&nbsp;Hive&nbsp;metastore&nbsp;database&nbsp;is&nbsp;not&nbsp;initialized.&nbsp;&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;Please&nbsp;use&nbsp;schematool&nbsp;(e.g.&nbsp;./schematool&nbsp;-initSchema&nbsp;-dbType&nbsp;...)&nbsp;to&nbsp;create&nbsp;the&nbsp;schema.&nbsp;If&nbsp;needed,&nbsp;&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;don't&nbsp;forget&nbsp;to&nbsp;include&nbsp;the&nbsp;option&nbsp;to&nbsp;auto-create&nbsp;the&nbsp;underlying&nbsp;database&nbsp;in&nbsp;your&nbsp;JDBC&nbsp;connection&nbsp;string&nbsp;(e.g.&nbsp;?<span class="attribute" style="margin:0px; padding:0px; border:none; color:red; background-color:inherit">createDatabaseIfNotExist</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">=</span><span class="attribute-value" style="margin:0px; padding:0px; border:none; color:blue; background-color:inherit">true</span><span style="margin:0px; padding:0px; border:none; background-color:inherit">&nbsp;for&nbsp;mysql)&nbsp;&nbsp;</span></span></li></ol>
+</div>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">解决：</span><br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:5185px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">#数据库的初始化。&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/schematool&nbsp;-initSchema&nbsp;-dbType&nbsp;mysql&nbsp;&nbsp;</span></li></ol>
+</div>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+报错：[ERROR] Terminal initialization failed; falling back to unsupported<br style="">
+java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface was expected<br style="">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; at jline.TerminalFactory.create(TerminalFactory.java:101)<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+解决：http://www.68idc.cn/help/buildlang/ask/20151006570946.html</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+${HADOOP_HOME}/share/hadoop/yarn/lib&nbsp;目录下存在老版本jline<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+解决：把${HIVE_HOME}/lib/下的 jline-x.xx拷贝得到${HADOOP_HOME}/share/hadoop/yarn/lib</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+cp /hive/apache-hive-1.1.0-bin/lib/jline-2.12.jar /hadoop-2.5.2/share/hadoop/yarn/lib</p>
+<br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+启动：</p>
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:5552px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">bin/hive&nbsp;&nbsp;</span></span></li></ol>
+</div>
+<br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">启动后mysql 多了hive 数据库</span><br style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<img src="https://img-blog.csdn.net/20170122145434927?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+测试</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<h3 id="创建数据库" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0.8em 0px; font-size:1.7em; padding:0px">
+<a target="_blank" target="_blank" name="t4" style="background:transparent; color:rgb(79,161,219); margin:0px; padding:0px; outline:none"></a><a target="_blank" target="_blank" name="t22" style="background:transparent; color:rgb(79,161,219); margin:0px; padding:0px; outline:none"></a>创建数据库</h3>
+<div style="margin:0px; padding:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+create database db_hive_test;<br style="">
+</div>
+<div style="margin:0px; padding:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<img src="https://img-blog.csdn.net/20170122145641806?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</div>
+<div style="margin:0px; padding:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<br style="">
+</div>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">创建测试表</span>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+use db_hive_test;<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+create table student(id int,name string) row format delimited fields terminated by '\t';</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<img src="https://img-blog.csdn.net/20170122151518519?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<img src="https://img-blog.csdn.net/20170122145825134?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+<br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<h4 id="加载数据到表中" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0.8em 0px; font-size:1.25em; padding:0px">
+加载数据到表中</h4>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+新建student.txt 文件写入数据(id，name 按tab键分隔)</p>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">vi student.txt</span>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<div class="dp-highlighter bg_html" style="padding:1px 0px 0px; font-family:Consolas,&quot;Courier New&quot;,Courier,mono,serif; background-color:rgb(231,229,220); width:851.391px; overflow-x:auto; overflow-y:hidden; position:relative; color:rgb(69,69,69); margin:18px 0px!important">
+<div class="bar" style="margin:0px; padding:0px 0px 0px 45px">
+<div class="tools" style="margin:0px; padding:3px 8px 10px 10px; font-size:9px; line-height:normal; font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; color:silver; background-color:rgb(248,248,248); border-left:3px solid rgb(108,226,108); border-right:1px solid rgb(231,229,220)">
+<span style="">[html]</span>&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="ViewSource" title="view plain" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">view
+ plain</a><span class="tracking-ad" style="margin:0px; padding:0px">&nbsp;<a target="_blank" target="_blank" href="http://blog.csdn.net/u014695188/article/details/54646575#" class="CopyToClipboard" title="copy" style="background-color:inherit; color:rgb(202,12,22); margin:0px 10px 0px 0px; padding:1px; outline:none; border:none; font-size:9px; display:inline-block; width:16px; height:16px; text-indent:-2000px">copy</a></span>
+<div style="margin:0px; padding:0px; position:absolute; left:259px; top:6410px; width:16px; height:16px; z-index:99">
+</div>
+<span class="tracking-ad" style="margin:0px; padding:0px"></span></div>
+</div>
+<ol start="1" class="dp-xml" style="padding:0px; list-style-position:initial; border-top:none; border-right:1px solid rgb(231,229,220); border-bottom:none; border-left:none; background-color:rgb(255,255,255); color:rgb(92,92,92); margin:0px 0px 1px 45px!important">
+<li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit"><span style="margin:0px; padding:0px; border:none; background-color:inherit">1001&nbsp;&nbsp;&nbsp;&nbsp;zhangsan&nbsp;&nbsp;</span></span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">1002&nbsp;&nbsp;&nbsp;&nbsp;lisi&nbsp;&nbsp;</span></li><li class="alt" style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); color:inherit; line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">1003&nbsp;&nbsp;&nbsp;&nbsp;wangwu&nbsp;&nbsp;</span></li><li style="margin-left:40px; list-style:decimal; border-top:none; border-right:none; border-bottom:none; border-left:3px solid rgb(108,226,108); background-color:rgb(248,248,248); line-height:18px; margin-top:0px!important; margin-right:0px!important; margin-bottom:0px!important; padding:0px 3px 0px 10px!important">
+<span style="margin:0px; padding:0px; border:none; color:black; background-color:inherit">1004&nbsp;&nbsp;&nbsp;&nbsp;zhaoli&nbsp;&nbsp;</span></li></ol>
+</div>
+<span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">load data local inpath '/home/hadoop/student.txt' into table&nbsp; db_hive_test.student</span>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<img src="https://img-blog.csdn.net/20170122151730987?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<h5 id="查询表信息" style="font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-weight:100; line-height:1.1; color:rgb(69,69,69); margin:0.8em 0px; font-size:1em; padding:0px">
+查询表信息</h5>
+<code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:14.4px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">select * from student;</code><span style="color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px"></span>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+</p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace">查看表的详细信息</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:14.4px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">desc formatted
+ student;</code></span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace">通过ui页面查看创建的数据位置</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace">http://192.168.169.132:50070/explorer.html#/user/hive/warehouse/db_hive_test.db<br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><img src="https://img-blog.csdn.net/20170122151909697?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace">通过Mysql查看创建的表</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><img src="https://img-blog.csdn.net/20170122152504896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace">查看hive的函数&nbsp;<br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:14.4px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">show functions;</code><br style="">
+</span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:14.4px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">查看函数详细信息&nbsp;<br style="">
+</code></span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:14.4px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.96px; padding:2px 4px">desc
+ function sum;&nbsp;<br style="">
+desc function extended</code><br style="">
+</code></span></p>
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px; color:rgb(69,69,69); font-family:&quot;PingFang SC&quot;,&quot;Microsoft YaHei&quot;,SimHei,Arial,SimSun; font-size:16px">
+<span style="margin:0px; padding:0px; font-family:monospace"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:14.4px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.96px; padding:2px 4px"><img src="https://img-blog.csdn.net/20170122152947399?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDY5NTE4OA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="" style="border:0px; vertical-align:middle; outline:none; max-width:100%"><br style="">
+</code></code></span></p>
+<div><span style="margin:0px; padding:0px; font-family:monospace"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:14.4px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)"><code style="font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.96px; padding:2px 4px"><br>
+</code></code></span></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2017/10/28/sqoop%E4%BD%BF%E7%94%A8/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>sqoop使用</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2017/10/06/Hadoop%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B_%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Hadoop安...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

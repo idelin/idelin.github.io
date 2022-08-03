@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>hadoop伪分布式环境搭建记录 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-05-12</span>
+        <h2>hadoop伪分布式环境...</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/hadoop/" rel="tag">hadoop</a></div>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+
+<div style="top:0px">&#65279;&#65279;Hadoop快3个月没接触了，这阶段全是阿里云的东西，乘着领导让我给同事讲讲Hadoop的机会，复习下Hadoop的知识。</div>
+<p>hadoop伪分布式环境搭建记录20160511<br>
+1.解压hadoop、jdk压缩包<br>
+</p>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_1_7823312"  name="code" class="html">tar -xvzf hadoop-2.6.0.tar.gz
+tar -xvzf jdk-7u79-linux-x64.tar.gz</pre><br>
+<p></p>
+<p>2.环境变量添加<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_2_9905672"  name="code" class="html">vi ~/.bash_profile
+export JAVA_HOME=/home/hadoop/jdk1.7.0_79
+export PATH=$PATH:$JAVA_HOME/bin
+export HADOOP_HOME=/home/hadoop/hadoop-2.6.0
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/lib
+export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+export HADOOP_OPTS=&quot;-Djava.library.path=$HADOOP_HOME/lib&quot;</pre><br>
+<br>
+</p>
+<p>修改完成，生效配置文件<br>
+source ~/.bash_profile</p>
+<p>检查是否成功<br>
+java -version<br>
+hadoop version</p>
+<p>3.修改hadoop配置文件</p>
+<p><pre code_snippet_id="2029847" snippet_file_name="blog_20161205_3_6067234"  name="code" class="html">&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!-- core-site.xml --&gt;
+&lt;configuration&gt;
+ &lt;property&gt;
+  &lt;name&gt;fs.default.name&lt;/name&gt;
+  &lt;value&gt;hdfs://127.0.0.1/&lt;/value&gt;
+ &lt;/property&gt;
+&lt;/configuration&gt;
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!-- hdfs-site.xml --&gt;
+&lt;configuration&gt;
+ &lt;property&gt;
+  &lt;name&gt;dfs.replication&lt;/name&gt;
+  &lt;value&gt;1&lt;/value&gt;
+ &lt;/property&gt;
+&lt;/configuration&gt;
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!-- mapred-site.xml --&gt;
+&lt;configuration&gt;
+ &lt;property&gt;
+  &lt;name&gt;mapred.job.tracker&lt;/name&gt;
+  &lt;value&gt;127.0.0.1:8021&lt;/value&gt;
+ &lt;/property&gt;
+&lt;property&gt;
+  &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt; 
+  &lt;value&gt;127.0.0.1:10020&lt;/value&gt; 
+&lt;/property&gt; 
+&lt;property&gt; 
+  &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt; 
+  &lt;value&gt;127.0.0.1:19888&lt;/value&gt; 
+&lt;/property&gt;
+&lt;/configuration&gt;
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!-- yarn-site.xml --&gt;
+&lt;configuration&gt;
+ &lt;property&gt;
+  &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
+  &lt;value&gt;127.0.0.1:8032&lt;/value&gt;
+ &lt;/property&gt;
+ &lt;property&gt;
+  &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+  &lt;value&gt;mapreduce.shuffle&lt;/value&gt;
+ &lt;/property&gt;
+&lt;/configuration&gt;</pre><br>
+<br>
+</p>
+<p>4.安装ssh并配置免密码登录<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_4_799554"  name="code" class="html">yum install ssh
+#或者
+apt-get install ssh
+ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+ssh localhost</pre><br>
+</p>
+<p>5.&#26684;式化hdfs<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_5_1180455"  name="code" class="html">hadoop namenode -format
+#此处遇到报错：
+java.net.UnknownHostException
+#修改
+vi /etc/sysconfig/network
+#HOSTNAME修改为localhost(随自己喜好，我这里设置的是Hadoop,确认/etc/hosts 里有对应的host配置就行)
+#重启
+reboot</pre><br>
+<br>
+</p>
+<p>6.启动hadoop<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_6_6785609"  name="code" class="html">#start-all.sh 不推荐使用，用这个nodemanager总是起不起来
+start-dfs.sh
+start-yarn.sh</pre><br>
+</p>
+<p>此处遇到报错：<br>
+localhost: Error: JAVA_HOME is not set and could not be found.<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_7_9326101"  name="code" class="html">#修改/etc/hadoop/hadoop-env.sh中设JAVA_HOME
+source  hadoop-env.sh</pre><br>
+<br>
+</p>
+<p>重新执行，此处依旧报错：<br>
+Cannot find configuration directory: /etc/hadoop <br>
+在hadoop-env.sh 配置一条hadoop配置文件所在目录：<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_8_7962898"  name="code" class="html">export HADOOP_CONF_DIR=/home/hadoop/hadoop-2.6.0/etc/hadoop
+source  hadoop-env.sh</pre><br>
+<br>
+</p>
+<p>7.访问web<br>
+<a target="_blank" target="_blank" href="http://hadoop:8088/">http://hadoop:8088/</a><br>
+<a target="_blank" target="_blank" href="http://hadoop:50070/">http://hadoop:50070/</a><br>
+如果无法访问，关闭防火墙<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_9_187746"  name="code" class="html">service iptables stop</pre><br>
+</p>
+<p>8.执行hdfs语句<br>
+<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_10_8965463"  name="code" class="html">hdfs dfs -ls</pre><br>
+<br>
+</p>
+<p>至此hadoop环境搭建完毕!</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/05/12/%E5%90%AF%E5%8A%A8hive%E6%8A%A5%E9%94%99%EF%BC%9A%5BERROR%5D%20Terminal%20initialization%20failed;%20falling%20back%20to%20unsupported/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>启动hive报...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>win10 驱...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

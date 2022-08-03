@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>建模交流学习 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-08-11</span>
+        <h2>建模交流学习</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E7%BB%8F%E9%AA%8C-%E9%A2%84%E6%B5%8B-%E6%80%A7%E8%83%BD/" rel="tag">大数据 机器学习 经验 预测 性能</a></div>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+<p>以下是今天（20160811）跟阿里的同学交流的关于建模方面的心得。</p>
+<p>1.规则-经验-机器学习<br>有的时候规则其实更简单，只不过这是人为的经验成分<br>机器学习其实是想通过大数据学习这种人为经验</p>
+<p>2.模型是注重性能还是可解释性？<br>（1）如果可解释性要强的话就要牺牲性能（预测的结果好坏），如果只追求性能的话可以用一些非线性（gbdt，dnn等）<br>（2）如果要求可解释性最好用一些线性的模型（最简单的最常用的也就是LR逻辑回归）</p>
+<p>3.特征筛选<br>不管什么模型，特征的筛选和数据预处理都很重要！<br>woe简单的反应了一个特征跟label之间的强弱关系<br>但是有的时候特征是相关的，比如判断一个人的经济能力（特征1：他有房，特征二： 他有存款） ，这2个特征某种程度上是相关的，一起放进来会有影响的。我们正常理解的是有房个数越多越有钱，存款越多越有钱，但是实际可能出来 有房是正的，存款是负的，这种不合常理的情况&#x3D;&#x3D;》结果显示存款越多越没有钱，这种就是相关导致的，如果2个特征的相关系统超过0.8了，就可以去掉一个了，结果影响倒不会太大，但是你的模型肯定性不好。</p>
+<p>4.数据的预处理，简单的说归一化离散化<br>一般来说离散化比归一化性能要好<br>因为离散化数据更碎，一定程度上可以模拟出非线性的关系</p>
+<p>5.iv<br>iv 是 看特征跟label的关系，一般iv比较强的，优先加入特征队列，能看出特征的重要程度。</p>
+<p>6.关于pai的使用<br>数据可以拿训练出来的模型直接预测<br>预测有2个输入：一个是模型，一个是预测数据<br>评估的输入是预测的输出</p>
+<p>7.关于计算auc<br>auc要看训练集（得出模型的数据集）、验证集（验证模型是否正确的数据集）、测试集上的值<br>训练集和验证集不要过拟合忒严重</p>
+<p>8.模型调优实例<br>根据baseline验证当前模型性能<br>把数据根据用户和时间维度划分一下<br>用你第一次的结果当做baseline，然后后面逐步优化<br>比如要预测违章，label是近三个月是否有违章记录（有1，无0），那么划分维度为就是时间，label定义三个月，那时间就是3个月的间隔，好比用1-3月的数据作为训练数据，那么一般我们把4-6月的数据作为预测数据，而1-3月份里的用户可以在用户维度拆分为训练集和验证集。<br>以上都是数据预处理的部分。</p>
+<p>9.建模理解<br>其实建模真正耗费的时间是分析数据上，第一要清洗数据，第二选择特征，pai无非就是根据你选择的特征 跑出一个模型，训练集与特征的好坏是pai不能选择的，好比，你都选择的是无关痛痒的特征，模型肯定不会好。<br>还有脏数据也要记得处理，对模型结果有影响。</p>
+<p>10.训练集和验证集<br>训练集、验证集比例一般分为7：3。<br>数据的处理很重要，直接决定模型的结果，至于用什么，其实差别不大，训练集得出的模型，在验证集上看看，如果验证集的性能比训练集的好太多，那就说明模型过拟合了（99%成功），一般情况下，验证集跟训练集结果差不多就可以了。<br>预测一般是预测相对于训练而言未来的事件<br>验证集可以看出模型的稳定性<br>训练集和验证集最好随机拆分</p>
+<p>11.关于特征<br>建模其实是个蛮精细的活，特征多我们需要根据特征重要程度剔除特征，有得时候特征少，我们需要创建特征。<br>常见的就是特征相乘，这个就是指数级别的增长，比如你有100个特征，两两相乘就是10000个特征，比如是否有车是一个特征，然后是否有稳定的工作也是一个特征，这2个特征交叉相乘就是 有车并且是否有稳定工作，特征意义就不一样了，类似的方法很多。</p>
+<p>14.关于指标加重权值<br>好比你有30w的数据，但是里面label&#x3D;1的只有100个，占比忒少，模型基本训练不出来好的结果，可以适当的让label&#x3D;1的样本多点，最简单的办法就是复制样本（但是要防止过拟合，举个最极端的例子，label&#x3D;1的只有一条数据，这个人是个男的，把这个人的样本复制100w份，导致过拟合，模型结果就会显示性别&#x3D;男的更容易出事故，但是事实并不是这样），但是复制需要适量。<br>比如一个正样本有效特征忒少，好比你有100个特征，但是这条正样本只有性别为男这一个特征，其他的特征都是空，你复制了100分，就会增加性别这个特征的权重，你复制正样本会导致无效特征权重增加。<br>比如酒驾对应与发生事故，模型计算出来，我们发现酒驾权重很小或vi值很小，但是我们认为醉酒这个特征权重应该是比较大的，这就是实际结果与预期的差异。但是我们需要加重酒驾的权重，这个时候就可以固定这个特征的权重，比如逻辑回归就是简单的加权求和，我这个特征我就给1.5。<br>就是每个特征 会有个自己的计算公式，100个特征每个都有一个，固定住了酒驾，相当于你先设定好,你原来要求解100个特征的权重值,现在我固定住一个了 他就是x&#x3D;1.5，有多少个特征，不就是求解多少个变量的权重值么，只不过是矩阵计算的，利用梯度求解最优解，只是你现在固定一个值，偷懒的做法就是：酒驾的特征不放进去，先训练99的特征 ，然后把你固定的酒驾特征权重加到模型输出里，但是这样结果不一定好，如果你的样本质量很高的话，这样没啥问题。</p>
+<p>真正建模得出一个好模型需要的时间很久的，不断的尝试不断的提升。</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/09/12/mysql%20%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%98%8E%E5%8F%B7%E7%A0%81%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>mysql 身...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/08/05/xx%E7%9C%81%E9%A9%BE%E9%A9%B6%E5%91%98%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>xx省驾驶员信...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

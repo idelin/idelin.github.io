@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>Spark集群硬件挑选 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2016-12-19</span>
+        <h2>Spark集群硬件挑选</h2>
+        
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <span id="more"></span>
+
+
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+<strong>Spark</strong>&nbsp;开发者都会反应一个常见问题，如何为&nbsp;<strong>Spark</strong>&nbsp;配置硬件。然而正确的硬件配置取决于使用的场景，我们提出以下建议。</p>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-存储系统" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+存储系统</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+因为大多数&nbsp;<strong>Spark</strong>&nbsp;作业都很可能必须从外部存储系统(例如&nbsp;<strong>Hadoop</strong>&nbsp;文件系统或者&nbsp;<strong>HBase</strong>&nbsp;)读取输入的数据，所以部署&nbsp;<strong>Spark</strong>&nbsp;时<span style="color:rgb(0,0,0)"><strong>尽可能靠近这些系统</strong></span>是很重要的。我们建议如下:</p>
+<ul style="margin:10px 0px 0px">
+<li>如果可以，在&nbsp;<strong>HDFS</strong>&nbsp;相同的节点上运行&nbsp;<strong>Spark</strong>&nbsp;。最简单的方法是在相同节点上设置&nbsp;<strong>Spark</strong>&nbsp;<a target="_blank" href="http://spark.apache.org/docs/latest/spark-standalone.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">独立模式集群</a>，并且配置&nbsp;<strong>Spark</strong>&nbsp;和&nbsp;<strong>Hadoop</strong>&nbsp;的内存和&nbsp;<strong>CPU</strong>&nbsp;的使用以避免干扰(&nbsp;<strong>Hadoop</strong>&nbsp;的相关选项为:
+ 设置每个任务内存大小的选项&nbsp;<span style="color:rgb(128,128,128)"><code><em><strong>mapred.child.java.opts</strong></em>&nbsp;<span style="color:rgb(51,51,51)">以及设置任务数量的选项&nbsp;</span><span style="color:rgb(0,0,0)"><span style="color:rgb(128,128,128)"><em><strong>mapred.tasktracker.map.tasks.maximum</strong></em>&nbsp;</span><span style="color:rgb(51,51,51)">和&nbsp;</span><span style="color:rgb(128,128,128)"><em><strong>mapred.tasktracker.reduce.tasks.maximum</strong></em>&nbsp;</span></span></code></span>)<span style="color:rgb(0,0,0)"><span style="color:rgb(51,51,51)">。当然你也可以在常用的集群管理器(比如&nbsp;</span><a target="_blank" href="http://spark.apache.org/docs/latest/running-on-mesos.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">Mesos</a>&nbsp;<span style="color:rgb(51,51,51)">或者&nbsp;</span><a target="_blank" href="http://spark.apache.org/docs/latest/running-on-yarn.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">Hadoop
+ YARN</a>&nbsp;<span style="color:rgb(51,51,51)">)上运行 &nbsp;<strong>Hadoop</strong>&nbsp;和&nbsp;<strong>Spark</strong>。</span></span></li><li>如果不可以在相同的节点上运行，建议在与&nbsp;<strong>HDFS</strong>&nbsp;相同的局域网中的不同节点上运行&nbsp;<strong>Spark</strong>&nbsp;。</li><li>对于像&nbsp;<strong>HBase</strong>&nbsp;这样的低延时数据存储系统，在与这些存储系统不同的节点上运行计算作业来可能更有利于避免干扰。</li></ul>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-本地磁盘" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+本地磁盘</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+虽然&nbsp;<strong>Spark</strong>&nbsp;可以在内存中执行大量计算，但是他仍然使用本地磁盘来存储不适合内存存储的数据以及各个阶段的中间结果。我们建议每个节点配置<strong>4-8个磁盘，并且</strong>不使用&nbsp;<strong>RAID</strong>&nbsp;配置(只作为单独挂载点)。在&nbsp;<strong>Linux</strong>&nbsp;中,使用&nbsp;<a target="_blank" href="https://www.centos.org/docs/5/html/Global_File_System/s2-manage-mountnoatime.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">noatime选项</a>&nbsp;挂载磁盘以减少不必要的写入。在&nbsp;<strong>Spark</strong>&nbsp;中，<a target="_blank" href="http://spark.apache.org/docs/latest/configuration.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">配置</a>&nbsp;<span style="color:rgb(0,0,0)"><span style="color:rgb(128,128,128)"><em><strong>spark.local.dir</strong></em><span style="color:rgb(51,51,51)">&nbsp;</span></span><span style="color:rgb(51,51,51)">变量为逗号分隔的本地磁盘列表。如果你正在运行&nbsp;<strong>HDFS</strong>，可以使用与&nbsp;<strong>HDFS&nbsp;</strong>相同的磁盘。</span></span></p>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-内存" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+内存</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+一般来说，<strong>Spark</strong>&nbsp;可以在每台机器<span style="color:rgb(0,0,0)"><strong>8GB到数百GB内存</strong></span>的任何地方正常运行。在所有情况下，我们建议只为&nbsp;<strong>Spark</strong>&nbsp;分配最多75%的内存；其余部分供操作系统和缓存区高速缓存存储器使用。</p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+您需要多少内存取决于你的应用程序。如果你需要确定的应用程序中某个特定数据集占用内存的大小，你可以把这个数据集加载到一个&nbsp;<strong>Spark&nbsp;RDD</strong>中，然后在&nbsp;<strong>Spark</strong>&nbsp;监控<strong>UI</strong>页面(<em><strong><span style="color:rgb(128,128,128)">http://&lt;driver-node&gt;:4040</span></strong></em>)<span style="color:rgb(0,0,0)"><span style="color:rgb(51,51,51)">中的&nbsp;</span><span style="color:rgb(29,31,34)"><span style="color:rgb(51,51,51)"><strong>Storage</strong>&nbsp;选项卡下查看它在内存中的大小。需要注意的是，存储级别和序列化&#26684;式对内存使用量有很大的影响
+ - 如何减少内存使用量的建议，请参阅</span><a target="_blank" href="http://spark.apache.org/docs/latest/tuning.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">调优指南</a>。</span></span></p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+最后,需要注意的是&nbsp;<strong>Java</strong>&nbsp;虚拟机在超过200GB的&nbsp;<strong>RAM</strong>&nbsp;时表现得并不好。如果你购置的机器有比这更多的&nbsp;<strong>RAM</strong>&nbsp;，你可以在每个节点上运行<em>多个</em><strong>Worker</strong><em>&nbsp;的&nbsp;</em><strong>JVM</strong><em>&nbsp;实例</em>。在&nbsp;<strong>Spark&nbsp;</strong>的<a target="_blank" href="http://spark.apache.org/docs/latest/spark-standalone.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none"><span style="color:rgb(51,51,51)">独立模式</span></a>下,你可以通过&nbsp;<em><strong>conf/spark-env.sh</strong></em>&nbsp;中的&nbsp;<span style="color:rgb(128,128,128)"><em><strong>SPARK_WORKER_INSTANCES</strong></em>&nbsp;</span>和&nbsp;<span style="color:rgb(128,128,128)"><em><strong>SPARK_WORKER_CORES</strong></em>&nbsp;</span>两个参数来分别设置每个节点的&nbsp;<strong>Worker</strong>&nbsp;数量和每个&nbsp;<strong>Worker</strong>&nbsp;使用的核心数量。</p>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-网络" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+网络</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+根据我们的经验，当数据在内存中时，很多&nbsp;<strong>Spark</strong>&nbsp;应用程序跟网络有密切的关系。使用<strong>10千兆位以太网</strong>或者更快的网络是让这些应用程序变快的最佳方式。这对于“&nbsp;<em><strong>distributed reduce</strong></em>&nbsp;”类的应用程序来说尤其如此,例如 group-by 、reduce-by 和 SQL join 。任何程序都可以在应用程序监控UI页面(<em><strong><span style="color:rgb(128,128,128)">http://&lt;driver-node&gt;:4040</span></strong></em>)中查看&nbsp;<strong>Spark</strong>&nbsp;通过网络传输的数据量。</p>
+</div>
+</div>
+</div>
+<p></p>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-CPUCore数量" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+CPU Core 数量</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+因为&nbsp;<strong>Spark</strong>&nbsp;实行线程之间的最小共享，所以&nbsp;<strong>Spark</strong>&nbsp;可以很好地在每台机器上扩展数十个&nbsp;<strong>CPU</strong>&nbsp;核心。你应该为每台机器至少配置<strong>8-16个核心</strong>。根据你工作负载的&nbsp;<strong>CPU</strong>&nbsp;成本，你可能还需要更多：当数据都在内存中时，大多数应用程序就只跟&nbsp;<strong>CPU</strong>&nbsp;或者网络有关了。</p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+<br>
+</p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+http://www.apache.wiki/pages/viewpage.action?pageId=2887869<br>
+</p>
+</div>
+</div>
+</div>
+<p></p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>azkaban...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2016/12/19/Hadoop%20%E9%9B%86%E7%BE%A4%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%A1%AC%E4%BB%B6/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Hadoop ...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>

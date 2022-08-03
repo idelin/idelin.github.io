@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div id="page">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/cover.min.jpeg)">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="featured">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>DELIN</span>
+        <h1>DELIN</h1>
+        <span>TO LEARN WELL,TO LIVE WELL.</span>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/28/%E3%80%90Oracle%E3%80%91LGWR/">【Oracle】LGWR</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-28 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/oracle/">oracle</a></span>
+      <p><span id="more"></span>
+
+<p>LGWR，是Log Writer的缩写，也是一种后台进程。主要负责将日志缓冲内容写到磁盘的在线重做日志文件或组中。DBWn将dirty块写到磁盘之前，所有与buffer修改相关的redo log都需要由LGWR写入磁盘的在线重做日志文件(组)，如果未写完，那么DBWn会等待LGWR，也会产生一些相应的等待事件(例如：log file prarllel write，后面单独作为话题再聊)。总之，这样做的目的就是为了当crash时，可以有恢复之前操作的可能，也是Oracle在保持交易完整性方面的一个机制。</p>
+<p>相关知识点：</p>
+<p>1、LGWR写日志是顺序写，这就解释了一个Orace Server只能有一个LGWR进程，不能像DBWR那样可以有多个，否则就无法保证顺序写的机制，而且可能会产生锁的问题。</p>
+<p>2、用户进程每次修改内存数据块时，都会在日志缓冲区(redo buffer)中构造一个相应的重做条目(redo entry)，它记录了被修改数据块修改之前和之后的值。</p>
+<p>3、LGWR将redo entry写入联机日志文件的情况可以概括为两种：后台写和同步写，或者说异步写和同步写。</p>
+<p>后台写的条件：</p>
+<p>(1)、每3秒LGWR启动一次。</p>
+<p>(2)、DBWR启动时如果发现dirty块对应的redo entry还没写入联机日志文件，则DBWR触发LGWR进程并等待LGWR完成后继续。</p>
+<p>(3)、redo entry数量达到整个log buffer的1&#x2F;3时，触发LGWR。</p>
+<p>(4)、redo entry的数量达到1M。</p>
+<p>同步写的条件：</p>
+<p>COMMIT。即执行COMMIT时，必须等待log buffer进行flushing操作(可能产生log file sync等待事件)，写入磁盘中的联机日志文件。但一般上述1&#x2F;3满的条件触发LGWR，几乎强制LGWR实时写，因此当需要执行COMMIT，可能没有任何redo entry需要写入了。</p>
+<p>4、3秒触发LGWR的规则，事实上，这个超时是DBWR的，但是因为LGWR总在DBWR调用之前执行，因此效果上也相当于LGWR的超时是3秒即调用。</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/12/28/%E3%80%90Oracle%E3%80%91LGWR/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/26/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B%EF%BC%88spark%202.0%20&%20kafka%200.10%EF%BC%89/">java8下spark-streaming结合kafka编程（spark 2.0 & kafka 0.10）</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-26 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop-spark/">hadoop spark</a></span>
+      <p><span id="more"></span>
+
+<p>前面有说道<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53689365">spark-streaming的简单demo</a>，也有说到<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53767622">kafka成功跑通的例子</a>，这里就结合二者，也是常用的使用之一。</p>
+<p>1.相关组件版本<br>首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。</p>
+<p>2.引入maven包<br>网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.spark<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spark-streaming-kafka-0-10_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>网上能找到的不带kafka版本号的包最新是1.6.3，我试过，已经无法在spark2下成功运行了，所以找到的是对应kafka0.10的版本，注意spark2.0的scala版本已经是2.11，所以包括之前必须后面跟2.11，表示scala版本。</p>
+<p>3.SparkSteamingKafka类<br>需要注意的是引入的包路径是org.apache.spark.streaming.kafka010.xxx，所以这里把import也放进来了。其他直接看注释。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.HashSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.kafka.clients.consumer.ConsumerRecord;</span><br><span class="line"><span class="keyword">import</span> org.apache.kafka.common.TopicPartition;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.SparkConf;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.api.java.JavaSparkContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.Durations;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.api.java.JavaInputDStream;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.api.java.JavaPairDStream;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.api.java.JavaStreamingContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.kafka010.ConsumerStrategies;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.kafka010.KafkaUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.streaming.kafka010.LocationStrategies;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> scala.Tuple2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SparkSteamingKafka</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">brokers</span> <span class="operator">=</span> <span class="string">&quot;master2:6667&quot;</span>;</span><br><span class="line">	    <span class="type">String</span> <span class="variable">topics</span> <span class="operator">=</span> <span class="string">&quot;topic1&quot;</span>;</span><br><span class="line">		<span class="type">SparkConf</span> <span class="variable">conf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SparkConf</span>().setMaster(<span class="string">&quot;local[2]&quot;</span>).setAppName(<span class="string">&quot;streaming word count&quot;</span>);</span><br><span class="line">		<span class="type">JavaSparkContext</span> <span class="variable">sc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JavaSparkContext</span>(conf);</span><br><span class="line">		sc.setLogLevel(<span class="string">&quot;WARN&quot;</span>);</span><br><span class="line">		<span class="type">JavaStreamingContext</span> <span class="variable">ssc</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JavaStreamingContext</span>(sc, Durations.seconds(<span class="number">1</span>));</span><br><span class="line">		</span><br><span class="line">		Collection&lt;String&gt; topicsSet = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;(Arrays.asList(topics.split(<span class="string">&quot;,&quot;</span>)));</span><br><span class="line">	    <span class="comment">//kafka相关参数，必要！缺了会报错</span></span><br><span class="line">		Map&lt;String, Object&gt; kafkaParams = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">	    kafkaParams.put(<span class="string">&quot;metadata.broker.list&quot;</span>, brokers) ;</span><br><span class="line">	    kafkaParams.put(<span class="string">&quot;bootstrap.servers&quot;</span>, brokers);</span><br><span class="line">	    kafkaParams.put(<span class="string">&quot;group.id&quot;</span>, <span class="string">&quot;group1&quot;</span>);</span><br><span class="line">	    kafkaParams.put(<span class="string">&quot;key.serializer&quot;</span>, <span class="string">&quot;org.apache.kafka.common.serialization.StringSerializer&quot;</span>);</span><br><span class="line">	    kafkaParams.put(<span class="string">&quot;key.deserializer&quot;</span>, <span class="string">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span>);</span><br><span class="line">	    kafkaParams.put(<span class="string">&quot;value.deserializer&quot;</span>, <span class="string">&quot;org.apache.kafka.common.serialization.StringDeserializer&quot;</span>);</span><br><span class="line">	    <span class="comment">//Topic分区</span></span><br><span class="line">	    Map&lt;TopicPartition, Long&gt; offsets = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">	    offsets.put(<span class="keyword">new</span> <span class="title class_">TopicPartition</span>(<span class="string">&quot;topic1&quot;</span>, <span class="number">0</span>), <span class="number">2L</span>); </span><br><span class="line">	    <span class="comment">//通过KafkaUtils.createDirectStream(...)获得kafka数据，kafka相关参数由kafkaParams指定</span></span><br><span class="line">	    JavaInputDStream&lt;ConsumerRecord&lt;Object,Object&gt;&gt; lines = KafkaUtils.createDirectStream(</span><br><span class="line">	            ssc,</span><br><span class="line">	            LocationStrategies.PreferConsistent(),</span><br><span class="line">	            ConsumerStrategies.Subscribe(topicsSet, kafkaParams, offsets)</span><br><span class="line">	        );</span><br><span class="line">	    <span class="comment">//这里就跟之前的demo一样了，只是需要注意这边的lines里的参数本身是个ConsumerRecord对象</span></span><br><span class="line">		JavaPairDStream&lt;String, Integer&gt; counts = </span><br><span class="line">				lines.flatMap(x -&gt; Arrays.asList(x.value().toString().split(<span class="string">&quot; &quot;</span>)).iterator())</span><br><span class="line">				.mapToPair(x -&gt; <span class="keyword">new</span> <span class="title class_">Tuple2</span>&lt;String, Integer&gt;(x, <span class="number">1</span>))</span><br><span class="line">				.reduceByKey((x, y) -&gt; x + y);	</span><br><span class="line">		counts.print();</span><br><span class="line"><span class="comment">//	可以打印所有信息，看下ConsumerRecord的结构</span></span><br><span class="line"><span class="comment">//	    lines.foreachRDD(rdd -&gt; &#123;</span></span><br><span class="line"><span class="comment">//	        rdd.foreach(x -&gt; &#123;</span></span><br><span class="line"><span class="comment">//	          System.out.println(x);</span></span><br><span class="line"><span class="comment">//	        &#125;);</span></span><br><span class="line"><span class="comment">//	      &#125;);</span></span><br><span class="line">		ssc.start();</span><br><span class="line">		ssc.awaitTermination();</span><br><span class="line">		ssc.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4.运行测试<br>这里使用上一篇kafka初探里写的producer类，put数据到kafka服务端，我这是master2节点上部署的kafka，本地测试跑spark2。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UserKafkaProducer producerThread = new UserKafkaProducer(KafkaProperties.topic);</span><br><span class="line">producerThread.start();</span><br></pre></td></tr></table></figure>
+<p>再运行3里的SparkSteamingKafka类，可以看到已经成功。<br><img src="http://img.blog.csdn.net/20161226195407346?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="运行生产者类"><br><img src="http://img.blog.csdn.net/20161226195350341?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="运行spark充当消费者"></p>
+<p><img src="http://img.blog.csdn.net/20161227103155846?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/12/26/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B%EF%BC%88spark%202.0%20&%20kafka%200.10%EF%BC%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/">kafka初探 版本0.10 java编程</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-20</span>
+      <p><span id="more"></span>
+
+<p>之前一直有项目用到，不过我并不负责这一块，所以了解不多，这次趁机会学习下。<br>之前对kafka的了解其实仅限于知道它是一个分布式消息系统，这次详细了解了下，知道了一些关键概念(topic主题、broker服务、producers消息发布者、consumer消息订阅者消费者)，具体网上一大堆，这里不赘述，直接开始代码。<br>###1.引入包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;kafka_2.10&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.10.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>实际上我倒不是以上面方式引入的，因为使用kafka还是为了后面跟spark steaming集成，所以我是引入的spark-streaming-kafka，依赖包自然会被引入，需求相同的话可以像下面这样引入。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spark-streaming-kafka-0-10_2.11&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>###2.发布者类Producer<br>这里使用KafkaProducer类,官方已经不建议使用Producer类，实现一个线程类，进行消息发布，实际的代码其实很简单，不过本来也就是要一个demo。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Properties;</span><br><span class="line"></span><br><span class="line">import org.apache.kafka.clients.producer.KafkaProducer;</span><br><span class="line">import org.apache.kafka.clients.producer.ProducerRecord;</span><br><span class="line"></span><br><span class="line">public class UserKafkaProducer extends Thread</span><br><span class="line">&#123;</span><br><span class="line">    private final KafkaProducer&lt;Integer, String&gt; producer;</span><br><span class="line">    private final String topic;</span><br><span class="line">    private final Properties props = new Properties();</span><br><span class="line">    public UserKafkaProducer(String topic)</span><br><span class="line">    &#123;</span><br><span class="line">        props.put(&quot;metadata.broker.list&quot;, &quot;master2:6667&quot;);</span><br><span class="line">        props.put(&quot;bootstrap.servers&quot;, &quot;master2:6667&quot;);</span><br><span class="line">        props.put(&quot;acks&quot;, &quot;all&quot;);</span><br><span class="line">        props.put(&quot;retries&quot;, 0);</span><br><span class="line">        props.put(&quot;batch.size&quot;, 16384);</span><br><span class="line">        props.put(&quot;linger.ms&quot;, 1);</span><br><span class="line">        props.put(&quot;buffer.memory&quot;, 33554432);</span><br><span class="line">        props.put(&quot;key.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span><br><span class="line">        props.put(&quot;value.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span><br><span class="line">        producer = new KafkaProducer&lt;Integer, String&gt;(props);</span><br><span class="line">        this.topic = topic;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        int messageNo = 1;</span><br><span class="line">        while (true)</span><br><span class="line">        &#123;</span><br><span class="line">            String messageStr = new String(&quot;Message_&quot; + messageNo);</span><br><span class="line">            System.out.println(&quot;Send:&quot; + messageStr);</span><br><span class="line">            producer.send(new ProducerRecord&lt;Integer, String&gt;(topic, messageStr));</span><br><span class="line">            messageNo++;</span><br><span class="line">            try &#123;</span><br><span class="line">                sleep(3000);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###3.消息消费者类Consumer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.Properties;</span><br><span class="line"></span><br><span class="line">import kafka.consumer.ConsumerConfig;</span><br><span class="line">import kafka.javaapi.consumer.ConsumerConnector;</span><br><span class="line">import kafka.consumer.ConsumerIterator;</span><br><span class="line">import kafka.consumer.KafkaStream;</span><br><span class="line"></span><br><span class="line">public class UserKafkaConsumer extends Thread</span><br><span class="line">&#123;</span><br><span class="line">    private final ConsumerConnector consumer;</span><br><span class="line">    private final String topic;</span><br><span class="line">    public UserKafkaConsumer(String topic)</span><br><span class="line">    &#123;</span><br><span class="line">        consumer = kafka.consumer.Consumer.createJavaConsumerConnector(</span><br><span class="line">                createConsumerConfig());</span><br><span class="line">        this.topic = topic;</span><br><span class="line">    &#125;</span><br><span class="line">    private static ConsumerConfig createConsumerConfig()</span><br><span class="line">    &#123;</span><br><span class="line">        Properties props = new Properties();</span><br><span class="line">        props.put(&quot;zookeeper.connect&quot;, &quot;master1:2181,master2:2181&quot;);</span><br><span class="line">        props.put(&quot;group.id&quot;, &quot;group1&quot;);</span><br><span class="line">        props.put(&quot;zookeeper.session.timeout.ms&quot;, &quot;40000&quot;);</span><br><span class="line">        props.put(&quot;zookeeper.sync.time.ms&quot;, &quot;200&quot;);</span><br><span class="line">        props.put(&quot;auto.commit.interval.ms&quot;, &quot;1000&quot;);</span><br><span class="line">        return new ConsumerConfig(props);</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        Map&lt;String, Integer&gt; topicCountMap = new HashMap&lt;String, Integer&gt;();</span><br><span class="line">        topicCountMap.put(topic, new Integer(1));</span><br><span class="line">        Map&lt;String, List&lt;KafkaStream&lt;byte[], byte[]&gt;&gt;&gt; consumerMap = consumer.createMessageStreams(topicCountMap);</span><br><span class="line">        KafkaStream&lt;byte[], byte[]&gt; stream = consumerMap.get(topic).get(0);</span><br><span class="line">        ConsumerIterator&lt;byte[], byte[]&gt; it = stream.iterator();</span><br><span class="line">        while (it.hasNext()) &#123;</span><br><span class="line">            System.out.println(&quot;receive：&quot; + new String(it.next().message()));</span><br><span class="line">            try &#123;</span><br><span class="line">                sleep(3000);</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###4.简单示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args)</span><br><span class="line">    &#123;</span><br><span class="line">        UserKafkaProducer producerThread = new UserKafkaProducer(KafkaProperties.topic);</span><br><span class="line">        producerThread.start();</span><br><span class="line">        UserKafkaConsumer consumerThread = new UserKafkaConsumer(KafkaProperties.topic);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>运行即可。</p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">azkaban集群多节点模式配置</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-19 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
+      <p><span id="more"></span>
+
+
+<h3 style="margin:20px 0px 10px; padding:0px; font-weight:500; font-size:24px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+<span style="line-height:1.1"><br>
+<br>
+</span>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+配置多节点执行服务器的时候，需要在<span style="line-height:22.4px">AzkabanWebServer的配置文件</span><code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code><span style="line-height:22.4px">里添加</span></p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; background-color:rgb(245,245,245); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204)">azkaban.use.multiple.executors=true
+azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
+azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
+azkaban.executorselector.comparator.Memory=1
+azkaban.executorselector.comparator.LastDispatched=1
+azkaban.executorselector.comparator.CpuUsage=1
+</pre>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+以确认使用的是分布式方式，随后提交的job会根据情况自行选择执行服务器，否则默认只使用本地执行服务器，切记！</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+之后需要在mysql的azkaban库中添加各个执行服务器的ip/域名和端口：</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+<span style="color:rgb(199,37,78); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)">insert into executors(host,port) values(&quot;EXECUTOR_PORT&quot;,EXECUTOR_PORT);</span></div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<span style="font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)"><span style="font-family:微软雅黑"><span style="font-size:1rem">至此，azkaban的分布式配置才算成功。</span></span></span></div>
+<br>
+</h3>
+<div><span style="line-height:1.1"></span>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+配置多节点执行服务器的时候，需要在<span style="line-height:22.4px">AzkabanWebServer的配置文件</span><code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code><span style="line-height:22.4px">里添加</span></p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; background-color:rgb(245,245,245); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204)">azkaban.use.multiple.executors=true
+azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
+azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
+azkaban.executorselector.comparator.Memory=1
+azkaban.executorselector.comparator.LastDispatched=1
+azkaban.executorselector.comparator.CpuUsage=1
+</pre>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+以确认使用的是分布式方式，随后提交的job会根据情况自行选择执行服务器，否则默认只使用本地执行服务器，切记！</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+之后需要在mysql的azkaban库中添加各个执行服务器的ip/域名和端口：</div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+<span style="color:rgb(199,37,78); font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)">insert into executors(host,port) values(&quot;EXECUTOR_PORT&quot;,EXECUTOR_PORT);</span></div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<span style="font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)"><span style="font-family:微软雅黑"><span style="font-size:1rem">至此，azkaban的分布式配置才算成功。</span></span></span></div>
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
+<span style="font-size:12.6px; line-height:20.16px; white-space:nowrap; background-color:rgb(249,242,244)"><span style="font-family:微软雅黑"><span style="font-size:1rem"><br>
+</span></span></span></div>
+<br>
+<span style="color:rgb(128,128,128); font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:12.5px; line-height:20px">以下来源官网文档：&nbsp;</span><a target="_blank" target="_blank" href="http://azkaban.github.io/azkaban/docs/latest/" style="font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:12.5px; line-height:20px; widows:1">http://azkaban.github.io/azkaban/docs/latest/</a><br>
+</div>
+<h3 style="margin:20px 0px 10px; padding:0px; font-weight:500; font-size:24px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+<span style="line-height:1.1">Configuring AzabanWebServer and AzkabanExecutorServer clients</span><br>
+</h3>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+The Executor server needs to be setup with a port, and the AzabanWebServer will need to know what this port is.</p>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+The following properties need to be set on AzkabanExecutorServer's&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code>.</p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204); background-color:rgb(245,245,245)"># Azkaban Executor settings
+executor.maxThreads=50
+executor.port=12321
+executor.flow.threads=30
+</pre>
+<h4 style="margin:10px 0px; padding:0px; font-weight:500; font-size:18px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+Single Executor Mode</h4>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+By default the&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">executor.port</code>&nbsp;is set to&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">12321</code>.
+ The AzkabanWebServer will have to point to this port as well.</p>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+This is done by setting the following property in AzkabanWebServer's&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.properties</code>.</p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204); background-color:rgb(245,245,245)">executor.port=12321
+</pre>
+<h4 style="margin:10px 0px; padding:0px; font-weight:500; font-size:18px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+Multiple Executor Mode</h4>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+We need to enable multiple executor mode in webserver configuration if we want to run in multiple executor mode. Please verify that you have following properties in azkaban.properties. azkaban.use.multiple.executors and azkaban.executorselector.comparator.*
+ are required properties. Please note that&nbsp;<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">azkaban.use.multiple.executors</code>&nbsp;is
+ not honoured in multiple exeutor mode.</p>
+<pre class="code" style="margin-top:0px; margin-bottom:10px; font-family:Monaco,Menlo,Consolas,&quot;Courier New&quot;,monospace; font-size:13px; white-space:pre-wrap; padding:9.5px; line-height:1.42857; color:rgb(51,51,51); word-break:break-all; word-wrap:break-word; border:1px solid rgb(204,204,204); background-color:rgb(245,245,245)">azkaban.use.multiple.executors=true
+azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
+azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
+azkaban.executorselector.comparator.Memory=1
+azkaban.executorselector.comparator.LastDispatched=1
+azkaban.executorselector.comparator.CpuUsage=1
+</pre>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+These changes are only picked up after restarting the servers.</p>
+<h2 id="multipleExecutors-config" style="margin:20px 0px 10px; padding:0px; font-weight:500; font-size:30px; font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; line-height:1.1; color:rgb(51,51,51)">
+Configure executors for Multiple Executor Mode</h2>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+We don't have a executor management UI at this point of Time. Executors need to be configured in database. For examples:-</p>
+<p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif; font-size:14px">
+Insert all executors into the mysql DB for executor setups. Verify that correct executors are active in executors table.<code style="margin:8px 0px; font-family:Monaco,Menlo,Consolas,'Courier New',monospace; font-size:12.6px; padding:2px 4px; color:rgb(199,37,78); white-space:nowrap; background-color:rgb(249,242,244)">insert
+ into executors(host,port) values(&quot;EXECUTOR_PORT&quot;,EXECUTOR_PORT);</code></p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/19/Spark%E9%9B%86%E7%BE%A4%E7%A1%AC%E4%BB%B6%E6%8C%91%E9%80%89/">Spark集群硬件挑选</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-19 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop-spark/">hadoop spark</a></span>
+      <p><span id="more"></span>
+
+
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<p style="margin-top:0px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+<strong>Spark</strong>&nbsp;开发者都会反应一个常见问题，如何为&nbsp;<strong>Spark</strong>&nbsp;配置硬件。然而正确的硬件配置取决于使用的场景，我们提出以下建议。</p>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-存储系统" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+存储系统</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+因为大多数&nbsp;<strong>Spark</strong>&nbsp;作业都很可能必须从外部存储系统(例如&nbsp;<strong>Hadoop</strong>&nbsp;文件系统或者&nbsp;<strong>HBase</strong>&nbsp;)读取输入的数据，所以部署&nbsp;<strong>Spark</strong>&nbsp;时<span style="color:rgb(0,0,0)"><strong>尽可能靠近这些系统</strong></span>是很重要的。我们建议如下:</p>
+<ul style="margin:10px 0px 0px">
+<li>如果可以，在&nbsp;<strong>HDFS</strong>&nbsp;相同的节点上运行&nbsp;<strong>Spark</strong>&nbsp;。最简单的方法是在相同节点上设置&nbsp;<strong>Spark</strong>&nbsp;<a target="_blank" href="http://spark.apache.org/docs/latest/spark-standalone.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">独立模式集群</a>，并且配置&nbsp;<strong>Spark</strong>&nbsp;和&nbsp;<strong>Hadoop</strong>&nbsp;的内存和&nbsp;<strong>CPU</strong>&nbsp;的使用以避免干扰(&nbsp;<strong>Hadoop</strong>&nbsp;的相关选项为:
+ 设置每个任务内存大小的选项&nbsp;<span style="color:rgb(128,128,128)"><code><em><strong>mapred.child.java.opts</strong></em>&nbsp;<span style="color:rgb(51,51,51)">以及设置任务数量的选项&nbsp;</span><span style="color:rgb(0,0,0)"><span style="color:rgb(128,128,128)"><em><strong>mapred.tasktracker.map.tasks.maximum</strong></em>&nbsp;</span><span style="color:rgb(51,51,51)">和&nbsp;</span><span style="color:rgb(128,128,128)"><em><strong>mapred.tasktracker.reduce.tasks.maximum</strong></em>&nbsp;</span></span></code></span>)<span style="color:rgb(0,0,0)"><span style="color:rgb(51,51,51)">。当然你也可以在常用的集群管理器(比如&nbsp;</span><a target="_blank" href="http://spark.apache.org/docs/latest/running-on-mesos.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">Mesos</a>&nbsp;<span style="color:rgb(51,51,51)">或者&nbsp;</span><a target="_blank" href="http://spark.apache.org/docs/latest/running-on-yarn.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">Hadoop
+ YARN</a>&nbsp;<span style="color:rgb(51,51,51)">)上运行 &nbsp;<strong>Hadoop</strong>&nbsp;和&nbsp;<strong>Spark</strong>。</span></span></li><li>如果不可以在相同的节点上运行，建议在与&nbsp;<strong>HDFS</strong>&nbsp;相同的局域网中的不同节点上运行&nbsp;<strong>Spark</strong>&nbsp;。</li><li>对于像&nbsp;<strong>HBase</strong>&nbsp;这样的低延时数据存储系统，在与这些存储系统不同的节点上运行计算作业来可能更有利于避免干扰。</li></ul>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-本地磁盘" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+本地磁盘</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+虽然&nbsp;<strong>Spark</strong>&nbsp;可以在内存中执行大量计算，但是他仍然使用本地磁盘来存储不适合内存存储的数据以及各个阶段的中间结果。我们建议每个节点配置<strong>4-8个磁盘，并且</strong>不使用&nbsp;<strong>RAID</strong>&nbsp;配置(只作为单独挂载点)。在&nbsp;<strong>Linux</strong>&nbsp;中,使用&nbsp;<a target="_blank" href="https://www.centos.org/docs/5/html/Global_File_System/s2-manage-mountnoatime.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">noatime选项</a>&nbsp;挂载磁盘以减少不必要的写入。在&nbsp;<strong>Spark</strong>&nbsp;中，<a target="_blank" href="http://spark.apache.org/docs/latest/configuration.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">配置</a>&nbsp;<span style="color:rgb(0,0,0)"><span style="color:rgb(128,128,128)"><em><strong>spark.local.dir</strong></em><span style="color:rgb(51,51,51)">&nbsp;</span></span><span style="color:rgb(51,51,51)">变量为逗号分隔的本地磁盘列表。如果你正在运行&nbsp;<strong>HDFS</strong>，可以使用与&nbsp;<strong>HDFS&nbsp;</strong>相同的磁盘。</span></span></p>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-内存" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+内存</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+一般来说，<strong>Spark</strong>&nbsp;可以在每台机器<span style="color:rgb(0,0,0)"><strong>8GB到数百GB内存</strong></span>的任何地方正常运行。在所有情况下，我们建议只为&nbsp;<strong>Spark</strong>&nbsp;分配最多75%的内存；其余部分供操作系统和缓存区高速缓存存储器使用。</p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+您需要多少内存取决于你的应用程序。如果你需要确定的应用程序中某个特定数据集占用内存的大小，你可以把这个数据集加载到一个&nbsp;<strong>Spark&nbsp;RDD</strong>中，然后在&nbsp;<strong>Spark</strong>&nbsp;监控<strong>UI</strong>页面(<em><strong><span style="color:rgb(128,128,128)">http://&lt;driver-node&gt;:4040</span></strong></em>)<span style="color:rgb(0,0,0)"><span style="color:rgb(51,51,51)">中的&nbsp;</span><span style="color:rgb(29,31,34)"><span style="color:rgb(51,51,51)"><strong>Storage</strong>&nbsp;选项卡下查看它在内存中的大小。需要注意的是，存储级别和序列化&#26684;式对内存使用量有很大的影响
+ - 如何减少内存使用量的建议，请参阅</span><a target="_blank" href="http://spark.apache.org/docs/latest/tuning.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none">调优指南</a>。</span></span></p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+最后,需要注意的是&nbsp;<strong>Java</strong>&nbsp;虚拟机在超过200GB的&nbsp;<strong>RAM</strong>&nbsp;时表现得并不好。如果你购置的机器有比这更多的&nbsp;<strong>RAM</strong>&nbsp;，你可以在每个节点上运行<em>多个</em><strong>Worker</strong><em>&nbsp;的&nbsp;</em><strong>JVM</strong><em>&nbsp;实例</em>。在&nbsp;<strong>Spark&nbsp;</strong>的<a target="_blank" href="http://spark.apache.org/docs/latest/spark-standalone.html" class="external-link" rel="nofollow" style="color:rgb(53,114,176); text-decoration:none"><span style="color:rgb(51,51,51)">独立模式</span></a>下,你可以通过&nbsp;<em><strong>conf/spark-env.sh</strong></em>&nbsp;中的&nbsp;<span style="color:rgb(128,128,128)"><em><strong>SPARK_WORKER_INSTANCES</strong></em>&nbsp;</span>和&nbsp;<span style="color:rgb(128,128,128)"><em><strong>SPARK_WORKER_CORES</strong></em>&nbsp;</span>两个参数来分别设置每个节点的&nbsp;<strong>Worker</strong>&nbsp;数量和每个&nbsp;<strong>Worker</strong>&nbsp;使用的核心数量。</p>
+</div>
+</div>
+</div>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-网络" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+网络</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+根据我们的经验，当数据在内存中时，很多&nbsp;<strong>Spark</strong>&nbsp;应用程序跟网络有密切的关系。使用<strong>10千兆位以太网</strong>或者更快的网络是让这些应用程序变快的最佳方式。这对于“&nbsp;<em><strong>distributed reduce</strong></em>&nbsp;”类的应用程序来说尤其如此,例如 group-by 、reduce-by 和 SQL join 。任何程序都可以在应用程序监控UI页面(<em><strong><span style="color:rgb(128,128,128)">http://&lt;driver-node&gt;:4040</span></strong></em>)中查看&nbsp;<strong>Spark</strong>&nbsp;通过网络传输的数据量。</p>
+</div>
+</div>
+</div>
+<p></p>
+<div class="columnLayout single" style="margin:0px 0px 8px; padding:0px; display:table; table-layout:fixed; width:951px; color:rgb(51,51,51); font-family:Arial,sans-serif; font-size:14px">
+<div class="cell normal" style="margin:8px 0px; padding:0px 15px; word-wrap:break-word; display:table-cell; vertical-align:top">
+<div class="innerCell" style="margin:0px; padding:0px; overflow-x:auto">
+<h2 id="id-硬件挑选-CPUCore数量" style="margin:0px; padding:0px; font-size:20px; font-weight:normal; line-height:1.5; border-bottom-color:rgb(204,204,204)">
+CPU Core 数量</h2>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+因为&nbsp;<strong>Spark</strong>&nbsp;实行线程之间的最小共享，所以&nbsp;<strong>Spark</strong>&nbsp;可以很好地在每台机器上扩展数十个&nbsp;<strong>CPU</strong>&nbsp;核心。你应该为每台机器至少配置<strong>8-16个核心</strong>。根据你工作负载的&nbsp;<strong>CPU</strong>&nbsp;成本，你可能还需要更多：当数据都在内存中时，大多数应用程序就只跟&nbsp;<strong>CPU</strong>&nbsp;或者网络有关了。</p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+<br>
+</p>
+<p style="margin-top:10px; margin-bottom:0px; padding-top:0px; padding-bottom:0px">
+http://www.apache.wiki/pages/viewpage.action?pageId=2887869<br>
+</p>
+</div>
+</div>
+</div>
+<p></p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/12/19/Spark%E9%9B%86%E7%BE%A4%E7%A1%AC%E4%BB%B6%E6%8C%91%E9%80%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/19/Hadoop%20%E9%9B%86%E7%BE%A4%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%A1%AC%E4%BB%B6/">Hadoop 集群如何选择合适的硬件</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-19 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
+      <p><span id="more"></span>
+
+
+<p style="margin-top:0px; margin-bottom:0px; word-wrap:break-word; padding-top:0px; padding-bottom:0px; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px; line-height:22px">
+<span style="word-wrap:break-word; color:rgb(0,0,0)"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">随着Apache Hadoop的起步，云客户的增多面临的首要问题就是如何为他们新的的Hadoop集群选择合适的硬件。</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; word-wrap:break-word; padding-top:0px; padding-bottom:0px; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px; line-height:22px">
+<span style="word-wrap:break-word; color:rgb(0,0,0)"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">尽管Hadoop被设计为运行在行业标准的硬件上，提出一个理想的集群配置不想提供硬件规&#26684;列表那么简单。 选择硬件，为给定的负载在性能和经济性提供最佳平衡是需要测试和验证其有效性。（比如，IO密集型工作负载的用户将会为每个核心主轴投资更多）。</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; word-wrap:break-word; padding-top:0px; padding-bottom:0px; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px; line-height:22px">
+<span style="word-wrap:break-word; color:rgb(0,0,0)"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">在这个博客帖子中，你将会学到一些工作负载评估的原则和它在硬件选择中起着至关重要的作用。在这个过程中，你也将学到Hadoop管理员应该考虑到各种因素。</span></span></p>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">结合存储和计算</span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">过去的十年，IT组织已经标准化了刀片服务器和存储区域网(SAN)来满足联网和处理密集型的工作负载。尽管这个模型对于一些方面的标准程序是有相当意义 的，比如网站服务器，程序服务器，小型结构化数据库，数据移动等，但随着数据数量和用户数的增长，对于基础设施的要求也已经改变。网站服务器现在有了缓存
+ 层；数据库需要本地硬盘支持大规模地并行；数据迁移量也超过了本地可处理的数量。</span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><span style="word-wrap:break-word; font-weight:700">大部分的团队还没有弄清楚实际工作负载需求就开始搭建他们的Hadoop集群。</span></span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">硬 件提供商已经生产了创新性的产品系统来应对这些需求，包括存储刀片服务器，串行SCSI交换机，外部SATA磁盘阵列和大容量的机架单元。然 而，Hadoop是基于新的实现方法，来存储和处理复杂数据，并伴随着数据迁移的减少。 相对于依赖SAN来满足大容量存储和可靠性，Hadoop在软件层次处理大数据和可靠性。Hadoop在一簇平衡的节点间分派数据并使用同步复制来保证数据可用性和容错性。因为数据被分发到有计算能力的节点，数据的处理可以被直接发送到存储有数据的节点。由于Hadoop集群中的每一台节点都存储并处理数据，这些节点都需要配置来满足数据存储和运算的要求。</span></span><br style="word-wrap:break-word">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><span style="word-wrap:break-word; font-weight:700">工作负载很重要吗？</span></span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><br style="word-wrap:break-word">
+</span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">在几乎所有情形下，MapReduce要么会在从硬盘或者网络读取数据时遇到瓶颈（称为IO受限的应用），要么在处理数据时遇到瓶颈（CPU受限）。排序是一个IO受限的例子，它需要很少的CPU处理（仅仅是简单的比较操作），但是需要大量的从硬盘读写数据。模式分类是一个CPU受限的例子，它对数据进行复杂的处理，用来判定本体。下面是更多IO受限的工作负载的例子：</span></span>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+索引</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+分组</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+数据导入导出</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+数据移动和转换<br style="word-wrap:break-word">
+</li></ul>
+下面是更多CPU受限的工作负载的例子：
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+聚类/分类</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+复杂文本挖掘</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+自然语言处理</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+特征提取<br style="word-wrap:break-word">
+</li></ul>
+Cloudera的客户需要完全理解他们的工作负载，这样才能选择最优的Hadoop硬件，而这好像是一个鸡生蛋蛋生鸡的问题。大多数工作组在没有彻底剖析他们的工作负载时，就已经搭建好了Hadoop集群，通常Hadoop运行的工作负载随着他们的精通程度的提高而完全不同。而且，某些工作负载可能会被一些未预料的原因受限。例如，某些理论上是IO受限的工作负载却最终成为了CPU受限，这是可能是因为用户选择了不同的压缩算法，或者算法的不同实现改变了MapReduce任务的约束方式。基于这些原因，当工作组还不熟悉要运行任务的类型时，深入剖析它才是构建平衡的Hadoop集群之前需要做的最合理的工作。<br style="word-wrap:break-word">
+<br style="word-wrap:break-word">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">接下来需要在集群上运行MapReduce基准测试任务，分析它们是如何受限的。完成这个目标最直接的方法是在运行中的工作负载中的适当位置添加监视器来检测瓶颈。我们推荐在Hadoop集群上安装Cloudera Manager，它可以提供CPU，硬盘和网络负载的实时统计信息。（Cloudera
+ Manager是Cloudera 标准版和企业版的一个组件，其中企业版还支持滚动升级）Cloudera Manager安装之后，Hadoop管理员就可以运行MapReduce任务并且查看Cloudera Manager的仪表盘，用来监测每台机器的工作情况。</span></span><br style="word-wrap:break-word">
+</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">第一步是弄清楚你的作业组已经拥有了哪些硬件</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+在为你的工作负载构建合适的集群之外，我们建议客户和它们的硬件提供商合作确定电力和冷却方面的预算。由于Hadoop会运行在数十台，数百台到数千台节点上。通过使用高性能功耗比的硬件，作业组可以节省一大笔资金。硬件提供商通常都会提供监测功耗和冷却方面的工具和建议。</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700"><span style="word-wrap:break-word">为你的CDH(</span><span style="word-wrap:break-word"><span style="word-wrap:break-word"><span style="word-wrap:break-word">Cloudera</span>&nbsp;<span style="word-wrap:break-word">distribution</span>&nbsp;<span style="word-wrap:break-word">for</span></span>&nbsp;</span><span style="word-wrap:break-word"><span style="word-wrap:break-word">Hadoop</span></span><span style="word-wrap:break-word">)
+ Cluster选择硬件</span></span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+选择机器配置类型的第一步就是理解你的运维团队已经在管理的硬件类型。在购买新的硬件设备时，运维团队经常根据一定的观点或者强制需求来选择，并且他们倾向于工作在自己业已熟悉的平台类型上。Hadoop不是唯一的从规模效率上获益的系统。再一次强调，作为更通用的建议，如果集群是新建立的或者你并不能准确的预估你的极限工作负载，我们建议你选择均衡的硬件类型。Hadoop集群有四种基本任务角色:名称节点（包括备用名称节点），工作追踪节点，任务执行节点，和数据节点。节点是执行某一特定功能的工作站。大部分你的集群内的节点需要执行两个角色的任务，作为数据节点（数据存储）和任务执行节点（数据处理）。这是在一个平衡Hadoop集群中，为数据节点/任务追踪器提供的推荐规&#26684;：
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+在一个磁盘阵列中要有12到24个1~4TB硬盘</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+2个频率为2~2.5GHz的四核、六核或八核CPU</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+64~512GB的内存</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+有保障的千兆或万兆以太网（存储密度越大，需要的网络吞吐量越高）<br style="word-wrap:break-word">
+</li></ul>
+名字节点角色负责协调集群上的数据存储，作业追踪器协调数据处理（备用的名字节点不应与集群中的名字节点共存，并且运行在与之相同的硬件环境上。）。Cloudera推荐客户购买在RAID1或10配置上有足够功率和企业级磁盘数的商用机器来运行名字节点和作业追踪器。NameNode也会直接需要与群集中的数据块的数量成比列的RAM。一个好的但不精确的规则是对于存储在分布式文件系统里面的每一个1百万的数据块，分配1GB的NameNode内存。于在一个群集里面的100个DataNodes而言，NameNode上的64GB的RAM提供了足够的空间来保证群集的增长。我们也推荐把HA同时配置在NameNode和JobTracker上，这里就是为NameNode／JobTracker／Standby
+ NameNode节点群推荐的技术细节。驱动器的数量或多或少，将取决于冗余数量的需要。
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+4–6 1TB 硬盘驱动器 采用 一个&nbsp;&nbsp;JBOD 配置 (1个用于OS, 2个用于文件系统映像[RAID 1], 1个用于Apache ZooKeeper, 1个用于Journal节点)</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+2 4-/16-/8-核心 CPUs, 至少运行于 2-2.5GHz</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+64-128GB 随机存储器</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+Bonded Gigabit 以太网卡 or 10Gigabit 以太网卡<br style="word-wrap:break-word">
+</li></ul>
+<span style="word-wrap:break-word; font-weight:700"><br style="word-wrap:break-word">
+记住, 在思想上，Hadoop 体系设计为用于一种并行环境。</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+如果你希望Hadoop集群扩展到20台机器以上，那么我们推荐最初配置的集群应分布在两个机架，而且每个机架都有一个位于机架顶部的10G的以太网交换。当这个集群跨越多个机架的时候，你将需要添加核心交换机使用40G的以太网来连接位于机架顶部的交换机。两个逻辑上分离的机架可以让维护团队更好地理解机架内部和机架间通信对网络需求。Hadoop集群安装好后，维护团队就可以开始确定工作负载，并准备对这些工作负载进行基准测试以确定硬件瓶颈。经过一段时间的基准测试和监视，维护团队将会明白如何配置添加的机器。异构的Hadoop集群是很常见的，尤其是在集群中用户机器的容量和数量不断增长的时候更常见-因此为你的工作负载所配置的“不理想”开始时的那组机器不是在浪费时间。Cloudera管理器提供了允许分组管理不同硬件配置的模板，通过这些模板你就可以简单地管理异构集群了。下面是针对不同的工作负载所采用对应的各种硬件配置的列表，包括我们最初推荐的“负载均衡”的配置：
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+轻量处理方式的配置(1U的机器）:两个16核的CPU，24-64GB的内存以及8张硬盘（每张1TB或者2TB)。<br style="word-wrap:break-word">
+</li></ul>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+负载均衡方式的配置(1U的机器）:两个16核的CPU，48-128GB的内存以及由主板控制器直接连接的12-16张硬盘（每张1TB或者2TB)。通常在一个2U的柜子里使用2个主板和24张硬盘实现相互备份。<br style="word-wrap:break-word">
+</li></ul>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+超大存储方式的配置(2U的机器）:两个16核的CPU，48-96GB的内存以及16-26张硬盘（每张2TB-4TB)。这种配置在多个节点/机架失效时会产生大量的网络流量。<br style="word-wrap:break-word">
+</li></ul>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+强力运算方式的配置(2U的机器）:两个16核的CPU，64-512GB的内存以及4-8张硬盘（每张1TB或者2TB)。<br style="word-wrap:break-word">
+</li></ul>
+（注意Cloudera期望你配置它可以使用的2x8,2x10和2x12核心CPU的配置。)下图向你展示了如何根据工作负载来配置一台机器：&nbsp;<img id="aimg_1979" src="file:///C:/Users/delin/Documents/My%20Knowledge/temp/fd3a6e75-d719-4855-b9fd-2dee0a624c27/4/index_files/0.15311841038055718.png" class="zoom" width="500" alt="" style="border:0px; max-width:100%; margin:2px 0px; height:auto!important; word-wrap:break-word"></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">其他要考虑的</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+记住Hadoop生态系统的设计是考虑了并行环境这点非常重要。当购买处理器时，我们不建议购买最高频率(GHZ)的芯片，这些芯片都有很高的功耗（130瓦以上）。这么做会产生两个问题：电量消耗会更高和热量散发会更大。处在中间型号的CPU在频率、价&#26684;和核心数方面性价比是最好的。当我们碰到生成大量中间数据的应用时-也就是说输出数据的量和读入数据的量相等的情况-我们推荐在单个以太网接口卡上启用两个端口，或者捆绑两个以太网卡，让每台机器提供2Gbps的传输速率。绑定2Gbps的节点最多可容纳的数据量是12TB。一旦你传输的数据超过12TB，你将需要使用传输速率为捆绑方式实现的4Gbps(4x1Gbps)。另外，对哪些已经使用10Gb带宽的以太网或者无线网络用户来说，这样的方案可以用来按照网络带宽实现工作负载的分配。如果你正在考虑切换到10GB的以太网络上，那么请确认操作系统和BIOS是否兼容这样的功能。当计算需要多少内存的时候，记住Java本身要使用高达10%的内存来管理虚拟机。我们建议把Hadoop配置为只使用堆，这样就可以避免内存与磁盘之间的切换。切换大大地降低MapReduce任务的性能，并且可以通过给机器配置更多的内存以及给大多数Linux发布版以适当的内核设置就可以避免这种切换。优化内存的通道宽度也是非常重要的。例如，当我们使用双通道内存时，每台机器就应当配置成对内存模块（DIMM）。当我们使用三通道的内存时，每台机器都应当使用三的倍数个内存模块（DIMM）。类&#20284;地，四通道的内存模块（DIMM)就应当按四来分组使用内存。</div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">超越MapReduce</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+Hadoop不仅仅是HDFS和MapReduce；它是一个无所不包的数据平台。因此CDH包含许多不同的生态系统产品（实际上很少仅仅做为MapReduce使用）。当你在为集群选型的时候，需要考虑的附加软件组件包括Apache HBase、Cloudera Impala和Cloudera Search。它们应该都运行在DataNode中来维护数据局部性。</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><span style="font-size:18px; word-wrap:break-word"><span style="color:#000000; word-wrap:break-word"><span style="word-wrap:break-word; font-weight:700">关注资源管理是你成功的关键。</span></span></span></span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和随机读写。Cloudera Search解决了CDH中存储内容的全文本搜索的需求，为新类型用户简化了访问，但是也为Hadoop中新类型数据存储提供了机会。Cloudera Search基于Apache Lucene/Solr Cloud和Apache Tika，并且为与CDH广泛集成的搜索扩展了有价&#20540;的功能和灵活性。基于Apache协议的Impala项目为Hadoop带来了可扩展的并行数据库技术，使得用户可以向HDFS和HBase中存储的数据发起低延迟的SQL查询，而且不需要数据移动或转换。由于垃圾回收器（GC）的超时，HBase的用户应该留意堆的大小的限制。别的JVM列存储也面临这个问题。因此，我们推荐每一个区域服务器的堆最大不超过16GB。HBase不需要太多别的资源而运行于Hadoop之上，但是维护一个实时的SLAs，你应该使用多个调度器，比如使用fair
+ and capacity 调度器，并协同Linux Cgroups使用。Impala使用内存以完成其大多数的功能，在默认的配置下，将最多使用80％的可用RAM资源，所以我们推荐，最少每一个节点使用96GB的RAM。与MapReduce一起使用Impala的用户，可以参考我们的建议 －&nbsp;<span style="color:#3e62a6; word-wrap:break-word"><a target="_blank" href="http://blog.cloudera.com/blog/2013/06/configuring-impala-and-mapreduce-for-multi-tenant-performance/" target="_blank" style="word-wrap:break-word; color:rgb(51,102,153)">“Configuring
+ Impala and MapReduce for Multi-tenant Performance.”</a></span>&nbsp;也可以为Impala指定特定进程所需的内存或者特定查询所需的内存。 搜索是最有趣的订制大小的组件。推荐的订制大小的实践操作是购买一个节点，安装Solr和Lucene，然后载入你的文档群。一旦文档群被以期望的方式来索引和搜索，可伸缩性将开始作用。持续不断的载入文档群，直到索引和查询的延迟，对于项目而言超出了必要的数&#20540; － 此时，这让你得到了在可用的资源上每一个节点所能处理的最大文档数目的基数，以及不包括欲期的集群复制此因素的节点的数量总计基数。<span style="word-wrap:break-word; font-weight:700">结论</span>购买合适的硬件，对于一个Hapdoop群集而言，需要性能测试和细心的计划，从而全面理解工作负荷。然而，Hadoop群集通常是一个形态变化的系统，而Cloudera建议，在开始的时候，使用负载均衡的技术文档来部署启动的硬件。重要的是，记住，当使用多种体系组件的时候，资源的使用将会是多样的，而专注与资源管理将会是你成功的关键。我们鼓励你在留言中，加入你关于配置Hadoop生产群集服务器的经验！Kevin
+ O‘Dell 是一个工作于Cloudera的系统工程师。<br style="word-wrap:break-word">
+</div>
+<br style="font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1; color:gray">
+<small>来源：&nbsp;<a target="_blank" href="http://www.aboutyun.com/thread-6549-1-1.html">http://www.aboutyun.com/thread-6549-1-1.html</a></small></div>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/12/19/Hadoop%20%E9%9B%86%E7%BE%A4%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%A1%AC%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/16/java8%E5%AE%9E%E7%8E%B0spark%20streaming%E7%9A%84wordcount/">java8实现spark streaming的wordcount</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-16 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/spark/">spark</a></span>
+      <p><span id="more"></span>
+
+<p>概念这里就不说了，从案例开始，惯例，hellowrod，哦不，wordcount。<br>要计算从一个监听 TCP socket 的数据服务器接收到的文本数据（text data）中的字数。<br>主体代码部分跟spark相差不大，毕竟DStream是RDD产生的模板（或者说类）。</p>
+<p>1.导入了 Spark Streaming 类</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spark-streaming_2.11&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>2.代码示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//注意本地调试，master必须为local[n],n&gt;1,表示一个线程接收数据，n-1个线程处理数据</span><br><span class="line">SparkConf conf = new SparkConf().setMaster(&quot;local[2]&quot;).setAppName(&quot;streaming word count&quot;);</span><br><span class="line">JavaSparkContext sc = new JavaSparkContext(conf);</span><br><span class="line">//设置日志运行级别</span><br><span class="line">sc.setLogLevel(&quot;WARN&quot;);</span><br><span class="line">JavaStreamingContext ssc = new JavaStreamingContext(sc, Durations.seconds(1));</span><br><span class="line">//创建一个将要连接到hostname:port 的离散流</span><br><span class="line">JavaReceiverInputDStream&lt;String&gt; lines = </span><br><span class="line">ssc.socketTextStream(&quot;master1&quot;, 9999);</span><br><span class="line">JavaPairDStream&lt;String, Integer&gt; counts = </span><br><span class="line">		lines.flatMap(x-&gt;Arrays.asList(x.split(&quot; &quot;)).iterator())</span><br><span class="line">		.mapToPair(x -&gt; new Tuple2&lt;String, Integer&gt;(x, 1))</span><br><span class="line">		.reduceByKey((x, y) -&gt; x + y);</span><br><span class="line"></span><br><span class="line">// 在控制台打印出在这个离散流（DStream）中生成的每个 RDD 的前十个元素</span><br><span class="line">counts.print();</span><br><span class="line">// 启动计算</span><br><span class="line">ssc.start();</span><br><span class="line">ssc.awaitTermination();</span><br></pre></td></tr></table></figure>
+<p>3.建立服务端<br>找台linux服务器，运行netcat小工具：<br><code>nc -lk 9999</code><br>也就是上面代码里socketTextStream的参数.</p>
+<p>4.运行测试<br>本地启动java代码后，控制台会循环打印时间戳。<br>在nc那边随意输入，本地即可实时看到统计结果。<br><img src="http://img.blog.csdn.net/20161216095839430?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/12/16/java8%E5%AE%9E%E7%8E%B0spark%20streaming%E7%9A%84wordcount/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/12/14/java8%E5%AE%9E%E7%8E%B0spark%20wordcount%E5%B9%B6%E4%B8%94%E6%8C%89%E7%85%A7value%E6%8E%92%E5%BA%8F%E8%BE%93%E5%87%BA/">java8实现spark wordcount并且按照value排序输出</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop-java-spark/">hadoop java spark</a></span>
+      <p><span id="more"></span>
+
+<p>   最近在学习spark，本来应该是使用scala编程，但是无奈scala没接触过，还得学，就先使用java的spark api练练手，其实发现java8的函数式编程跟scala很多地方异曲同工啊，搞定spark的java api后面学scala应该事半功倍！<br>最开始当然是万年不变的wordcount，加了个排序输出，具体看注释(^o^)&#x2F;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SparkConf conf = new SparkConf().setMaster(&quot;local&quot;).setAppName(&quot;word count&quot;);</span><br><span class="line">JavaSparkContext sc = new JavaSparkContext(conf);</span><br><span class="line">JavaRDD&lt;String&gt; lines = sc.textFile(&quot;xxx.txt&quot;);</span><br><span class="line">//使用java8提供的lambda表达式</span><br><span class="line">//一句可以完成wordcount</span><br><span class="line">JavaPairRDD&lt;String, Integer&gt; counts = </span><br><span class="line">	lines</span><br><span class="line">	//根据&#x27;\001&#x27;分割来源行</span><br><span class="line">	.flatMap(line -&gt; Arrays.asList(line.split(&quot;\\001&quot;)).iterator())</span><br><span class="line">	//map输出 (单词,1)</span><br><span class="line">	.mapToPair(w -&gt; new Tuple2&lt;String, Integer&gt;(w, 1)) </span><br><span class="line">	//通过reduce相同key，value值相加</span><br><span class="line">	.reduceByKey((x, y) -&gt; x + y); </span><br><span class="line">		</span><br><span class="line">//根据得到的value值排序而不是key，默认只提供了根据key排序</span><br><span class="line">//那么想到的思路是，交换key、value，进行key排序，交换回来，完成value排序</span><br><span class="line">counts</span><br><span class="line">	//交换key-value，注意类型</span><br><span class="line">	.mapToPair(s -&gt; new Tuple2&lt;Integer, String&gt;(s._2, s._1))</span><br><span class="line">	//倒序</span><br><span class="line">	.sortByKey(false)</span><br><span class="line">	//交换key-value，注意类型</span><br><span class="line">	.mapToPair(s -&gt; new Tuple2&lt;String, Integer&gt;(s._2, s._1))</span><br><span class="line">	//转成集合</span><br><span class="line">	.collect()</span><br><span class="line">	//输出</span><br><span class="line">	.forEach(tuple -&gt; System.out.println(tuple._1() + &quot;: &quot; + tuple._2()));</span><br></pre></td></tr></table></figure></p>
+      <div class="post-button"><a class="btn" href="/2016/12/14/java8%E5%AE%9E%E7%8E%B0spark%20wordcount%E5%B9%B6%E4%B8%94%E6%8C%89%E7%85%A7value%E6%8E%92%E5%BA%8F%E8%BE%93%E5%87%BA/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/11/14/%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%EF%BC%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E6%96%87%E4%BB%B6%E5%8C%B9%E9%85%8D%E5%8F%91%E7%94%9F%E9%94%99%E8%AF%AF%20binary%20operator%20expected/">判断文件是否存在，通配符文件匹配发生错误 binary operator expected</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-11-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/linux/">linux</a></span>
+      <p><span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">time1=$(date -d &quot;$currentTime&quot; +%s)</span><br><span class="line">time2=$(($time1-24*3600))</span><br><span class="line">filepath=/root/g01/g_01_api_*_$time2.txt</span><br><span class="line">if [ -f $filepath ];</span><br><span class="line">then</span><br><span class="line">echo &#x27;找到匹配的文件&#x27;</span><br><span class="line">for i in $filepath</span><br><span class="line">do</span><br><span class="line">   echo $i</span><br><span class="line">done</span><br><span class="line">echo &quot;执行hive load语句&quot;</span><br><span class="line">hive -e &#x27;load data local inpath &quot;$filepath&quot; into table notify_portal.t_g01 PARTITION(pt=&quot;INIT&quot;);&#x27;</span><br><span class="line">else</span><br><span class="line">echo &quot;文件不存在或者您输入的路径有误$filepath&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p><code>if [ -f $filepath ];</code>这句报错<code>-bash: [: /root/g01/g_01_api_shenzhen_1478966400.txt: binary operator expected</code><br>找了半天错误，最后发现，-f后面根本是不能跟通配符，或者说可以跟通配符，但是除非只有一个文件被匹配上。<br>遂使用<code>if [ -n &quot;ls $filepath&quot; ];</code>来判断，意思是ls命令列出通配符匹配的文件，存在返回true，这个在文件存在的时候是没问题，但是如果不存在，就会报错而不是返回<code>false:No such file or directory</code><br>然后去查，发现有人遇到过一个一样的问题， 解决办法是把标准错误重定向到正确输出，使用<br><code>if [ -n &quot;ls $filepath &gt;/dev/null 2&gt;&amp;1&quot; ];</code>解决。</p>
+<blockquote>
+<p>linux启动后，会默认打开3个文件描述符，分别是：<br>标准输入standard input 0,<br>正确输出standard output 1,<br>错误输出error output 2。</p>
+</blockquote>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/11/14/%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%EF%BC%8C%E9%80%9A%E9%85%8D%E7%AC%A6%E6%96%87%E4%BB%B6%E5%8C%B9%E9%85%8D%E5%8F%91%E7%94%9F%E9%94%99%E8%AF%AF%20binary%20operator%20expected/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
+      <h2 class="title"><a href="/2016/11/14/Encryption%20raised%20an%20exception/">Encryption raised an exception</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-11-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/java/">java</a></span>
+      <p><span id="more"></span>
+
+<p>script-test:<br>     [echo] Testing encrypt.sh<br>     [exec] Exception in thread “main” org.jasypt.exceptions.EncryptionOperationNotPossibleException: Encryption raised an exception. A possible cause is you are using strong encryption algorithms and you have not installed the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files in this Java Virtual Machine<br>     [exec]     at org.jasypt.encryption.pbe.StandardPBEByteEncryptor.handleInvalidKeyException(StandardPBEByteEncryptor.java:1073)<br>     [exec]     at org.jasypt.encryption.pbe.StandardPBEByteEncryptor.encrypt(StandardPBEByteEncryptor.java:924)<br>     [exec]     at org.jasypt.encryption.pbe.StandardPBEStringEncryptor.encrypt(StandardPBEStringEncryptor.java:642)<br>     [exec]     at azkaban.crypto.CryptoV1_1.encrypt(CryptoV1_1.java:42)<br>     [exec]     at azkaban.crypto.Crypto.encrypt(Crypto.java:49)<br>     [exec]     at azkaban.crypto.EncryptionCLI.main(EncryptionCLI.java:58)</p>
+<p>发现错误是因为jdk没有带jce，遂安装。</p>
+<p>How to Install JCE</p>
+<p>Go to the Oracle Java SE download page <a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a><br>Scroll down … Under “Additional Resources” section you will find “Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy File”<br>Download the version that matches your installed JVM E.g. UnlimitedJCEPolicyJDK7.zip<br>Unzip the downloaded zip<br>Copy local_policy.jar and US_export_policy.jar to the $JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;security (Note: these jars will be already there so you have to overwrite them)<br>Then restart your application to get rid of this exception.</p>
+<p><a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html">http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html</a></p>
+</p>
+      <div class="post-button"><a class="btn" href="/2016/11/14/Encryption%20raised%20an%20exception/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+
+
+<div id="pagination">
+  <a class="extend prev" rel="prev" href="/page/2/"></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"></a>
+</div>
+
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+  </div>
+</div>
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+
+
+</body>
+</html>
