@@ -3590,12 +3590,10 @@ echo 代理服务器设置已经清空
   <entry>
     <title>渗透学习：SQL盲注</title>
     <url>/2019/03/18/%E6%B8%97%E9%80%8F%E5%AD%A6%E4%B9%A0%EF%BC%9ASQL%E7%9B%B2%E6%B3%A8/</url>
-    <content><![CDATA[<span id="more"></span>
-
-<!-- more -->
-
-<h2 id="SQL-盲注"><a href="#SQL-盲注" class="headerlink" title="SQL 盲注"></a>SQL 盲注</h2><p>可能会查看、修改或删除数据库条目和表</p>
+    <content><![CDATA[<h2 id="SQL-盲注"><a href="#SQL-盲注" class="headerlink" title="SQL 盲注"></a>SQL 盲注</h2><p>可能会查看、修改或删除数据库条目和表</p>
 <h3 id="可能原因"><a href="#可能原因" class="headerlink" title="可能原因"></a>可能原因</h3><p>未对用户输入正确执行危险字符清理</p>
+<span id="more"></span>
+
 <h3 id="技术描述"><a href="#技术描述" class="headerlink" title="技术描述"></a>技术描述</h3><p>该软件使用受外部影响的输入来构造 SQL 命令的全部或一部分，但是它未能对可能在 SQL 命令发送到数据库时修改该命令的元素进行无害化处理。如果在用户可控制的输入中没有对 SQL 语法充分地除去或加上引号，那么生成的 SQL 查询可能会导致将这些输入解释为 SQL 而不是普通用户数据。这可用于修改查询逻辑以绕过安全性检查，或者插入其他用于修改后端数据库的语句，可能包括执行系统命令。<br>例如，假设有一个带有登录表单的 HTML 页面，该页面最终使用用户输入对数据库运行以下 SQL 查询：   <code>SELECT * FROM accounts WHERE username=&#39;$user&#39; AND password=&#39;$pass&#39;</code></p>
 <p>这两个变量（$user 和 $pass）包含了用户在登录表单中输入的用户凭证。如果用户输入“jsmith”作为用户名，并输入“Demo1234”作为密码，那么 SQL 查询将如下所示：<br>  <code>SELECT * FROM accounts WHERE username=&#39;jsmith&#39; AND password=&#39;Demo1234&#39;</code></p>
 <p>但如果用户输入“’”（单引号）作为用户名，输入“’”（单引号）作为密码，那么 SQL 查询将如下所示：<br>  <code>SELECT * FROM accounts WHERE username=&#39;&#39;&#39; AND password=&#39;&#39;&#39;</code></p>
