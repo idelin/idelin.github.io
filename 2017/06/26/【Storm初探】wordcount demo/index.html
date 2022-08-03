@@ -105,9 +105,10 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>目前工作下需要接触storm，遂写个demo练练手。<br>代码主要借鉴的是storm官方的github项目：<a target="_blank" rel="noopener" href="https://github.com/apache/storm">https://github.com/apache/storm</a></p>
+<span id="more"></span>
 
-<p>目前工作下需要接触storm，遂写个demo练练手。<br>代码主要借鉴的是storm官方的github项目：<a target="_blank" rel="noopener" href="https://github.com/apache/storm">https://github.com/apache/storm</a><br>略做修改。<br>1.pom.xml引入</p>
+<p>略做修改。<br>1.pom.xml引入</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.apache.storm&lt;/groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;storm-core&lt;/artifactId&gt;</span><br><span class="line">     &lt;type&gt;jar&lt;/type&gt;</span><br><span class="line">     &lt;version&gt;1.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 <p>2.Spout<br>Spout是strom里产生元数据（tuple）流的类，通常情况下Spout会读取外部数据，然后转换为Topology内部的元数据（tuple），主动角色。<br>nextTuple方法不断执行，数据在此方法内产生。<br>此处用在数组中随机获得句子作为元数据流做示例。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public class RandomSentenceSpout extends BaseRichSpout &#123;</span><br><span class="line">  private static final Logger LOG = LoggerFactory.getLogger(RandomSentenceSpout.class);</span><br><span class="line"></span><br><span class="line">  SpoutOutputCollector _collector;</span><br><span class="line">  Random _rand;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) &#123;</span><br><span class="line">    _collector = collector;</span><br><span class="line">    _rand = new Random();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void nextTuple() &#123;</span><br><span class="line">    Utils.sleep(100);</span><br><span class="line">    String[] sentences = new String[]&#123;sentence(&quot;the cow jumped over the moon&quot;), sentence(&quot;an apple a day keeps the doctor away&quot;),</span><br><span class="line">            sentence(&quot;four score and seven years ago&quot;), sentence(&quot;snow white and the seven dwarfs&quot;), sentence(&quot;i am at two with nature&quot;)&#125;;</span><br><span class="line">    final String sentence = sentences[_rand.nextInt(sentences.length)];</span><br><span class="line"></span><br><span class="line">    LOG.info(&quot;Emitting tuple: &#123;&#125;&quot;, sentence);</span><br><span class="line"></span><br><span class="line">    _collector.emit(new Values(sentence));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  protected String sentence(String input) &#123;</span><br><span class="line">    return input;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void ack(Object id) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void fail(Object id) &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void declareOutputFields(OutputFieldsDeclarer declarer) &#123;</span><br><span class="line">    declarer.declare(new Fields(&quot;word&quot;));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -186,18 +187,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

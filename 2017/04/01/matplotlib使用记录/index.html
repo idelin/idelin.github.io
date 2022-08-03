@@ -105,11 +105,11 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
-
-<blockquote>
+        <blockquote>
 <p>工作中需要使用python的matplotlib包作图，记录了一些需要注意的坑。</p>
 </blockquote>
+<span id="more"></span>
+
 <h2 id="1-Linux服务器没有GUI的情况下使用matplotlib绘图"><a href="#1-Linux服务器没有GUI的情况下使用matplotlib绘图" class="headerlink" title="1.Linux服务器没有GUI的情况下使用matplotlib绘图"></a>1.Linux服务器没有GUI的情况下使用matplotlib绘图</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib <span class="keyword">as</span> mpl</span><br><span class="line">mpl.use(<span class="string">&#x27;Agg&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <p>必须添加在import matplotlib.pyplot之前</p>
 <h2 id="2-解决matplotlib中文乱码"><a href="#2-解决matplotlib中文乱码" class="headerlink" title="2.解决matplotlib中文乱码"></a>2.解决matplotlib中文乱码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = [<span class="string">&#x27;SimSun&#x27;</span>, <span class="string">&#x27;SimHei&#x27;</span>, <span class="string">&#x27;SimKai&#x27;</span>, <span class="string">&#x27;PingFang SC&#x27;</span>]  </span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.serif&#x27;</span>] = [<span class="string">&#x27;SimSun&#x27;</span>, <span class="string">&#x27;SimHei&#x27;</span>, <span class="string">&#x27;SimKai&#x27;</span>, <span class="string">&#x27;PingFang SC&#x27;</span>] </span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.family&#x27;</span>] = <span class="string">&#x27;sans-serif&#x27;</span></span><br></pre></td></tr></table></figure>
@@ -194,18 +194,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

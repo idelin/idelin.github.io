@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>前面有说道<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53689365">spark-streaming的简单demo</a>，也有说到<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53767622">kafka成功跑通的例子</a>，这里就结合二者，也是常用的使用之一。</p>
+<span id="more"></span>
 
-<p>前面有说道<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53689365">spark-streaming的简单demo</a>，也有说到<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53767622">kafka成功跑通的例子</a>，这里就结合二者，也是常用的使用之一。</p>
 <p>1.相关组件版本<br>首先确认版本，因为跟之前的版本有些不一样，所以才有必要记录下，另外仍然没有使用scala,使用java8,spark 2.0.0,kafka 0.10。</p>
 <p>2.引入maven包<br>网上找了一些结合的例子，但是跟我当前版本不一样，所以根本就成功不了，所以探究了下，列出引入包。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.spark<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spark-streaming-kafka-0-10_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -186,18 +186,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

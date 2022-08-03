@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>以下是今天（20160811）跟阿里的同学交流的关于建模方面的心得。</p>
+<span id="more"></span>
 
-<p>以下是今天（20160811）跟阿里的同学交流的关于建模方面的心得。</p>
 <p>1.规则-经验-机器学习<br>有的时候规则其实更简单，只不过这是人为的经验成分<br>机器学习其实是想通过大数据学习这种人为经验</p>
 <p>2.模型是注重性能还是可解释性？<br>（1）如果可解释性要强的话就要牺牲性能（预测的结果好坏），如果只追求性能的话可以用一些非线性（gbdt，dnn等）<br>（2）如果要求可解释性最好用一些线性的模型（最简单的最常用的也就是LR逻辑回归）</p>
 <p>3.特征筛选<br>不管什么模型，特征的筛选和数据预处理都很重要！<br>woe简单的反应了一个特征跟label之间的强弱关系<br>但是有的时候特征是相关的，比如判断一个人的经济能力（特征1：他有房，特征二： 他有存款） ，这2个特征某种程度上是相关的，一起放进来会有影响的。我们正常理解的是有房个数越多越有钱，存款越多越有钱，但是实际可能出来 有房是正的，存款是负的，这种不合常理的情况&#x3D;&#x3D;》结果显示存款越多越没有钱，这种就是相关导致的，如果2个特征的相关系统超过0.8了，就可以去掉一个了，结果影响倒不会太大，但是你的模型肯定性不好。</p>
@@ -188,18 +188,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

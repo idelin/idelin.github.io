@@ -107,144 +107,17 @@
     <div>
       <h2 class="title"><a href="/2016/05/12/%E5%90%AF%E5%8A%A8hive%E6%8A%A5%E9%94%99%EF%BC%9A%5BERROR%5D%20Terminal%20initialization%20failed;%20falling%20back%20to%20unsupported/">启动hive报错：[ERROR] Terminal initialization failed; falling back to unsupported</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-05-12 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop-hive/">hadoop hive</a></span>
-      <p><span id="more"></span>
-
-<p>﻿﻿[ERROR] Terminal initialization failed; falling back to unsupported<br>java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface was expected<br>at jline.TerminalFactory.create(TerminalFactory.java:101)<br>at jline.TerminalFactory.get(TerminalFactory.java:158)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:229)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br>at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br>at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br>at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br>at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br>at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br>at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>at java.lang.reflect.Method.invoke(Method.java:606)<br>at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br>at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</p>
-<p>Exception in thread “main” java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:230)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br>at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br>at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br>at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br>at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br>at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br>at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>at java.lang.reflect.Method.invoke(Method.java:606)<br>at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br>at org.apache.hadoop.util.RunJar.main(RunJar.java:136)[ERROR] Terminal initialization failed; falling back to unsupported<br>java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface was expected<br> at jline.TerminalFactory.create(TerminalFactory.java:101)<br> at jline.TerminalFactory.get(TerminalFactory.java:158)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:229)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br> at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br> at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br> at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br> at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br> at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br> at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br> at java.lang.reflect.Method.invoke(Method.java:606)<br> at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br> at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</p>
-<p>Exception in thread “main” java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:230)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br> at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br> at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br> at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br> at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br> at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br> at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br> at java.lang.reflect.Method.invoke(Method.java:606)<br> at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br> at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</p>
-<p>是因为jline版本太低造成，复制hive下的jline jar包到Hadoop下即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cp /home/hadoop/apache-hive-1.1.0-bin/lib/jline-2.12.jar /home/hadoop/hadoop-2.6.0/share/hadoop/yarn/lib</span><br><span class="line">stop-dfs.sh</span><br><span class="line">stop-yarn.sh</span><br><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br><span class="line">hive</span><br></pre></td></tr></table></figure>
-
-</p>
-      <div class="post-button"><a class="btn" href="/2016/05/12/%E5%90%AF%E5%8A%A8hive%E6%8A%A5%E9%94%99%EF%BC%9A%5BERROR%5D%20Terminal%20initialization%20failed;%20falling%20back%20to%20unsupported/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <p><p>﻿﻿[ERROR] Terminal initialization failed; falling back to unsupported</p></p>
+      <div class="post-button"><a class="btn" href="/2016/05/12/%E5%90%AF%E5%8A%A8hive%E6%8A%A5%E9%94%99%EF%BC%9A%5BERROR%5D%20Terminal%20initialization%20failed;%20falling%20back%20to%20unsupported/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2016/05/12/hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/">hadoop伪分布式环境搭建记录</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-05-12 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
-      <p><span id="more"></span>
-
-
-<div style="top:0px">&#65279;&#65279;Hadoop快3个月没接触了，这阶段全是阿里云的东西，乘着领导让我给同事讲讲Hadoop的机会，复习下Hadoop的知识。</div>
-<p>hadoop伪分布式环境搭建记录20160511<br>
-1.解压hadoop、jdk压缩包<br>
-</p>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_1_7823312"  name="code" class="html">tar -xvzf hadoop-2.6.0.tar.gz
-tar -xvzf jdk-7u79-linux-x64.tar.gz</pre><br>
-<p></p>
-<p>2.环境变量添加<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_2_9905672"  name="code" class="html">vi ~/.bash_profile
-export JAVA_HOME=/home/hadoop/jdk1.7.0_79
-export PATH=$PATH:$JAVA_HOME/bin
-export HADOOP_HOME=/home/hadoop/hadoop-2.6.0
-export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/lib
-export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
-export HADOOP_OPTS=&quot;-Djava.library.path=$HADOOP_HOME/lib&quot;</pre><br>
-<br>
-</p>
-<p>修改完成，生效配置文件<br>
-source ~/.bash_profile</p>
-<p>检查是否成功<br>
-java -version<br>
-hadoop version</p>
-<p>3.修改hadoop配置文件</p>
-<p><pre code_snippet_id="2029847" snippet_file_name="blog_20161205_3_6067234"  name="code" class="html">&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;!-- core-site.xml --&gt;
-&lt;configuration&gt;
- &lt;property&gt;
-  &lt;name&gt;fs.default.name&lt;/name&gt;
-  &lt;value&gt;hdfs://127.0.0.1/&lt;/value&gt;
- &lt;/property&gt;
-&lt;/configuration&gt;
-&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;!-- hdfs-site.xml --&gt;
-&lt;configuration&gt;
- &lt;property&gt;
-  &lt;name&gt;dfs.replication&lt;/name&gt;
-  &lt;value&gt;1&lt;/value&gt;
- &lt;/property&gt;
-&lt;/configuration&gt;
-&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;!-- mapred-site.xml --&gt;
-&lt;configuration&gt;
- &lt;property&gt;
-  &lt;name&gt;mapred.job.tracker&lt;/name&gt;
-  &lt;value&gt;127.0.0.1:8021&lt;/value&gt;
- &lt;/property&gt;
-&lt;property&gt;
-  &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt; 
-  &lt;value&gt;127.0.0.1:10020&lt;/value&gt; 
-&lt;/property&gt; 
-&lt;property&gt; 
-  &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt; 
-  &lt;value&gt;127.0.0.1:19888&lt;/value&gt; 
-&lt;/property&gt;
-&lt;/configuration&gt;
-&lt;?xml version=&quot;1.0&quot;?&gt;
-&lt;!-- yarn-site.xml --&gt;
-&lt;configuration&gt;
- &lt;property&gt;
-  &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
-  &lt;value&gt;127.0.0.1:8032&lt;/value&gt;
- &lt;/property&gt;
- &lt;property&gt;
-  &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
-  &lt;value&gt;mapreduce.shuffle&lt;/value&gt;
- &lt;/property&gt;
-&lt;/configuration&gt;</pre><br>
-<br>
-</p>
-<p>4.安装ssh并配置免密码登录<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_4_799554"  name="code" class="html">yum install ssh
-#或者
-apt-get install ssh
-ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
-cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
-ssh localhost</pre><br>
-</p>
-<p>5.&#26684;式化hdfs<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_5_1180455"  name="code" class="html">hadoop namenode -format
-#此处遇到报错：
-java.net.UnknownHostException
-#修改
-vi /etc/sysconfig/network
-#HOSTNAME修改为localhost(随自己喜好，我这里设置的是Hadoop,确认/etc/hosts 里有对应的host配置就行)
-#重启
-reboot</pre><br>
-<br>
-</p>
-<p>6.启动hadoop<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_6_6785609"  name="code" class="html">#start-all.sh 不推荐使用，用这个nodemanager总是起不起来
-start-dfs.sh
-start-yarn.sh</pre><br>
-</p>
-<p>此处遇到报错：<br>
-localhost: Error: JAVA_HOME is not set and could not be found.<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_7_9326101"  name="code" class="html">#修改/etc/hadoop/hadoop-env.sh中设JAVA_HOME
-source  hadoop-env.sh</pre><br>
-<br>
-</p>
-<p>重新执行，此处依旧报错：<br>
-Cannot find configuration directory: /etc/hadoop <br>
-在hadoop-env.sh 配置一条hadoop配置文件所在目录：<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_8_7962898"  name="code" class="html">export HADOOP_CONF_DIR=/home/hadoop/hadoop-2.6.0/etc/hadoop
-source  hadoop-env.sh</pre><br>
-<br>
-</p>
-<p>7.访问web<br>
-<a target="_blank" target="_blank" href="http://hadoop:8088/">http://hadoop:8088/</a><br>
-<a target="_blank" target="_blank" href="http://hadoop:50070/">http://hadoop:50070/</a><br>
-如果无法访问，关闭防火墙<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_9_187746"  name="code" class="html">service iptables stop</pre><br>
-</p>
-<p>8.执行hdfs语句<br>
-<pre code_snippet_id="2029847" snippet_file_name="blog_20161205_10_8965463"  name="code" class="html">hdfs dfs -ls</pre><br>
-<br>
-</p>
-<p>至此hadoop环境搭建完毕!</p>
-</p>
-      <div class="post-button"><a class="btn" href="/2016/05/12/hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <p><div style="top:0px">&#65279;&#65279;Hadoop快3个月没接触了，这阶段全是阿里云的东西，乘着领导让我给同事讲讲Hadoop的机会，复习下Hadoop的知识。</div>
+<p>hadoop伪分布式环境搭建记录20160511<br></p>
+      <div class="post-button"><a class="btn" href="/2016/05/12/hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -252,7 +125,7 @@ source  hadoop-env.sh</pre><br>
       <h2 class="title"><a href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/">win10 驱动无法安装 系统找不到指定文件</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-04-27 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/windows/">windows</a></span>
       <p><p>明明指定了下载的驱动文件夹，但是报错，“系统找不到指定文件”，<br>然后查看C:\Windows\INF\setupapi.dev.log文件，这是驱动安装的日志，查看信息发现：</p></p>
-      <div class="post-button"><a class="btn" href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -271,7 +144,7 @@ source  hadoop-env.sh</pre><br>
 <div style="margin:0px"><span style="font-family:Microsoft YaHei">维度表的劣势：查询性能不随着扩容提升，浪费更多存储空间，但是对于数据量不大的情况下都不是问题。</span></div>
 <div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
 </span></div></p>
-      <div class="post-button"><a class="btn" href="/2016/04/25/%E9%98%BF%E9%87%8C%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93ads%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/04/25/%E9%98%BF%E9%87%8C%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93ads%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -286,7 +159,7 @@ source  hadoop-env.sh</pre><br>
 <div><strong>到控制台导入导出的地方看一下记录，看表分析是否已经结束了。表分析需要一定的时间。目前在表分析的时候，会产生一条导入记录。那个记录是成功了，才是分析好了。</strong>&nbsp;
 </div>
 <div></div></p>
-      <div class="post-button"><a class="btn" href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -297,190 +170,35 @@ source  hadoop-env.sh</pre><br>
 <p>这次来无锡出差，天天需要设置代理，如果不...就会这样:</p>
 <p>回宿舍还得把代理取消。</p>
 <p>遂偷懒...考虑了下...是否可以写个程序运行完成...<br></p>
-      <div class="post-button"><a class="btn" href="/2015/11/15/python%E5%AE%9E%E7%8E%B0windows%20ie%E4%BB%A3%E7%90%86%E5%88%87%E6%8D%A2/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2015/11/15/python%E5%AE%9E%E7%8E%B0windows%20ie%E4%BB%A3%E7%90%86%E5%88%87%E6%8D%A2/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2015/09/04/The%20following%20classes%20could%20not%20be%20instantiated!%20-%20android.support.v7.widget.Toolbar%20%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">The following classes could not be instantiated- android.support.v7.widget.Toolbar 解决方法</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2015-09-04 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/Android/">Android</a></span>
-      <p><span id="more"></span>
-
-
-<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
+      <p><p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
 </p>
 <p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
-初学安卓，找了半天，各种方法不行，这个解决了。</p>
-<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
-原网址（http://stackoverflow.com/questions/26575815/the-following-classes-could-not-be-instantiated-android-support-v7-widget-too）</p>
-<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
-I changed the res/values/styles.xml file from this:</p>
-<pre style="margin-top:0px; margin-bottom:1em; padding:5px; border:0px; font-size:13px; overflow:auto; width:auto; max-height:600px; font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu Sans Mono','Bitstream Vera Sans Mono','Courier New',monospace,sans-serif; word-wrap:normal; color:rgb(34,34,34); background-color:rgb(238,238,238)"><code style="margin:0px; padding:0px; border:0px; font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu Sans Mono','Bitstream Vera Sans Mono','Courier New',monospace,sans-serif; white-space:inherit">&lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.DarkActionBar&quot;&gt;
-</code></pre>
-<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
-to this:</p>
-<pre style="margin-top:0px; margin-bottom:1em; padding:5px; border:0px; font-size:13px; overflow:auto; width:auto; max-height:600px; font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu Sans Mono','Bitstream Vera Sans Mono','Courier New',monospace,sans-serif; word-wrap:normal; color:rgb(34,34,34); background-color:rgb(238,238,238)"><code style="margin:0px; padding:0px; border:0px; font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu Sans Mono','Bitstream Vera Sans Mono','Courier New',monospace,sans-serif; white-space:inherit">&lt;style name=&quot;AppTheme&quot; parent=&quot;Base.Theme.AppCompat.Light.DarkActionBar&quot;&gt;
-</code></pre>
-<p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
-and that solved the problem.</p>
-</p>
-      <div class="post-button"><a class="btn" href="/2015/09/04/The%20following%20classes%20could%20not%20be%20instantiated!%20-%20android.support.v7.widget.Toolbar%20%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+初学安卓，找了半天，各种方法不行，这个解决了。</p></p>
+      <div class="post-button"><a class="btn" href="/2015/09/04/The%20following%20classes%20could%20not%20be%20instantiated!%20-%20android.support.v7.widget.Toolbar%20%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2015/03/10/python3+BeautifulSoup+tkinter%20%E7%88%AC%E8%99%AB%20%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%E6%88%90%E7%BB%A9/">python3+BeautifulSoup+tkinter 爬虫 获取学校成绩</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2015-03-10</span>
-      <p><span id="more"></span>
-
-
-<p>写的是一个小爬虫，有界面，爬取学校成绩</p>
-<p>从最开始只用python3&#43;正则表达式</p>
-<p>然后加界面用tkinter</p>
-<p>到最后加了BeautifulSoup</p>
-<p>现在看起来和谐多了</p>
-<pre name="code" class="python">&lt;pre name=&quot;code&quot; class=&quot;python&quot;&gt;#获取学校成绩</pre>
-<pre></pre>
-<pre name="code" class="python">import re,string,urllib.parse,urllib.request
-from tkinter import *
-from tkinter import ttk
-from bs4 import BeautifulSoup
-class AhutScore:
-    def __init__(self):
-        print(&#39;已经启动安工大成绩查询爬虫，咔嚓咔嚓&#39;)
-
-<pre><code>def getAhutScore(self,stuNo,idCard,xn,xq):
-    #通过HttpWatch抓包的当前网站的形式
-    postdata=urllib.parse.urlencode(&#123;
-        &amp;#39;__EVENTVALIDATION&amp;#39;:&amp;#39;/wEWIQLH/uyCBwLs0bLrBgLs0fbZDALWrMSACwKEx5fABgKFx/uABQKax7/ABwKax6OABgKbx6OABgKYx+dBAsKF4K8GAs2FiJQIAsqF5O0IAsOF8PcLAsCFjO0JAvGV4pUFAv/6yPsJAv76yPsJAvbLmuYBAq7k2jACzqvD4A4CrvycrAcCi+uC+wwCn/nbgQ0C4d349AoC9PbF/AwCrZj0xQsCrZiIoQQC0sqYtwoC6MqwtAcC1srwtQoChobTsw4C1orq2A/lc4cMuGz9/vf0WzeaMjk2B63pi/yD0c3bh6AkZ2usTA==&amp;#39;,
-        &amp;#39;__VIEWSTATE&amp;#39;:&amp;#39;/wEPDwUKLTc5MTY3NzY2OA9kFgICAw9kFg4CBQ8QZBAVDA09Peivt+mAieaLqT09CTIwMTQtMjAxNQkyMDEzLTIwMTQJMjAxMi0yMDEzCTIwMTEtMjAxMwkyMDExLTIwMTIJMjAxMC0yMDExCTIwMDktMjAxMAkyMDA4LTIwMDkJMjAwNy0yMDA4CTIwMDYtMjAwNwkyMDA1LTIwMDYVDAAJMjAxNC0yMDE1CTIwMTMtMjAxNAkyMDEyLTIwMTMJMjAxMS0yMDEzCTIwMTEtMjAxMgkyMDEwLTIwMTEJMjAwOS0yMDEwCTIwMDgtMjAwOQkyMDA3LTIwMDgJMjAwNi0yMDA3CTIwMDUtMjAwNhQrAwxnZ2dnZ2dnZ2dnZ2dkZAIHDxBkEBUDDT096K+36YCJ5oupPT0BMgExFQMAATIBMRQrAwNnZ2dkZAIdD2QWAgIFDzwrABEAZAIfD2QWAgIBDzwrABEAZAIjD2QWAgIJDzwrABEAZAIlD2QWAgIDDxBkZBYBZmQCJw9kFgICAQ88KwARAQEQFgAWABYAZBgEBQlHcmlkVmlldzMPZ2QFCUdyaWRWaWV3MQ9nZAUMR3JpZFZpZXdfY2owD2dkBQtHcmlkVmlld19jag9nZJ3osNiaHFKtpB351twVA++gU7GdyOdYypVlNUYHNaNo&amp;#39;,
-        &amp;#39;__VIEWSTATEGENERATOR&amp;#39;:&amp;#39;DCA2160B&amp;#39;,
-        &amp;#39;Button_cjcx&amp;#39;:&amp;#39;查询&amp;#39;,  
-        &amp;#39;drop_type&amp;#39;:&amp;#39;全部成绩&amp;#39;,  
-        &amp;#39;drop_xn&amp;#39;:xn,  
-        &amp;#39;drop_xq&amp;#39;:xq,  
-        &amp;#39;hid_dqszj&amp;#39;:&amp;#39;&amp;#39;,
-        &amp;#39;TextBox1&amp;#39;:stuNo,
-        &amp;#39;TextBox2&amp;#39;:idCard
-    &#125;).encode(encoding=&amp;#39;utf-8&amp;#39;)
-    #伪装消息头，伪装用户访问
-    headers = &#123;  
-        &amp;#39;User-Agent&amp;#39;:&amp;#39;Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6&amp;#39;  
-    &#125;
-    #创建请求对象
-    req = urllib.request.Request(
-        url = &amp;#39;http://211.70.149.134:8080/stud_score/brow_stud_score.aspx&amp;#39;,  
-        data = postdata,
-        headers = headers
-    )
-    #接收结果对象
-    result = urllib.request.urlopen(req)
-    #读取并解码
-    unicodePage = result.read().decode(&amp;#39;utf-8&amp;#39;)
-    soup = BeautifulSoup(unicodePage)
-    #print(soup.prettify())
-    stuMsg = soup.find(&amp;#39;span&amp;#39;,id=&amp;#39;Label1&amp;#39;).string
-    #stuMsg = soup.html(&amp;#39;span&amp;#39;,attrs=&#123;&amp;quot;id&amp;quot;: &amp;quot;Label1&amp;quot;&#125;)[0].string
-    #scoreMsg = re.findall(&amp;#39;&amp;lt;tr align=&amp;quot;left&amp;quot; onmouseover=&amp;quot;c=this.style.backgroundColor;this.style.backgroundColor=&amp;#39;#EEC470&amp;#39;&amp;quot; onmouseout=&amp;quot;this.style.backgroundColor=c&amp;quot; style=&amp;quot;.*?&amp;quot;&amp;gt;(.*?)&amp;lt;/tr&amp;gt;&amp;#39;,unicodePage,re.S)
-    # &amp;lt;tr class=&amp;quot;Freezing&amp;quot; style=&amp;quot;color:White;background-color:#006699;border-color:#6666FF;font-weight:bold;height:25px;&amp;quot;&amp;gt;&amp;lt;th&amp;gt;*n&amp;lt;/tr&amp;gt;
-    #&amp;lt;span id=&amp;quot;Label_SHOW&amp;quot; style=&amp;quot;font-size:Small;color: #003300; font-family: 微软雅黑;&amp;quot;&amp;gt;共找到4条记录!&amp;lt;/span&amp;gt;
-    items = []
-    labelShow = soup.find(&amp;#39;span&amp;#39;,id=&amp;#39;Label_SHOW&amp;#39;).string
-    if labelShow == &amp;#39;没有返回记录!&amp;#39;:
-        return items,stuMsg,labelShow
-    scoreTitle = soup.find(&amp;#39;tr&amp;#39;,class_=&amp;#39;Freezing&amp;#39;)(&amp;#39;th&amp;#39;)
-    scoreMsg = soup(&amp;#39;tr&amp;#39;,align=&amp;#39;left&amp;#39;,onmouseout=&amp;quot;this.style.backgroundColor=c&amp;quot;)
-    
-    for itemMsg in scoreMsg:
-        #itemScore = re.findall(&amp;#39;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td style=&amp;quot;.*?&amp;quot;&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;lt;td&amp;gt;(.*?)&amp;lt;/td&amp;gt;&amp;#39;,itemMsg,re.S)
-        itemScore = itemMsg(&amp;#39;td&amp;#39;)
-        dicts =&#123;&#125;
-        for i in range(15):
-            dicts[scoreTitle[i].string] = itemScore[i].string.replace(&amp;#39;\xa0&amp;#39;,&amp;#39;&amp;#39;)
-        items.append(dicts)
-    print(items)
-    return items,stuMsg,labelShow
-
-def getGUI(self):
-    def test():
-        result = self.getAhutScore(stuNo.get(),idCard.get(),xn.get(),xq.get())
-        rstk = Tk()
-        rstk.title(&amp;#39;成绩查询结果&amp;#39;)
-        rstk.resizable(width=False, height=False)
-        t=Text(rstk)
-        t.insert(1.0,result[1]+&amp;#39;\n&amp;#39;)
-        t.insert(2.0,&amp;#39;-&amp;#39;*32+result[2]+&amp;#39;-&amp;#39;*32+&amp;#39;\n&amp;#39;)
-        if result[0]!=[]:
-            for item in result[0]:
-                t.insert(3.0,item[&amp;#39;课程名&amp;#39;]+&amp;#39;:&amp;#39;+item[&amp;#39;总评成绩&amp;#39;]+&amp;#39;\n&amp;#39;)
-        else:
-            t.insert(3.0,&amp;#39;暂无信息!\n&amp;#39;)
-        t.grid(row=5, column=0,columnspan=4)
-    root = Tk()
-    root.geometry()
-    root.resizable(width=False, height=False)
-    root.title(&amp;#39;ahut成绩查询&amp;#39;)
-    Label(root,text=&amp;#39;学号:&amp;#39;).grid(row=0, column=0,sticky=W)
-    Label(root,text=&amp;#39;身份证号:&amp;#39;).grid(row=0, column=2,sticky=W)
-    Label(root,text=&amp;#39;学年:&amp;#39;).grid(row=1, column=0,sticky=W)
-    Label(root,text=&amp;#39;学期:&amp;#39;).grid(row=1, column=2,sticky=W)
-    stuNo = StringVar()
-    idCard = StringVar()
-    xn = StringVar()
-    xq = StringVar()
-    #Entry(root, textvariable=e, state=&amp;quot;readonly&amp;quot;, show=&amp;quot;*&amp;quot;)
-    Entry(root,textvariable = stuNo).grid(row=0, column=1)
-    Entry(root,textvariable = idCard).grid(row=0, column=3)
-    stuNo.set(&amp;#39;11908***&amp;#39;)
-    idCard.set(&amp;#39;34082*************&amp;#39;)
-    xnBox = ttk.Combobox(root,textvariable=xn,state=&amp;#39;readonly&amp;#39;)
-    xnBox[&amp;#39;values&amp;#39;] = (&amp;#39;&amp;#39;,&amp;#39;2010-2011&amp;#39;, &amp;#39;2011-2012&amp;#39;, &amp;#39;2012-2013&amp;#39;,&amp;#39;2013-2014&amp;#39;, &amp;#39;2014-2015&amp;#39;)
-    xnBox.set(&amp;#39;2014-2015&amp;#39;)
-    xnBox.grid(row=1, column=1)
-    xqBox = ttk.Combobox(root,textvariable=xq,state=&amp;#39;readonly&amp;#39;)
-    xqBox[&amp;#39;values&amp;#39;] = (&amp;#39;&amp;#39;,&amp;#39;1&amp;#39;, &amp;#39;2&amp;#39;)
-    xqBox.set(&amp;#39;1&amp;#39;)
-    xqBox.grid(row=1, column=3)
-    b = Button(root,text=&amp;#39;查询&amp;#39;,command=test).grid(row=4, columnspan=4)
-    #label = Label(root,text=&amp;#39;&amp;#169; F8&amp;#39;).grid()
-    root.mainloop()
-</code></pre>
-<p>ahutScore &#x3D; AhutScore()<br>ahutScore.getGUI()<br></pre></p>
-<p></p>
-<div><img src="https://img-blog.csdn.net/20150310134454603" alt=""><img src="https://img-blog.csdn.net/20150310134629559" alt=""><br>
-</div>
-<br>
-<p></p>
-</p>
-      <div class="post-button"><a class="btn" href="/2015/03/10/python3+BeautifulSoup+tkinter%20%E7%88%AC%E8%99%AB%20%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%E6%88%90%E7%BB%A9/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <p><p>写的是一个小爬虫，有界面，爬取学校成绩</p></p>
+      <div class="post-button"><a class="btn" href="/2015/03/10/python3+BeautifulSoup+tkinter%20%E7%88%AC%E8%99%AB%20%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%E6%88%90%E7%BB%A9/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2014/12/04/js%E4%BC%AA%E5%88%86%E9%A1%B5/">js伪分页</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2014-12-04</span>
-      <p><span id="more"></span>
-
-
-<p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
-挑战杯的一个项目，大部分同学在做，然后需要分页的功能，为了不影响同学服务端代码，干脆js分页了，效果还好，当然如果你的数据量不小，千万不要用这个方法....</p>
-<p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
-jsp的列表数据&nbsp;以及&nbsp;分页&nbsp;页号、上下页&nbsp;链接生成</p>
-<p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
-<img src="http://imglf0.ph.126.net/URRZxNbYcFKg3bp9p7sk-Q==/6608524478795013801.png" border="0" hspace="0" vspace="0" alt="" style="border:0px; max-width:100%; margin-bottom:20px; vertical-align:middle"></p>
-<p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
-引入分页paging.js,之前需要定义好，size、项目行数、总页数</p>
-<p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
-<img src="http://imglf0.ph.126.net/hFYL_ZomEtZHYkuUfqI0Cw==/3242310256830594336.png" border="0" hspace="0" vspace="0" alt="" style="border:0px; max-width:100%; margin-bottom:20px; vertical-align:middle"><br>
-<br>
-paging.js</p>
-<p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
-<img src="http://imglf1.ph.126.net/A0uVqkMUxSuDUW9QWWCjIg==/6599289680634484369.png" border="0" hspace="0" vspace="0" alt="" style="border:0px; max-width:100%; margin-bottom:20px; vertical-align:middle"><br>
-</p>
-<p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
-同步发布在lofter&nbsp;http://delin.ml/post/327197_416976a</p>
-</p>
-      <div class="post-button"><a class="btn" href="/2014/12/04/js%E4%BC%AA%E5%88%86%E9%A1%B5/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <p><p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
+挑战杯的一个项目，大部分同学在做，然后需要分页的功能，为了不影响同学服务端代码，干脆js分页了，效果还好，当然如果你的数据量不小，千万不要用这个方法....</p></p>
+      <div class="post-button"><a class="btn" href="/2014/12/04/js%E4%BC%AA%E5%88%86%E9%A1%B5/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -501,7 +219,7 @@ paging.js</p>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2000/10/10/hello-world/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+      <div class="post-button"><a class="btn" href="/2000/10/10/hello-world/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
 
@@ -543,18 +261,18 @@ paging.js</p>
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

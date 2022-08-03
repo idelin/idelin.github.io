@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
-
-<p>1、join连接时的优化：当三个或多个以上的表进行join操作时，如果每个on使用相同的字段连接时只会产生一个mapreduce。<br>2、join连接时的优化：当多个表进行查询时，从左到右表的大小顺序应该是从小到大。原因：hive在对每行记录操作时会把其他表先缓存起来，直到扫描最后的表进行计算<br>3、在where字句中增加分区过滤器。<br>4、当可以使用left semi join 语法时不要使用inner join，前者效率更高。原因：对于左表中指定的一条记录，一旦在右表中找到立即停止扫描。<br>5、如果所有表中有一张表足够小，则可置于内存中，这样在和其他表进行连接的时候就能完成匹配，省略掉reduce 过程。设置属性即可实现，set hive.auto.covert.join&#x3D;true; 用户可以配置希望被优化的小表的大小 set hive.mapjoin.smalltable.size&#x3D;2500000; 如果需要使用这两个配置可置入$HOME&#x2F;.hiverc文件中。<br>6、同一种数据的多种处理：从一个数据源产生的多个数据聚合，无需每次聚合都需要重新扫描一次。<br>例如：insert overwrite table student select *　from employee; insert overwrite table person select * from employee;<br>可以优化成：from employee insert overwrite table student select * insert overwrite table person select *<br>7、limit调优：limit语句通常是执行整个语句后返回部分结果。set hive.limit.optimize.enable&#x3D;true;<br>8、开启并发执行。某个job任务中可能包含众多的阶段，其中某些阶段没有依赖关系可以并发执行，开启并发执行后job任务可以更快的完成。设置属性：set hive.exec.parallel&#x3D;true;<br>9、hive提供的严格模式，禁止3种情况下的查询模式。<br>a：当表为分区表时，where字句后没有分区字段和限制时，不允许执行。<br>b：当使用order by语句时，必须使用limit字段，因为order by 只会产生一个reduce任务。<br>c：限制笛卡尔积的查询。<br>10、合理的设置map和reduce数量。<br>11、jvm重用。可在hadoop的mapred-site.xml中设置jvm被重用的次数。</p>
+        <p>1、join连接时的优化：当三个或多个以上的表进行join操作时，如果每个on使用相同的字段连接时只会产生一个mapreduce。</p>
+<span id="more"></span>
+<p>2、join连接时的优化：当多个表进行查询时，从左到右表的大小顺序应该是从小到大。原因：hive在对每行记录操作时会把其他表先缓存起来，直到扫描最后的表进行计算<br>3、在where字句中增加分区过滤器。<br>4、当可以使用left semi join 语法时不要使用inner join，前者效率更高。原因：对于左表中指定的一条记录，一旦在右表中找到立即停止扫描。<br>5、如果所有表中有一张表足够小，则可置于内存中，这样在和其他表进行连接的时候就能完成匹配，省略掉reduce 过程。设置属性即可实现，set hive.auto.covert.join&#x3D;true; 用户可以配置希望被优化的小表的大小 set hive.mapjoin.smalltable.size&#x3D;2500000; 如果需要使用这两个配置可置入$HOME&#x2F;.hiverc文件中。<br>6、同一种数据的多种处理：从一个数据源产生的多个数据聚合，无需每次聚合都需要重新扫描一次。<br>例如：insert overwrite table student select *　from employee; insert overwrite table person select * from employee;<br>可以优化成：from employee insert overwrite table student select * insert overwrite table person select *<br>7、limit调优：limit语句通常是执行整个语句后返回部分结果。set hive.limit.optimize.enable&#x3D;true;<br>8、开启并发执行。某个job任务中可能包含众多的阶段，其中某些阶段没有依赖关系可以并发执行，开启并发执行后job任务可以更快的完成。设置属性：set hive.exec.parallel&#x3D;true;<br>9、hive提供的严格模式，禁止3种情况下的查询模式。<br>a：当表为分区表时，where字句后没有分区字段和限制时，不允许执行。<br>b：当使用order by语句时，必须使用limit字段，因为order by 只会产生一个reduce任务。<br>c：限制笛卡尔积的查询。<br>10、合理的设置map和reduce数量。<br>11、jvm重用。可在hadoop的mapred-site.xml中设置jvm被重用的次数。</p>
 
       </div>
     </div>
@@ -175,18 +175,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>
