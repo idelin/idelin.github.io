@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
-
-<p>之前一直有项目用到，不过我并不负责这一块，所以了解不多，这次趁机会学习下。<br>之前对kafka的了解其实仅限于知道它是一个分布式消息系统，这次详细了解了下，知道了一些关键概念(topic主题、broker服务、producers消息发布者、consumer消息订阅者消费者)，具体网上一大堆，这里不赘述，直接开始代码。<br>###1.引入包</p>
+        <p>之前一直有项目用到，不过我并不负责这一块，所以了解不多，这次趁机会学习下。<br>之前对kafka的了解其实仅限于知道它是一个分布式消息系统，这次详细了解了下，知道了一些关键概念(topic主题、broker服务、producers消息发布者、consumer消息订阅者消费者)，具体网上一大堆，这里不赘述，直接开始代码。</p>
+<span id="more"></span>
+<p>###1.引入包</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.apache.kafka&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;kafka_2.10&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;0.10.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 <p>实际上我倒不是以上面方式引入的，因为使用kafka还是为了后面跟spark steaming集成，所以我是引入的spark-streaming-kafka，依赖包自然会被引入，需求相同的话可以像下面这样引入。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.apache.spark&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spark-streaming-kafka-0-10_2.11&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
@@ -185,18 +185,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

@@ -105,9 +105,8 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">time1=$(date -d &quot;$currentTime&quot; +%s)</span><br><span class="line">time2=$(($time1-24*3600))</span><br><span class="line">filepath=/root/g01/g_01_api_*_$time2.txt</span><br><span class="line">if [ -f $filepath ];</span><br><span class="line">then</span><br><span class="line">echo &#x27;找到匹配的文件&#x27;</span><br><span class="line">for i in $filepath</span><br><span class="line">do</span><br><span class="line">   echo $i</span><br><span class="line">done</span><br><span class="line">echo &quot;执行hive load语句&quot;</span><br><span class="line">hive -e &#x27;load data local inpath &quot;$filepath&quot; into table notify_portal.t_g01 PARTITION(pt=&quot;INIT&quot;);&#x27;</span><br><span class="line">else</span><br><span class="line">echo &quot;文件不存在或者您输入的路径有误$filepath&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">time1=$(date -d &quot;$currentTime&quot; +%s)</span><br><span class="line">time2=$(($time1-24*3600))</span><br><span class="line">filepath=/root/g01/g_01_api_*_$time2.txt</span><br><span class="line">if [ -f $filepath ];</span><br><span class="line">then</span><br><span class="line">echo &#x27;找到匹配的文件&#x27;</span><br><span class="line">for i in $filepath</span><br><span class="line">do</span><br><span class="line">   echo $i</span><br><span class="line">done</span><br><span class="line">echo &quot;执行hive load语句&quot;</span><br><span class="line">hive -e &#x27;load data local inpath &quot;$filepath&quot; into table notify_portal.t_g01 PARTITION(pt=&quot;INIT&quot;);&#x27;</span><br><span class="line">else</span><br><span class="line">echo &quot;文件不存在或者您输入的路径有误$filepath&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
 
 <p><code>if [ -f $filepath ];</code>这句报错<code>-bash: [: /root/g01/g_01_api_shenzhen_1478966400.txt: binary operator expected</code><br>找了半天错误，最后发现，-f后面根本是不能跟通配符，或者说可以跟通配符，但是除非只有一个文件被匹配上。<br>遂使用<code>if [ -n &quot;ls $filepath&quot; ];</code>来判断，意思是ls命令列出通配符匹配的文件，存在返回true，这个在文件存在的时候是没问题，但是如果不存在，就会报错而不是返回<code>false:No such file or directory</code><br>然后去查，发现有人遇到过一个一样的问题， 解决办法是把标准错误重定向到正确输出，使用<br><code>if [ -n &quot;ls $filepath &gt;/dev/null 2&gt;&amp;1&quot; ];</code>解决。</p>
 <blockquote>
@@ -180,18 +179,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

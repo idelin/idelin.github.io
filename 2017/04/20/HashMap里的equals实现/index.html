@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>今天遇到一个问题，需要对<code>List&lt;Map&gt;</code>对象里的Map去重，然后想到是否可以使用Set去重，试了下是可以的，但是仔细想想，发现明明塞进Set的时候是新创建的Map对象，但是Set却认为是重复的塞不进去，想到应该是HashMap的equals里逻辑，遂看源码。</p>
+<span id="more"></span>
 
-<p>今天遇到一个问题，需要对<code>List&lt;Map&gt;</code>对象里的Map去重，然后想到是否可以使用Set去重，试了下是可以的，但是仔细想想，发现明明塞进Set的时候是新创建的Map对象，但是Set却认为是重复的塞不进去，想到应该是HashMap的equals里逻辑，遂看源码。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"> public boolean equals(Object o) &#123;</span><br><span class="line">//1.同一对象，对象相等</span><br><span class="line">        if (o == this)</span><br><span class="line">            return true;</span><br><span class="line">//2.类型不是Map，对象不相等</span><br><span class="line">        if (!(o instanceof Map))</span><br><span class="line">            return false;</span><br><span class="line">        Map&lt;?,?&gt; m = (Map&lt;?,?&gt;) o;</span><br><span class="line">//3.size不等，对象不相等</span><br><span class="line">        if (m.size() != size())</span><br><span class="line">            return false;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            Iterator&lt;Entry&lt;K,V&gt;&gt; i = entrySet().iterator();</span><br><span class="line">            while (i.hasNext()) &#123;</span><br><span class="line">                Entry&lt;K,V&gt; e = i.next();</span><br><span class="line">                K key = e.getKey();</span><br><span class="line">                V value = e.getValue();</span><br><span class="line">//4.如果value为空，对应的对象value不为空或者根本没有这个key，对象不相等</span><br><span class="line">                if (value == null) &#123;</span><br><span class="line">                    if (!(m.get(key)==null &amp;&amp; m.containsKey(key)))</span><br><span class="line">                        return false;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line"> //如果value不为空，对应map相同key的value值是否相等，不等则对象不相等</span><br><span class="line">                    if (!value.equals(m.get(key)))</span><br><span class="line">                        return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (ClassCastException unused) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125; catch (NullPointerException unused) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>上面我注释了下，总结下：<br>1.同一对象，相等；<br>2.size相等，且对应key的value值完全相同，相等。</p>
 
@@ -177,18 +177,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

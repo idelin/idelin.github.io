@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>最近项目里需要写模型，然后数据是从es取，不同人负责写不同模型，这里遇到一个问题，就是数据的读其实公用，没必要各自取一次数据浪费带宽、内存、cpu…遂想是否可以提取公用部分做数据读，下发给各个模型，然后开发老大说用disruptor试试，调研了下确实可行，就稍加记录下。</p>
+<span id="more"></span>
 
-<p>最近项目里需要写模型，然后数据是从es取，不同人负责写不同模型，这里遇到一个问题，就是数据的读其实公用，没必要各自取一次数据浪费带宽、内存、cpu…遂想是否可以提取公用部分做数据读，下发给各个模型，然后开发老大说用disruptor试试，调研了下确实可行，就稍加记录下。</p>
 <p>disruptor项目地址：<a target="_blank" rel="noopener" href="https://github.com/LMAX-Exchange/disruptor">https://github.com/LMAX-Exchange/disruptor</a><br>简单来说disruptor是一个高性能的异步的消息处理框架。</p>
 <p>disruptor最核心的概念是ringbuffer（环形缓冲队列），下图解释所有↓<br><img src="http://img.blog.csdn.net/20170828102904174?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamFja2xpbjkyOQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>ringbuffer就如上一个环形队列，生产者往队列写数据，消费者读取数据处理，如果生产者追到消费者，那么生产者会停止生产，阻塞，等待它完成；同样的，消费者消费完了所有数据，消费者还未来得及消费，前者一样阻塞等待。</p>
 <p>disruptor采用的就是ringbuffer数据结构，之所以采用这种结构，官网是这样描述的：<br><em>之所以采用ringbuffer，是因为它在可靠消息传递方面有很好的性能。这就够了，不过它还有一些其他的优点。<br>首先，因为它是数组，所以要比链表快，而且有一个容易预料到的数据访问的内存地址。这是对CPU缓存友好的—也就是说，在硬件级别，数组中的元素是会被预加载的，因此在ringbuffer当中，cpu无需时不时去主存加载数组中的下一个元素。（校对注：因为只要一个元素被加载到缓存行，其他相邻的几个元素也会被加载进同一个缓存行）<br>其次，你可以为数组预先分配内存，使得数组对象一直存在（除非程序终止）。这就意味着不需要花大量的时间用于垃圾回收。此外，不像链表那样，需要为每一个添加到其上面的对象创造节点对象—对应的，当删除节点时，需要执行相应的内存清理操作。</em></p>
@@ -192,18 +192,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

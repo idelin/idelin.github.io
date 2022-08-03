@@ -116,7 +116,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cp /home/hadoop/apache-hive-1.1.0-bin/lib/jline-2.12.jar /home/hadoop/hadoop-2.6.0/share/hadoop/yarn/lib</span><br><span class="line">stop-dfs.sh</span><br><span class="line">stop-yarn.sh</span><br><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br><span class="line">hive</span><br></pre></td></tr></table></figure>
 
 </p>
-      <div class="post-button"><a class="btn" href="/2016/05/12/%E5%90%AF%E5%8A%A8hive%E6%8A%A5%E9%94%99%EF%BC%9A%5BERROR%5D%20Terminal%20initialization%20failed;%20falling%20back%20to%20unsupported/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/05/12/%E5%90%AF%E5%8A%A8hive%E6%8A%A5%E9%94%99%EF%BC%9A%5BERROR%5D%20Terminal%20initialization%20failed;%20falling%20back%20to%20unsupported/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -244,31 +244,22 @@ source  hadoop-env.sh</pre><br>
 </p>
 <p>至此hadoop环境搭建完毕!</p>
 </p>
-      <div class="post-button"><a class="btn" href="/2016/05/12/hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/05/12/hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/">win10 驱动无法安装 系统找不到指定文件</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-04-27 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/windows/">windows</a></span>
-      <p><span id="more"></span>
-
-<p>明明指定了下载的驱动文件夹，但是报错，“系统找不到指定文件”，<br>然后查看C:\Windows\INF\setupapi.dev.log文件，这是驱动安装的日志，查看信息发现：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;  [Device Install (DiShowUpdateDevice) - USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001]</span><br><span class="line">&gt;&gt;&gt;  Section start 2016/04/27 10:10:28.324</span><br><span class="line">      cmd: &quot;C:\WINDOWS\system32\mmc.exe&quot; &quot;C:\WINDOWS\system32\compmgmt.msc&quot; /s</span><br><span class="line">     dvi: &#123;DIF_UPDATEDRIVER_UI&#125; 10:10:28.328</span><br><span class="line">     dvi:      Default installer: Enter 10:10:28.332</span><br><span class="line">     dvi:      Default installer: Exit</span><br><span class="line">     dvi: &#123;DIF_UPDATEDRIVER_UI - exit(0xe000020e)&#125; 10:10:28.339</span><br><span class="line">     ndv: &#123;Update Driver Software Wizard for USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125;</span><br><span class="line">     ndv:      Driver package &#x27;c:\users\dl\desktop\usb_driver\android_winusb.inf&#x27; exists under &#x27;C:\WINDOWS\System32\DriverStore\FileRepository\android_winusb.inf_amd64_bd75d06c56998078\android_winusb.inf&#x27; (oem87.inf).</span><br><span class="line">     dvi:      Searching for hardware ID(s):</span><br><span class="line">     dvi:           usb\vid_18d1&amp;pid_4ee2&amp;rev_0310&amp;mi_01</span><br><span class="line">     dvi:           usb\vid_18d1&amp;pid_4ee2&amp;mi_01</span><br><span class="line">     dvi:      Searching for compatible ID(s):</span><br><span class="line">     dvi:           usb\class_ff&amp;subclass_42&amp;prot_01</span><br><span class="line">     dvi:           usb\class_ff&amp;subclass_42</span><br><span class="line">     dvi:           usb\class_ff</span><br><span class="line">     dvi:      Class GUID of device changed to: &#123;3f966bd9-fa04-4ec5-991c-d326973b5128&#125;.</span><br><span class="line">     dvi:      &#123;Plug and Play Service: Device Install for USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125;</span><br><span class="line">     ndv:           Driver INF Path: C:\WINDOWS\INF\oem87.inf</span><br><span class="line">     ndv:           Driver Node Name: android_winusb.inf:e5735744df83a689:USB_Install:11.0.0.0:usb\vid_18d1&amp;pid_4ee2&amp;mi_01</span><br><span class="line">     ndv:           Driver Store Path: C:\WINDOWS\System32\DriverStore\FileRepository\android_winusb.inf_amd64_bd75d06c56998078\android_winusb.inf</span><br><span class="line">     dvi:           Searching for hardware ID(s):</span><br><span class="line">     dvi:                usb\vid_18d1&amp;pid_4ee2&amp;rev_0310&amp;mi_01</span><br><span class="line">     dvi:                usb\vid_18d1&amp;pid_4ee2&amp;mi_01</span><br><span class="line">     dvi:           Searching for compatible ID(s):</span><br><span class="line">     dvi:                usb\class_ff&amp;subclass_42&amp;prot_01</span><br><span class="line">     dvi:                usb\class_ff&amp;subclass_42</span><br><span class="line">     dvi:                usb\class_ff</span><br><span class="line">     dvi:           Class GUID of device changed to: &#123;3f966bd9-fa04-4ec5-991c-d326973b5128&#125;.</span><br><span class="line">     ndv:           &#123;Core Device Install&#125; 10:10:31.409</span><br><span class="line">     ndv:                &#123;Install Device - USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125; 10:10:31.412</span><br><span class="line">     ndv:                     Parent device: USB\VID_18D1&amp;PID_4EE2\ENU7N15A20008134</span><br><span class="line">!    ndv:                     Device class &#123;3f966bd9-fa04-4ec5-991c-d326973b5128&#125; is not configurable.</span><br><span class="line">     dvi:                     &#123;DIF_ALLOW_INSTALL&#125; 10:10:31.420</span><br><span class="line">!!!  dvi:                          Loading module &#x27;C:\WINDOWS\system32\USBCoInstaller.dll&#x27; failed.</span><br><span class="line">!!!  dvi:                          Error 193: %1 is not a valid Win32 application.</span><br><span class="line">!!!  dvi:                          Error 193 loading CoInstaller(USBCoInstaller.dll,Zoom2_CoInstaller)</span><br><span class="line">!!!  dvi:                          Error 193: %1 is not a valid Win32 application.</span><br><span class="line">     dvi:                          Default installer: Enter 10:10:31.425</span><br><span class="line">     dvi:                          Default installer: Exit</span><br><span class="line">     dvi:                     &#123;DIF_ALLOW_INSTALL - exit(0xe000020e)&#125; 10:10:31.427</span><br><span class="line">     dvi:                     &#123;DIF_INSTALLDEVICEFILES&#125; 10:10:31.428</span><br><span class="line">     dvi:                          Default installer: Enter 10:10:31.429</span><br><span class="line">     dvi:                          Default installer: Exit</span><br><span class="line">     dvi:                     &#123;DIF_INSTALLDEVICEFILES - exit(0x00000000)&#125; 10:10:31.436</span><br><span class="line">     flq:                     File &#x27;C:\WINDOWS\system32\WinUSBCoInstaller2.dll&#x27; pruned from copy.</span><br><span class="line">     flq:                     File &#x27;C:\WINDOWS\system32\WdfCoInstaller01009.dll&#x27; pruned from copy.</span><br><span class="line">!!!  flq:                     *Source Media: SPFQOPERATION_ABORT (C:\WINDOWS\System32\DriverStore\FileRepository\winusb.inf_amd64_1921d43d747bdc1c\winusb.sys).*</span><br><span class="line">!!!  flq:                     Error 2: The system cannot find the file specified.</span><br><span class="line">!!!  flq:                     FileQueueCommit aborting!</span><br><span class="line">!!!  flq:                     Error 2: The system cannot find the file specified.</span><br><span class="line">!    ndv:                     Queueing up error report since device installation failed...</span><br><span class="line">     ndv:                &#123;Install Device - exit(0x00000002)&#125; 10:10:31.589</span><br><span class="line">     ndv:           &#123;Core Device Install - exit(0x00000002)&#125; 10:10:31.589</span><br><span class="line">     ump:      &#123;Plug and Play Service: Device Install exit(00000002)&#125;</span><br><span class="line">!!!  ndv:      Device install failed for device.</span><br><span class="line">!!!  ndv:      Error 2: The system cannot find the file specified.</span><br><span class="line">     ndv:      Installing NULL driver.</span><br><span class="line">     dvi:      &#123;Plug and Play Service: Device Install for USB\VID_18D1&amp;PID_4EE2&amp;MI_01\6&amp;28F58FF&amp;0&amp;0001&#125;</span><br><span class="line">!    ndv:           Installing NULL driver!</span><br><span class="line">     dvi:           &#123;DIF_ALLOW_INSTALL&#125; 10:10:31.705</span><br><span class="line">     dvi:                Default installer: Enter 10:10:31.706</span><br><span class="line">     dvi:                Default installer: Exit</span><br><span class="line">     dvi:           &#123;DIF_ALLOW_INSTALL - exit(0xe000020e)&#125; 10:10:31.708</span><br><span class="line">     dvi:           &#123;DIF_REGISTER_COINSTALLERS&#125; 10:10:31.709</span><br><span class="line">     dvi:                Default installer: Enter 10:10:31.710</span><br><span class="line">     dvi:                Default installer: Exit</span><br><span class="line">     dvi:           &#123;DIF_REGISTER_COINSTALLERS - exit(0x00000000)&#125; 10:10:31.711</span><br><span class="line">     dvi:           &#123;DIF_INSTALLDEVICE&#125; 10:10:31.712</span><br><span class="line">     dvi:                Default installer: Enter 10:10:31.713</span><br><span class="line">!    dvi:                     Installing NULL driver!</span><br><span class="line">     dvi:                     Install Null Driver: Removing device sub-tree. 10:10:31.718</span><br><span class="line">     dvi:                     Install Null Driver: Removing device sub-tree completed. 10:10:31.762</span><br><span class="line">     dvi:                     Install Null Driver: Restarting device. 10:10:31.777</span><br><span class="line">     dvi:                     Install Null Driver: Restarting device completed. 10:10:31.800</span><br><span class="line">     dvi:                     Install Device: Starting device. 10:10:31.805</span><br><span class="line">     dvi:                     Install Device: Starting device completed. 10:10:31.916</span><br><span class="line">     dvi:                Default installer: Exit</span><br><span class="line">     dvi:           &#123;DIF_INSTALLDEVICE - exit(0x00000000)&#125; 10:10:31.918</span><br><span class="line">     ump:      &#123;Plug and Play Service: Device Install exit(00000000)&#125;</span><br><span class="line">     ndv: &#123;Update Driver Software Wizard exit(00000002)&#125;</span><br><span class="line">&lt;&lt;&lt;  Section end 2016/04/27 10:10:33.104</span><br><span class="line">&lt;&lt;&lt;  [Exit status: FAILURE(0x00000002)]</span><br></pre></td></tr></table></figure>
-<p>关注这段：<br> !!!  flq:                     <em><strong>Source Media: SPFQOPERATION_ABORT (C:\WINDOWS\System32\DriverStore\FileRepository\winusb.inf_amd64_1921d43d747bdc1c\winusb.sys).</strong></em><br>!!!  flq:                     Error 2: The system cannot find the file specified.<br>!!!  flq:                     FileQueueCommit aborting!<br>!!!  flq:                     Error 2: The system cannot find the file specified.</p>
-<p>C:\WINDOWS\System32\DriverStore\FileRepository\winusb.inf_amd64_1921d43d747bdc1c\winusb.sys<br>报错指这个文件找不到，然后去找了下，果然没有，连winusb.inf_amd64_XXX文件夹都没有，不过找到个类似的，只是后面的XXX部分不同，然后修改FileRepository文件夹权限，改为管理员可写可修改，原本是只读，然后到FileRepository文件夹下复制存在的winusb.inf_amd64_XXX增加一个副本，改名为报错的不存在的那个文件夹名。<br>再试着装下驱动，是不是就ok了？<br>本质上所有报此类错误的驱动安装不上的问题都可以这样解决，如果找不到报错里描述的类似文件夹，可以到其他计算机上copy过来再重命名</p>
-</p>
-      <div class="post-button"><a class="btn" href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <p><p>明明指定了下载的驱动文件夹，但是报错，“系统找不到指定文件”，<br>然后查看C:\Windows\INF\setupapi.dev.log文件，这是驱动安装的日志，查看信息发现：</p></p>
+      <div class="post-button"><a class="btn" href="/2016/04/27/win10%20%E9%A9%B1%E5%8A%A8%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%20%E7%B3%BB%E7%BB%9F%E6%89%BE%E4%B8%8D%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2016/04/25/%E9%98%BF%E9%87%8C%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93ads%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">阿里分析型数据库ads学习记录</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-04-25 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a></span>
-      <p><span id="more"></span>
-
-
-<p><span style="font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto"></span></p>
+      <p><p><span style="font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto"></span></p>
 <div style="margin:0px; font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto">
 </div>
 <p style="margin:0px; font-size:15px; line-height:24px; widows:auto"><span style="widows:auto"><span style="font-family:Microsoft YaHei">1.ads中非分区表关联问题</span></span></p>
@@ -279,138 +270,34 @@ source  hadoop-env.sh</pre><br>
 </span>
 <div style="margin:0px"><span style="font-family:Microsoft YaHei">维度表的劣势：查询性能不随着扩容提升，浪费更多存储空间，但是对于数据量不大的情况下都不是问题。</span></div>
 <div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-</span></div>
-<p style="margin:0px"><span style="font-family:Microsoft YaHei">2.ads不支持带偏移量的limit</span></p>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">实际上无法做成真实分页，而且最多只能取出前1w条数据。可以使用dump方式解决，但是不建议那么做，ads主要关注快速获得查询结果，并不适用此场景。</span></div>
-<p style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-3.ads支持count(distinct columnName)<br>
-需修改后台配置，<br>
-/global/config/query --&gt;新增enableUdfSysGroupDistinctConcat&nbsp;<span style="line-height:1.6">bool类型，&#20540;false，然后count distinct可以即时生效</span></span></p>
-<p style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-4.UNION无法使用或结果错误</span></p>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">目前仅支持分区列UNION，所以带group by的聚合函数结果或查询出的非分区列结果都不可以使用union。</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">注：以上基于0.8.18版本，后续版本有所更新，会另写文详解。</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">之后更新会说明版本。</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">=====20160805更新===========</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">版本0.9.10</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">ads性能优化</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei"></span>
-<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
-<span style="line-height:1.6">1.</span><span style="line-height:1.6">注意过滤条件加上表别名</span><br>
-</div>
-<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
-2.<span style="line-height:1.6">打平关联语句</span><span style="line-height:1.6">（采用直接关联表而非关联子查询的方式）</span></div>
-<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
-3.将关联条件设置为表聚集列</div>
-<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
-<br>
-</div>
-<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px">
-为什么打平（直接关联表而不采用关联子查询的方式）会比子查询快，这里面涉及什么原理？
-<div style="margin:0px">打平之后，关联的维度表成为右表，join的时候走索引，所以很快；而子查询情况下，维度表就只能作为左表（子查询会自动将其处理为左表），实时表成为右表。实时部分的数据因为没有强大的索引，所以只能走扫描，这样就慢了。</div>
-</div>
-<br>
-</div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">遇到一个坑！！！强调下！！！</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">select ... a join b where xrsj&gt;....&nbsp;</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">（a为大表，上百亿数据，b为维度表，上万数据）</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">这种语句执行的时候，当xrsj这个字段只有a或者b表的时候是完全没问题的，碰巧就是a、b表都有xrsj这个字段的时候，按常理来说，应该报错的！怎么都应该报错才对，然后秀逗了，居然没有报错，还欢快地跑起来了，以至于我一个月都没找到为什么语句那么慢！</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">所以优化第一句就是过滤条件要加上表别名。</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">这个bug已经提交给ads开发经理了，不过回复我优先级不会很高，什么时候修复再说。</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei"><br>
-</span></div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei"><span style="font-family:&quot;Microsoft YaHei&quot;; font-size:15px; line-height:24px">=====201608011更新===========</span></span></div>
-<div style="margin:0px"><br>
-</div>
-<div style="margin:0px"><span style="font-family:Microsoft YaHei">分区表与Group-By、Order-By查询<br>
-</span>
-<ul>
-<li>Group-By条件包含分区列，则应该放到第一列，此时结果是精确的且查询性能很好</li><li>Group-By表达式如果不包含分区列（或第一列不是分区列），则分组数量在范围内（&lt;5000），结果是精确的，但性能随分组数量增加而降低</li><li>Group-By表达式如果不包含分区列（或第一列不是分区列），且分组数量不在范围内（&gt;=5000），此时结果是不精确的且性能随分组数量增加而降低</li><li>如果Group-By表达式第一列不是按分区列，则Having语句不支持</li><li>全局分组TOP(N)：Group-By表达式包含分区列，则应该放到第一列，同时包含Order-By表达式，如果分组数量在范围内（&lt;1000），结果是精确的，但性能随分组数量增加而较大降低</li><li>全局模糊分组TOP(N)：Group-By表达式第一列如果不是分区列且包含Order-By表达式，而且分组</li><li>数量不在范围内（&gt;=1000），此时结果是不精确的且性能随分组数量增加而较大降低</li><li>全数据排序：Order-By表达式第一列如果不是分区列，性能会随排序列或表达式取&#20540;增加而较大降</li></ul>
-<div><span style="font-family:&quot;Microsoft YaHei&quot;; font-size:15px; line-height:24px">使用新引擎不受限制，我估计以后的问题，新引擎都不受限制，毕竟就是为了最大化兼容sql，但是效率较低，最重要的是我现在私有云没有新引擎：)</span><br>
-</div>
-<div><span style="font-family:&quot;Microsoft YaHei&quot;; font-size:15px; line-height:24px"><br>
-</span></div>
-</div>
-<div style="margin:0px"><span style="font-family:&quot;Microsoft YaHei&quot;">持续更新中...</span></div>
-</div>
-<div style="margin:0px; font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto">
-<div style="margin:0px"></div>
-</div>
-<div style="margin:0px; font-family:Helvetica,'Hiragino Sans GB',微软雅黑,'Microsoft YaHei UI',SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:auto">
-</div>
-</p>
-      <div class="post-button"><a class="btn" href="/2016/04/25/%E9%98%BF%E9%87%8C%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93ads%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+</span></div></p>
+      <div class="post-button"><a class="btn" href="/2016/04/25/%E9%98%BF%E9%87%8C%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93ads%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/">分析型数据库 ADS 报错 Query misses join index</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-04-05 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a></span>
-      <p><span id="more"></span>
-
-
-<div>查询了下，看到阿里官网解释的是</div>
+      <p><div>查询了下，看到阿里官网解释的是</div>
 <div>【目前分析型数据库中使用JOIN时若一方是物理表，那么物理表参与JOIN的列必须是分区列并且已建立HASH索引】</div>
 <div>然后就按照要求把索引改为HASH索引，继续执行JOIN，但是还是报相同错误，遂问了下阿里的技术人员，得到答案：</div>
 <div><strong>确认表是实时更新表还是批量表，如果是批量表的话，是否在新增索引后有重新加载数据，如果是实时更新表是否已经做过表分析optimize table &lt;tablename&gt;;&nbsp;
 </strong></div>
 <div><strong>到控制台导入导出的地方看一下记录，看表分析是否已经结束了。表分析需要一定的时间。目前在表分析的时候，会产生一条导入记录。那个记录是成功了，才是分析好了。</strong>&nbsp;
 </div>
-<div></div>
-</p>
-      <div class="post-button"><a class="btn" href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+<div></div></p>
+      <div class="post-button"><a class="btn" href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
       <h2 class="title"><a href="/2015/11/15/python%E5%AE%9E%E7%8E%B0windows%20ie%E4%BB%A3%E7%90%86%E5%88%87%E6%8D%A2/">python实现windows ie代理切换</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2015-11-15 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/python/">python</a></span>
-      <p><span id="more"></span>
-
-
-<p>以前在杭州公司是需要设代理才可以连接外网，忽然一天不需要了，就没怎么想过这个问题。</p>
+      <p><p>以前在杭州公司是需要设代理才可以连接外网，忽然一天不需要了，就没怎么想过这个问题。</p>
 <p>这次来无锡出差，天天需要设置代理，如果不...就会这样:</p>
 <p>回宿舍还得把代理取消。</p>
-<p>遂偷懒...考虑了下...是否可以写个程序运行完成...<br>
-</p>
-<p>首先查询到，windows的ie代理实际上是修改注册表项的相关内容参数完成的。</p>
-<p>这下就简单多了，只需修改注册表里的项内容就行。</p>
-<pre class="brush:python;toolbar:false">import io, sys, time, re, os
-import winreg
-#表项路径
-xpath = &quot;Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;
-
-<p>#设定代理,enable:是否开启,proxyIp:代理服务器ip及端口,IgnoreIp:忽略代理的ip或网址<br>def setProxy(enable,proxyIp,IgnoreIp):<br>    try:<br>        key &#x3D; winreg.OpenKey(winreg.HKEY_CURRENT_USER, xpath, 0, winreg.KEY_WRITE)<br>        winreg.SetValueEx(key, &quot;ProxyEnable&quot;, 0, winreg.REG_DWORD, enable)<br>        winreg.SetValueEx(key, &quot;ProxyServer&quot;, 0, winreg.REG_SZ, proxyIp)<br>        winreg.SetValueEx(key, &quot;ProxyOverride&quot;, 0, winreg.REG_SZ, IgnoreIp)<br>    except Exception as e:<br>        print(&quot;ERROR: &quot; &amp;#43; str(e.args))<br>    finally:<br>        None</p>
-<p>#开启，定义代理服务器ip及端口，忽略ip内容(分号分割)<br>def enableProxy():<br>    proxyIP &#x3D; &quot;172.21.18.21:8080&quot;<br>    IgnoreIp &#x3D; &quot;172.<em>;192.</em>;&quot;<br>    print(&quot; Setting proxy&quot;)<br>    setProxy(1,proxyIP,IgnoreIp)<br>    print(&quot; Setting success&quot;)</p>
-<p>#关闭清空代理<br>def disableProxy():<br>    print(&quot; Empty proxy&quot;)<br>    setProxy(0,&quot;&quot;,&quot;&quot;)<br>    print(&quot; Empty success&quot;)</p>
-<p>def main():<br>    place &#x3D; input(&quot;where are you?(home or ls)\n&quot;)<br>    try:<br>        if place&#x3D;&#x3D;&quot;home&quot;:<br>            disableProxy()<br>        elif place&#x3D;&#x3D;&quot;ls&quot;:<br>            enableProxy()<br>        else:<br>            print(&quot;please input ‘home’ or ‘ls’(longshine)!&quot;)<br>            main()<br>    except Exception as e:<br>        print(&quot;ERROR: &quot; &amp;#43; str(e.args))<br>    finally:<br>        pass</p>
-<p>if <strong>name</strong> &#x3D;&#x3D; ‘<strong>main</strong>‘:<br>    main()<br></pre></p>
-<p>完成...其实后来想想用批处理也可以解决...反正就是修改注册表项。</p>
-<pre class="brush:bash;toolbar:false">@echo off
-title 设置代理服务器
-echo 正在设置代理服务器……
-reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyEnable /t REG_DWORD /d 1 /f
-reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyServer /d &quot;172.21.18.21:8080&quot; /f
-reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyOverride /t REG_SZ /d &quot;172.*;192.*;&quot; /f
-echo 设置完毕
-</pre>
-<pre class="brush:bash;toolbar:false">@echo off
-title 清空代理服务器 没有代理
-echo 正在清空代理服务器设置……
-reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyEnable /t REG_DWORD /d 0 /f
-reg add &quot;HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; /v ProxyServer /d &quot;&quot; /f
-echo 代理服务器设置已经清空
-</pre>
-</p>
-      <div class="post-button"><a class="btn" href="/2015/11/15/python%E5%AE%9E%E7%8E%B0windows%20ie%E4%BB%A3%E7%90%86%E5%88%87%E6%8D%A2/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+<p>遂偷懒...考虑了下...是否可以写个程序运行完成...<br></p>
+      <div class="post-button"><a class="btn" href="/2015/11/15/python%E5%AE%9E%E7%8E%B0windows%20ie%E4%BB%A3%E7%90%86%E5%88%87%E6%8D%A2/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -437,7 +324,7 @@ to this:</p>
 <p style="margin-top:0px; margin-bottom:1em; padding-top:0px; padding-bottom:0px; border:0px; font-size:15px; clear:both; color:rgb(34,34,34); font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; line-height:19.5px">
 and that solved the problem.</p>
 </p>
-      <div class="post-button"><a class="btn" href="/2015/09/04/The%20following%20classes%20could%20not%20be%20instantiated!%20-%20android.support.v7.widget.Toolbar%20%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2015/09/04/The%20following%20classes%20could%20not%20be%20instantiated!%20-%20android.support.v7.widget.Toolbar%20%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -565,7 +452,7 @@ def getGUI(self):
 <br>
 <p></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2015/03/10/python3+BeautifulSoup+tkinter%20%E7%88%AC%E8%99%AB%20%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%E6%88%90%E7%BB%A9/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2015/03/10/python3+BeautifulSoup+tkinter%20%E7%88%AC%E8%99%AB%20%E8%8E%B7%E5%8F%96%E5%AD%A6%E6%A0%A1%E6%88%90%E7%BB%A9/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -593,7 +480,7 @@ paging.js</p>
 <p style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-bottom:0px; color:rgb(102,102,102); font-family:'Hiragino Sans GB','Microsoft YaHei',微软雅黑,tahoma,arial,simsun,宋体; line-height:24px">
 同步发布在lofter&nbsp;http://delin.ml/post/327197_416976a</p>
 </p>
-      <div class="post-button"><a class="btn" href="/2014/12/04/js%E4%BC%AA%E5%88%86%E9%A1%B5/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2014/12/04/js%E4%BC%AA%E5%88%86%E9%A1%B5/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -614,7 +501,7 @@ paging.js</p>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 </p>
-      <div class="post-button"><a class="btn" href="/2000/10/10/hello-world/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2000/10/10/hello-world/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
 
@@ -656,18 +543,18 @@ paging.js</p>
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

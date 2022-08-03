@@ -105,11 +105,12 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <ol>
+<li>list-databases  列出数据库<br>sqoop list-databases –connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs</li>
+</ol>
+<span id="more"></span>
 
-<ol>
-<li><p>list-databases  列出数据库<br>sqoop list-databases –connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs</p>
-</li>
+<ol start="2">
 <li><p>list-tables  列出某数据库下的表<br>sqoop list-tables–connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs</p>
 </li>
 <li><p>eval 可以快速地使用SQL语句对关系数据库进行操作，这可以使得在使用import这种工具进行数据导入的时候，可以预先了解相关的SQL语句是否正确，并能将结果显示在控制台<br>sqoop eval –connect jdbc:oracle:thin:@172.21.202.4:1521:TJZHCSDEV –username tjzhcs –password tjzhcs -e “select * from b_code”</p>
@@ -190,18 +191,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

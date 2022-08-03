@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">L4.plan_id</span><br><span class="line">,MAX(SUBSTR(L4.分组内容,2)) display_theme</span><br><span class="line">FROM(</span><br><span class="line">        SELECT</span><br><span class="line">        L3.plan_id</span><br><span class="line">        ,SYS_CONNECT_BY_PATH(L3.theme_name,&#x27;；&#x27;) AS 分组内容</span><br><span class="line">        FROM(</span><br><span class="line">                SELECT</span><br><span class="line">                L2.plan_id</span><br><span class="line">                ,L2.theme_name</span><br><span class="line">                ,L2.plan_id||L2.分组内编号 AS 分组字段加编号,L2.plan_id||(L2.分组内编号-1) AS 上级分组字段加编号</span><br><span class="line">                FROM(</span><br><span class="line">                        SELECT</span><br><span class="line">                        L1.plan_id   -- 分组依据</span><br><span class="line">                        ,L1.theme_name    -- 同一列中 要合并的不同行 的值</span><br><span class="line">                        ,ROW_NUMBER() OVER (PARTITION BY L1.plan_id ORDER BY L1.theme_name ASC) 分组内编号</span><br><span class="line">                        FROM t_display_config_theme L1</span><br><span class="line">                ) L2</span><br><span class="line">        ) L3</span><br><span class="line">        START WITH L3.上级分组字段加编号 LIKE &#x27;%0&#x27;</span><br><span class="line">        CONNECT BY PRIOR L3.分组字段加编号=L3.上级分组字段加编号</span><br><span class="line">) L4</span><br><span class="line">GROUP BY L4.plan_id</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">L4.plan_id</span><br><span class="line">,MAX(SUBSTR(L4.分组内容,2)) display_theme</span><br><span class="line">FROM(</span><br><span class="line">        SELECT</span><br><span class="line">        L3.plan_id</span><br><span class="line">        ,SYS_CONNECT_BY_PATH(L3.theme_name,&#x27;；&#x27;) AS 分组内容</span><br><span class="line">        FROM(</span><br><span class="line">                SELECT</span><br><span class="line">                L2.plan_id</span><br><span class="line">                ,L2.theme_name</span><br><span class="line">                ,L2.plan_id||L2.分组内编号 AS 分组字段加编号,L2.plan_id||(L2.分组内编号-1) AS 上级分组字段加编号</span><br><span class="line">                FROM(</span><br><span class="line">                        SELECT</span><br><span class="line">                        L1.plan_id   -- 分组依据</span><br><span class="line">                        ,L1.theme_name    -- 同一列中 要合并的不同行 的值</span><br><span class="line">                        ,ROW_NUMBER() OVER (PARTITION BY L1.plan_id ORDER BY L1.theme_name ASC) 分组内编号</span><br><span class="line">                        FROM t_display_config_theme L1</span><br><span class="line">                ) L2</span><br><span class="line">        ) L3</span><br><span class="line">        START WITH L3.上级分组字段加编号 LIKE &#x27;%0&#x27;</span><br><span class="line">        CONNECT BY PRIOR L3.分组字段加编号=L3.上级分组字段加编号</span><br><span class="line">) L4</span><br><span class="line">GROUP BY L4.plan_id</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
       </div>
     </div>
   </div>
@@ -174,18 +174,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

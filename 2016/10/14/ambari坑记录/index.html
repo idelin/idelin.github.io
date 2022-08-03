@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>问题一：<br>此问题是在安装注册主机时遇到的</p>
+<span id="more"></span>
 
-<p>问题一：<br>此问题是在安装注册主机时遇到的</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">(&#x27;ERROR 2015-02-06 20:09:43,441 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group</span><br><span class="line">ERROR 2015-02-06 20:09:43,442 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions. </span><br><span class="line">Refer to: https://bugzilla.redhat.com/show_bug.cgi?id=1022468 for more details.</span><br><span class="line">INFO 2015-02-06 20:09:43,442 NetUtil.py:81 - Server at https://Master.domain.dev:8440 is not reachable, sleeping for 10 seconds...</span><br><span class="line">INFO 2015-02-06 20:09:45,343 main.py:83 - loglevel=logging.INFO</span><br><span class="line">INFO 2015-02-06 20:09:45,343 main.py:55 - signal received, exiting.</span><br><span class="line">INFO 2015-02-06 20:09:45,343 ProcessHelper.py:39 - Removing pid file</span><br><span class="line">INFO 2015-02-06 20:09:45,344 ProcessHelper.py:46 - Removing temp files</span><br><span class="line">INFO 2015-02-06 20:10:19,815 main.py:83 - loglevel=logging.INFO</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:36 - Data cleanup thread started</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:71 - Data cleanup started</span><br><span class="line">INFO 2015-02-06 20:10:19,816 DataCleaner.py:73 - Data cleanup finished</span><br><span class="line">INFO 2015-02-06 20:10:19,973 PingPortListener.py:51 - Ping port listener started on port: 8670</span><br><span class="line">INFO 2015-02-06 20:10:19,973 main.py:227 - Connecting to the server at: https://Master.domain.dev:8440</span><br><span class="line">INFO 2015-02-06 20:10:19,974 NetUtil.py:72 - DEBUG: Trying to connect to the server at https://Master.domain.dev:8440</span><br><span class="line">INFO 2015-02-06 20:10:19,974 NetUtil.py:42 - Connecting to the following url https://Master.domain.dev:8440/cert/ca</span><br><span class="line">ERROR 2015-02-06 20:10:20,023 NetUtil.py:56 - [Errno 1] _ssl.c:492: error:100AE081:elliptic curve routines:EC_GROUP_new_by_curve_name:unknown group</span><br><span class="line">ERROR 2015-02-06 20:10:20,023 NetUtil.py:58 - SSLError: Failed to connect. Please check openssl library versions. </span><br><span class="line">Refer to: https://bugzilla.redhat.com/show_bug.cgi?id=1022468 for more details.</span><br><span class="line">INFO 2015-02-06 20:10:20,023 NetUtil.py:81 - Server at https://Master.domain.dev:8440 is not reachable, sleeping for 10 seconds...</span><br><span class="line">&#x27;, None)</span><br><span class="line"></span><br><span class="line">Connection to Slave5.domain.dev closed.</span><br><span class="line">SSH command execution finished</span><br><span class="line">host=Slave5.domain.dev, exitcode=0</span><br><span class="line">Command end time 2015-02-06 12:07:47</span><br><span class="line"></span><br><span class="line">Registering with the server...</span><br><span class="line">Registration with the server failed.</span><br></pre></td></tr></table></figure>
 
 <p>解决方法：<br>一下是官方论坛中给出的方法，很好</p>
@@ -191,18 +191,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

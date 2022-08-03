@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <h2 id="一、下载安装包"><a href="#一、下载安装包" class="headerlink" title="一、下载安装包"></a>一、下载安装包</h2><p><a target="_blank" rel="noopener" href="http://www.apache.org/dyn/closer.lua/storm/apache-storm-1.1.1/apache-storm-1.1.1.tar.gz">http://www.apache.org/dyn/closer.lua/storm/apache-storm-1.1.1/apache-storm-1.1.1.tar.gz</a></p>
+<span id="more"></span>
 
-<h2 id="一、下载安装包"><a href="#一、下载安装包" class="headerlink" title="一、下载安装包"></a>一、下载安装包</h2><p><a target="_blank" rel="noopener" href="http://www.apache.org/dyn/closer.lua/storm/apache-storm-1.1.1/apache-storm-1.1.1.tar.gz">http://www.apache.org/dyn/closer.lua/storm/apache-storm-1.1.1/apache-storm-1.1.1.tar.gz</a></p>
 <p>##二、修改配置文件<br>vim  storm.yaml</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">##zookeeper</span><br><span class="line">storm.zookeeper.servers:</span><br><span class="line">     - &quot;localhost&quot;</span><br><span class="line">##nimbus所在节点</span><br><span class="line">nimbus.seeds: [&quot;localhost&quot;]</span><br><span class="line">##可用端口号配置，每个对应一个worker，可配置多个</span><br><span class="line">supervisor.slots.ports:</span><br><span class="line">    - 6700</span><br></pre></td></tr></table></figure>
 <p>##三、启动组件<br>###1.启动zookeeper<br>Storm中使用Zookeeper主要用于Storm集群各节点的分布式协调工作，所以最先启动zookeeper，当然zookeeper也是需要下载，自行下载启动&gt;&gt;<a target="_blank" rel="noopener" href="http://zookeeper.apache.org/">http://zookeeper.apache.org/</a></p>
@@ -195,18 +195,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

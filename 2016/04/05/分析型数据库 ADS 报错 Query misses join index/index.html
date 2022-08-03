@@ -105,10 +105,7 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
-
-
-<div>查询了下，看到阿里官网解释的是</div>
+        <div>查询了下，看到阿里官网解释的是</div>
 <div>【目前分析型数据库中使用JOIN时若一方是物理表，那么物理表参与JOIN的列必须是分区列并且已建立HASH索引】</div>
 <div>然后就按照要求把索引改为HASH索引，继续执行JOIN，但是还是报相同错误，遂问了下阿里的技术人员，得到答案：</div>
 <div><strong>确认表是实时更新表还是批量表，如果是批量表的话，是否在新增索引后有重新加载数据，如果是实时更新表是否已经做过表分析optimize table &lt;tablename&gt;;&nbsp;
@@ -116,6 +113,8 @@
 <div><strong>到控制台导入导出的地方看一下记录，看表分析是否已经结束了。表分析需要一定的时间。目前在表分析的时候，会产生一条导入记录。那个记录是成功了，才是分析好了。</strong>&nbsp;
 </div>
 <div></div>
+
+<span id="more"></span>
 
       </div>
     </div>
@@ -183,18 +182,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

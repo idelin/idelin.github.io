@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>上一篇发了解决elasticsearch UpdateByQuery的问题，后来遇到好多小伙伴问我，为什么他使用不了UpdateByQuery，遂科普下。<br>在于你可能没有引入reindex包：</p>
+<span id="more"></span>
 
-<p>上一篇发了解决elasticsearch UpdateByQuery的问题，后来遇到好多小伙伴问我，为什么他使用不了UpdateByQuery，遂科普下。<br>在于你可能没有引入reindex包：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.elasticsearch.module&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;reindex&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.4.3&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 <p>使用方法也很简单，举个栗子，这个栗子的作用是把所有满足条件的session_id记录都使用对应script更新：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public static void updateByQuery(String index, String type, Set&lt;Map&lt;String, Object&gt;&gt; docs, String scriptStr) &#123;</span><br><span class="line">        if (docs == null || docs.isEmpty())&#123;</span><br><span class="line">            LOG.info(&quot;No data can updateByQuery to es! index:&#123;&#125;.&quot;, index);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        UpdateByQueryRequestBuilder ubqrb = UpdateByQueryAction.INSTANCE.newRequestBuilder(client);</span><br><span class="line">        for (Map&lt;String, Object&gt; doc : docs) &#123;</span><br><span class="line">            if (doc==null || doc.isEmpty())&#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">            Script script = new Script(scriptStr);</span><br><span class="line">            BulkIndexByScrollResponse scrollResponse =</span><br><span class="line">                    ubqrb.source(index)</span><br><span class="line">                            .script(script)</span><br><span class="line">                            .filter(QueryBuilders.termQuery(&quot;session_id&quot;, doc.get(&quot;orgin_session_id&quot;)))</span><br><span class="line">                            .abortOnVersionConflict(false).get();</span><br><span class="line">            for (BulkItemResponse.Failure failure : scrollResponse.getIndexingFailures()) &#123;</span><br><span class="line">                LOG.error(failure.getMessage());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -177,18 +177,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

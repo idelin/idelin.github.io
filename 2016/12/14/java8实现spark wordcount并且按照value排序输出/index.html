@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>   最近在学习spark，本来应该是使用scala编程，但是无奈scala没接触过，还得学，就先使用java的spark api练练手，其实发现java8的函数式编程跟scala很多地方异曲同工啊，搞定spark的java api后面学scala应该事半功倍！<br>最开始当然是万年不变的wordcount，加了个排序输出，具体看注释(^o^)&#x2F;</p>
+<span id="more"></span>
 
-<p>   最近在学习spark，本来应该是使用scala编程，但是无奈scala没接触过，还得学，就先使用java的spark api练练手，其实发现java8的函数式编程跟scala很多地方异曲同工啊，搞定spark的java api后面学scala应该事半功倍！<br>最开始当然是万年不变的wordcount，加了个排序输出，具体看注释(^o^)&#x2F;</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SparkConf conf = new SparkConf().setMaster(&quot;local&quot;).setAppName(&quot;word count&quot;);</span><br><span class="line">JavaSparkContext sc = new JavaSparkContext(conf);</span><br><span class="line">JavaRDD&lt;String&gt; lines = sc.textFile(&quot;xxx.txt&quot;);</span><br><span class="line">//使用java8提供的lambda表达式</span><br><span class="line">//一句可以完成wordcount</span><br><span class="line">JavaPairRDD&lt;String, Integer&gt; counts = </span><br><span class="line">	lines</span><br><span class="line">	//根据&#x27;\001&#x27;分割来源行</span><br><span class="line">	.flatMap(line -&gt; Arrays.asList(line.split(&quot;\\001&quot;)).iterator())</span><br><span class="line">	//map输出 (单词,1)</span><br><span class="line">	.mapToPair(w -&gt; new Tuple2&lt;String, Integer&gt;(w, 1)) </span><br><span class="line">	//通过reduce相同key，value值相加</span><br><span class="line">	.reduceByKey((x, y) -&gt; x + y); </span><br><span class="line">		</span><br><span class="line">//根据得到的value值排序而不是key，默认只提供了根据key排序</span><br><span class="line">//那么想到的思路是，交换key、value，进行key排序，交换回来，完成value排序</span><br><span class="line">counts</span><br><span class="line">	//交换key-value，注意类型</span><br><span class="line">	.mapToPair(s -&gt; new Tuple2&lt;Integer, String&gt;(s._2, s._1))</span><br><span class="line">	//倒序</span><br><span class="line">	.sortByKey(false)</span><br><span class="line">	//交换key-value，注意类型</span><br><span class="line">	.mapToPair(s -&gt; new Tuple2&lt;String, Integer&gt;(s._2, s._1))</span><br><span class="line">	//转成集合</span><br><span class="line">	.collect()</span><br><span class="line">	//输出</span><br><span class="line">	.forEach(tuple -&gt; System.out.println(tuple._1() + &quot;: &quot; + tuple._2()));</span><br></pre></td></tr></table></figure>
       </div>
     </div>
@@ -175,18 +175,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

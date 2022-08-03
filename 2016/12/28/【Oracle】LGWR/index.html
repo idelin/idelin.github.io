@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>LGWR，是Log Writer的缩写，也是一种后台进程。主要负责将日志缓冲内容写到磁盘的在线重做日志文件或组中。DBWn将dirty块写到磁盘之前，所有与buffer修改相关的redo log都需要由LGWR写入磁盘的在线重做日志文件(组)，如果未写完，那么DBWn会等待LGWR，也会产生一些相应的等待事件(例如：log file prarllel write，后面单独作为话题再聊)。总之，这样做的目的就是为了当crash时，可以有恢复之前操作的可能，也是Oracle在保持交易完整性方面的一个机制。</p>
+<span id="more"></span>
 
-<p>LGWR，是Log Writer的缩写，也是一种后台进程。主要负责将日志缓冲内容写到磁盘的在线重做日志文件或组中。DBWn将dirty块写到磁盘之前，所有与buffer修改相关的redo log都需要由LGWR写入磁盘的在线重做日志文件(组)，如果未写完，那么DBWn会等待LGWR，也会产生一些相应的等待事件(例如：log file prarllel write，后面单独作为话题再聊)。总之，这样做的目的就是为了当crash时，可以有恢复之前操作的可能，也是Oracle在保持交易完整性方面的一个机制。</p>
 <p>相关知识点：</p>
 <p>1、LGWR写日志是顺序写，这就解释了一个Orace Server只能有一个LGWR进程，不能像DBWR那样可以有多个，否则就无法保证顺序写的机制，而且可能会产生锁的问题。</p>
 <p>2、用户进程每次修改内存数据块时，都会在日志缓冲区(redo buffer)中构造一个相应的重做条目(redo entry)，它记录了被修改数据块修改之前和之后的值。</p>
@@ -187,18 +187,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>
