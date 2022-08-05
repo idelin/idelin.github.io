@@ -3733,4 +3733,30 @@ source  hadoop-env.sh</pre><br>
         <tag>kafka</tag>
       </tags>
   </entry>
+  <entry>
+    <title>git patch使用</title>
+    <url>/2017/08/25/git%20patch%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>Git 提供了两种补丁方案，一种是通过 git diff 生成的 .diff 文件，第二种是通过 git format-patch 生成的 .patch 文件。</p>
+<span id="more"></span>
+
+<p>通过 git diff 生成的文件不含有 commit 信息，可以指定文件生成 diff，也可以指定单个 commit， 多个 commit 生成 。</p>
+<p>通过 git format-patch 生成的 .patch 文件 含有 commmit 信息。一个 commit 对应一个 patch 文件，也可以整合到一个 patch 文件里。</p>
+<p>此方案只针对某一个 branch 的代码的迁移。</p>
+<h2 id="1-git-format-patch"><a href="#1-git-format-patch" class="headerlink" title="1. git format-patch"></a>1. git format-patch</h2><p>此命令用于生成 patch 文件。</p>
+<p>某次提交以后的所有 patch:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git format-patch [commitId]</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-git-am"><a href="#2-git-am" class="headerlink" title="2. git am"></a>2. git am</h2><p>此命令用于打 patch 文件入分支。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git am xxx.patch</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="3-Usage"><a href="#3-Usage" class="headerlink" title="3. Usage"></a>3. Usage</h2><p>使用流程：start -&gt; 云桌面查看待同步分支最新 commitId -&gt; 内网切换到需要同步的分支 -&gt; 内网 git format-patch -&gt; 打包 patch 文件内传外（包含代码，需要有高权限的人才可以传） -&gt; 云桌面解包 -&gt; git am -&gt; over。</p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
 </search>

@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>es  UpdateByQuery 出现 VersionConflictEngineException | DELIN</title>
+  <title>Tag-git | DELIN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="DELIN">
   <meta name="keywords" content="">
@@ -63,7 +63,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
 <meta name="generator" content="Hexo 6.1.0"></head>
 <body>
-<div class="single">
+
+<div id="page">
 <div class="popup search-popup local-search-popup">
   <div class="local-search-header clearfix">
     <span class="search-icon">
@@ -81,16 +82,15 @@
   <div id="local-search-result"></div>
 </div>
 
-<div id="page">
 <div class="header">
-  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/cover.min.jpeg)">
     <div class="overlay">
       <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
-      <div class="page-title">
+      <div class="featured">
         <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
-        <span>2017-08-25</span>
-        <h2>es  UpdateBy...</h2>
-        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/%E5%BC%82%E5%B8%B8/" rel="tag">异常</a></div>
+        <span>DELIN</span>
+        <h1>DELIN</h1>
+        <span>TO LEARN WELL,TO LIVE WELL.</span>
         <div class="social-links">
     <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
     <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
@@ -103,54 +103,21 @@
 </div>
 <div id="lx-main-content">
   <div class="lx-post">
-    <div class="lx-entry padding">
-      <div>
-        <p>问题出在多次更新统一doc出现版本不一致，抛出异常，修改不成功。<br>解决方法：<br>确认你的操作不会造成数据不一致的情况下，<br>UpdateByQueryRequestBuilder实现类增加执行方法abortOnVersionConflict(false)</p>
-<span id="more"></span>
+  <h2 class="pagehead">Tag git</h2>
+    <div class="lx-entry padding"><div>
+    <span class="lx-post-detail">2017-08-25</span>
+    <h2 class="title"><a href="/2017/08/25/git%20patch%E4%BD%BF%E7%94%A8/">git patch使用</a></h2>
+    <p><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/git/" rel="tag">git</a></p></div></div>
 
-<p>like this</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UpdateByQueryRequestBuilder ubqrb = UpdateByQueryAction.INSTANCE.newRequestBuilder(client);</span><br><span class="line">Script script = new Script(scriptStr);</span><br><span class="line">BulkIndexByScrollResponse scrollResponse = ubqrb.source(index).script(script)</span><br><span class="line">.filter(QueryBuilders.termQuery(&quot;xxx&quot;,xxx)))</span><br><span class="line">.abortOnVersionConflict(false)</span><br><span class="line">.get();</span><br></pre></td></tr></table></figure>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="lx-navigation">
-	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="/2017/08/29/elasticsearch%20UpdateByQuery%E7%9A%84%E4%BD%BF%E7%94%A8/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Next</span>
-						<h3>elastic...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="/2017/08/25/git%20patch%E4%BD%BF%E7%94%A8/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Prev</span>
-						<h3>git pat...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-</div>
 
-</div>
-<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
   Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
   </div>
 </footer>
 
+  </div>
+</div>
 </div>
 
 <button class="hamburger hamburger--arrow-r" type="button" title="menu">
@@ -226,26 +193,7 @@
 }());
 </script>
 <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script>
-<script>
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'Uw10rKYdVtxgziHXLtKFjIQm-gzGzoHsz',
-    appKey: 'wckPTfmV3QJDVvus6l2oaTUn',
-    placeholder: 'Say something.',
-    avatar: 'identicon',
-    meta: guest,
-    pageSize: '10' || 10,
-    lang: 'zh-cn' || 'zh-cn'
-  });
-</script>
+
 
 </body>
 </html>
