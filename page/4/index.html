@@ -105,10 +105,19 @@
 
   <div class="lx-entry padding">
     <div>
+      <h2 class="title"><a href="/2016/11/14/Encryption%20raised%20an%20exception/">Encryption raised an exception</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-11-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/java/">java</a></span>
+      <p><p>script-test:<br>     [echo] Testing encrypt.sh<br>     [exec] Exception in thread “main” org.jasypt.exceptions.EncryptionOperationNotPossibleException: Encryption raised an exception. A possible cause is you are using strong encryption algorithms and you have not installed the Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files in this Java Virtual Machine<br>     [exec]     at org.jasypt.encryption.pbe.StandardPBEByteEncryptor.handleInvalidKeyException(StandardPBEByteEncryptor.java:1073)<br>     [exec]     at org.jasypt.encryption.pbe.StandardPBEByteEncryptor.encrypt(StandardPBEByteEncryptor.java:924)<br>     [exec]     at org.jasypt.encryption.pbe.StandardPBEStringEncryptor.encrypt(StandardPBEStringEncryptor.java:642)<br>     [exec]     at azkaban.crypto.CryptoV1_1.encrypt(CryptoV1_1.java:42)<br>     [exec]     at azkaban.crypto.Crypto.encrypt(Crypto.java:49)<br>     [exec]     at azkaban.crypto.EncryptionCLI.main(EncryptionCLI.java:58)</p>
+<p>发现错误是因为jdk没有带jce，遂安装。</p></p>
+      <div class="post-button"><a class="btn" href="/2016/11/14/Encryption%20raised%20an%20exception/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
       <h2 class="title"><a href="/2016/10/20/Hive%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">Hive常用优化方法</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-20 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
       <p><p>1、join连接时的优化：当三个或多个以上的表进行join操作时，如果每个on使用相同的字段连接时只会产生一个mapreduce。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/10/20/Hive%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/10/20/Hive%E5%B8%B8%E7%94%A8%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -116,7 +125,7 @@
       <h2 class="title"><a href="/2016/10/20/centos%E4%B8%8Bwget!%20%E6%97%A0%E6%B3%95%E8%A7%A3%E6%9E%90%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%9D%80/">centos下wget无法解析主机地址</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-20</span>
       <p><p>wget -4<br>强制使用ipv4</p></p>
-      <div class="post-button"><a class="btn" href="/2016/10/20/centos%E4%B8%8Bwget!%20%E6%97%A0%E6%B3%95%E8%A7%A3%E6%9E%90%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%9D%80/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/10/20/centos%E4%B8%8Bwget!%20%E6%97%A0%E6%B3%95%E8%A7%A3%E6%9E%90%E4%B8%BB%E6%9C%BA%E5%9C%B0%E5%9D%80/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -124,7 +133,7 @@
       <h2 class="title"><a href="/2016/10/14/ambari%E5%9D%91%E8%AE%B0%E5%BD%95/">ambari坑记录</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
       <p><p>问题一：<br>此问题是在安装注册主机时遇到的</p></p>
-      <div class="post-button"><a class="btn" href="/2016/10/14/ambari%E5%9D%91%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/10/14/ambari%E5%9D%91%E8%AE%B0%E5%BD%95/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -132,7 +141,7 @@
       <h2 class="title"><a href="/2016/10/14/ambari%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8Ahadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B/">ambari离线安装以及hadoop环境搭建详细过程</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-10-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
       <p><p>一、安装环境<br>六台相同配置的虚拟机</p></p>
-      <div class="post-button"><a class="btn" href="/2016/10/14/ambari%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8Ahadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/10/14/ambari%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8Ahadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -141,7 +150,7 @@
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-09-12 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/mysql/">mysql</a></span>
       <p><p>匹配15和18位</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from sfzmhm_table where sfzmhm regexp &#x27;^[1-9][[:digit:]]&#123;7&#125;((0[[:digit:]])|(1[0-2]))(([0|1|2][[:digit:]])|3[0-1])[[:digit:]]&#123;3&#125;$|^[1-9][[:digit:]]&#123;5&#125;[1-9][[:digit:]]&#123;3&#125;((0[[:digit:]])|(1[0-2]))(([0|1|2][[:digit:]])|3[0-1])[[:digit:]]&#123;3&#125;([0-9]|X)$&#x27;</span><br></pre></td></tr></table></figure></p>
-      <div class="post-button"><a class="btn" href="/2016/09/12/mysql%20%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%98%8E%E5%8F%B7%E7%A0%81%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/09/12/mysql%20%E8%BA%AB%E4%BB%BD%E8%AF%81%E6%98%8E%E5%8F%B7%E7%A0%81%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -149,7 +158,7 @@
       <h2 class="title"><a href="/2016/08/11/%E5%BB%BA%E6%A8%A1%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0/">建模交流学习</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-08-11 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91-%E5%BB%BA%E6%A8%A1/">阿里云 建模</a></span>
       <p><p>以下是今天（20160811）跟阿里的同学交流的关于建模方面的心得。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/08/11/%E5%BB%BA%E6%A8%A1%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/08/11/%E5%BB%BA%E6%A8%A1%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -163,7 +172,7 @@
 <h3>1.“Y”变量定义</h3>
 <p></p>
 <p>为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现：</p></p>
-      <div class="post-button"><a class="btn" href="/2016/08/05/xx%E7%9C%81%E9%A9%BE%E9%A9%B6%E5%91%98%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/08/05/xx%E7%9C%81%E9%A9%BE%E9%A9%B6%E5%91%98%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -171,7 +180,7 @@
       <h2 class="title"><a href="/2016/08/05/%E5%90%90%E6%A7%BD%E9%98%BF%E9%87%8C%E4%BA%91PAI/">吐槽阿里云PAI</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-08-05 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/">阿里云</a></span>
       <p><p>之前在杭州培训的时候有接触过PAI，说实话是挺好用的。<br>直接接入ODPS数据，使用ODPS的引擎做机器学习，训练模型，体验还是不错的，基本的算法都有，满足基本预测挖掘数据的要求。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/08/05/%E5%90%90%E6%A7%BD%E9%98%BF%E9%87%8C%E4%BA%91PAI/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/08/05/%E5%90%90%E6%A7%BD%E9%98%BF%E9%87%8C%E4%BA%91PAI/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -179,21 +188,13 @@
       <h2 class="title"><a href="/2016/06/14/%E4%B8%80%E4%BA%9B%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%A1%86%E6%9E%B6/">一些分布式计算框架</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-06-14 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
       <p><p>1） MapReduce:  这个框架人人皆知，它是一种离线计算框架，将一个算法抽象成Map和Reduce两个阶段进行处理，非常适合数据密集型计算。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/06/14/%E4%B8%80%E4%BA%9B%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%A1%86%E6%9E%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2016/05/25/Hbase%E5%AE%89%E8%A3%85/">Hbase安装</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-05-25 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
-      <p><p>hbase安装<br></p></p>
-      <div class="post-button"><a class="btn" href="/2016/05/25/Hbase%E5%AE%89%E8%A3%85/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/06/14/%E4%B8%80%E4%BA%9B%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E6%A1%86%E6%9E%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
 
 
 <div id="pagination">
-  <a class="extend prev" rel="prev" href="/page/3/"></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"></a>
+  <a class="extend prev" rel="prev" href="/page/3/"></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"></a>
 </div>
 
 <footer>
@@ -229,18 +230,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

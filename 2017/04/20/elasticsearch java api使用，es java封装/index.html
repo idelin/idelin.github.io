@@ -105,9 +105,9 @@
   <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <span id="more"></span>
+        <p>最近需要使用到elasticsearch，封装了一些方法，在此记录下。</p>
+<span id="more"></span>
 
-<p>最近需要使用到elasticsearch，封装了一些方法，在此记录下。</p>
 <h3 id="1-创建索引"><a href="#1-创建索引" class="headerlink" title="1. 创建索引"></a>1. 创建索引</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static boolean createIndex(String index) &#123;</span><br><span class="line">        if (!isIndexExist(index)) &#123;</span><br><span class="line">            LOG.info(&quot;Index is not exits!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        CreateIndexResponse indexresponse = client.admin().indices()</span><br><span class="line">                // 这个索引库的名称还必须不包含大写字母</span><br><span class="line">                .prepareCreate(index).execute().actionGet();</span><br><span class="line">        LOG.info(&quot;执行建立成功？&quot; + indexresponse.isAcknowledged());</span><br><span class="line">        return indexresponse.isAcknowledged();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="2-删除索引"><a href="#2-删除索引" class="headerlink" title="2. 删除索引"></a>2. 删除索引</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public static boolean deleteIndex(String index) &#123;</span><br><span class="line">        if (!isIndexExist(index)) &#123;</span><br><span class="line">            LOG.info(&quot;Index is not exits!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        DeleteIndexResponse dResponse = client.admin().indices().prepareDelete(index).execute().actionGet();</span><br><span class="line">        if (dResponse.isAcknowledged()) &#123;</span><br><span class="line">            LOG.info(&quot;delete index &quot; + index + &quot;  successfully!&quot;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            LOG.info(&quot;Fail to delete index &quot; + index);</span><br><span class="line">        &#125;</span><br><span class="line">        return dResponse.isAcknowledged();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -191,18 +191,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

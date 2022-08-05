@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>kafka的相关操作脚本 | DELIN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  <meta name="description" content="程序员、信息安全、Java、大数据。旅行、跑步、音乐、PLAYSTATION。">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.4.3',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/css/main.min.css">
+  
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.jside.menu.min.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 6.1.0"></head>
+<body>
+<div class="single">
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div class="header">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+    <div class="overlay">
+      <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+      <div class="page-title">
+        <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
+        <span>2019-12-21</span>
+        <h2>kafka的相关操作脚本</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/kafka/" rel="tag">kafka</a></div>
+        <div class="social-links">
+    <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://weibo.com/234601929" target="_blank" title="social-link"><i class="fa fa-weibo fa-fw"></i></a>
+    <a href="https://www.delin.fun:5001" target="_blank" title="social-link"><i class="fa fa-scribd fa-fw"></i></a>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <p>总结最近用到的kafka相关命令和脚本。</p>
+<span id="more"></span>
+<p>1、创建Topic<br>.&#x2F;kafka-topics.sh –zookeeper cc13-141:2182 –topic mytopic –replication-factor 1 –partitions 1 –create</p>
+<p>2、Topic列表<br>.&#x2F;kafka-topics.sh –zookeeper cc13-138:2181 –list</p>
+<p>3、创建生产者<br>.&#x2F;kafka-console-producer.sh –broker-list cc13-141:9092 –topic mytopic</p>
+<p>4、创建消费者<br>.&#x2F;kafka-console-consumer.sh –zookeeper c13-138:2181 –topic mytopic<br>–from-beginning 每次都是从开始位置消费，在生产环境下不建议这样使用。</p>
+<p>5、查看指定topic<br>.&#x2F;kafka-topics.sh –describe –zookeeper c13-138:2181 –topic mytopic</p>
+<p>6、删除topic<br>.&#x2F;kafka-topics.sh –delete –zookeeper c13-138:2181–topic mytopic</p>
+<p>7、显示出Consumer的Group、Topic、分区ID、分区对应已经消费的Offset、logSize大小，Lag以及Owner等信息。<br>使用脚本：kafka-consumer-offset-checker.sh<br>.&#x2F;kafka-consumer-offset-checker.sh –zookeeper c13-138:2181,c13-139:2181,c13-141:2181 –topic mytopic –group xb_id –broker-info</p>
+<p>8、有时候我们需要验证日志索引是否正确，或者仅仅想从log文件中直接打印消息。<br>使用脚本：kafka-run-class.sh<br>.&#x2F;kafka-run-class.sh kafka.tools.DumpLogSegments<br>.&#x2F;kafka-run-class.sh kafka.tools.DumpLogSegments &#x2F;nodedata&#x2F;kafka&#x2F;kafka-logs&#x2F;xb_topic-0&#x2F;00000000000000000033.log<br>.&#x2F;kafka-run-class.sh kafka.tools.DumpLogSegments –files &#x2F;nodedata&#x2F;kafka&#x2F;kafka-logs&#x2F;xb_topic-0&#x2F;00000000000000000033.log –print-data-log</p>
+<p>9、导出Zookeeper中Group相关的偏移量。有时候我们需要导出某个Consumer group各个分区的偏移量。<br>使用脚本：kafka-run-class.sh<br>.&#x2F;kafka-run-class.sh kafka.tools.ExportZkOffsets<br>.&#x2F;kafka-run-class.sh kafka.tools.ExportZkOffsets –group xb_id –zkconnect c13-138:2181,c13-139:2181,c13-141:2181 –output-file ~&#x2F;offset<br>vim ~&#x2F;offset</p>
+<p>10、这个工具主要作用是从一个Kafka集群里面读取指定Topic的消息，并将这些消息发送到其他集群的指定topic中。<br>使用脚本：.&#x2F;kafka-replay-log-producer.sh</p>
+<p>11、kafka-simple-consumer-shell.sh工具主要是使用Simple Consumer API从指定Topic的分区读取数据并打印在终端。<br>使用脚本：.&#x2F;kafka-simple-consumer-shell.sh –broker-list c13-141:9092 –topic mytopic –partition 0</p>
+<p>12、kafka.tools.UpdateOffsetsInZK工具可以更新Zookeeper中指定Topic所有分区的偏移量，可以指定成 earliest或者latest<br>使用工具：.&#x2F;kafka-run-class.sh kafka.tools.UpdateOffsetsInZK</p>
+<p>最后再注意kafka的启动和停止。<br>启动kafka： .&#x2F;kafka-server-start.sh &#x2F;kafka&#x2F;config&#x2F;server.properties &gt;&#x2F;dev&#x2F;null 2&gt;&amp;1 &amp;<br>停止kafka： 直接kill掉进程就行。</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2021/10/08/202110-%E8%AE%B0%E5%BD%95/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>202110-记录</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2019/03/18/%E6%B8%97%E9%80%8F%E5%AD%A6%E4%B9%A0%EF%BC%9ASQL%E7%9B%B2%E6%B3%A8/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>渗透学习：SQ...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
+<footer>
+  <div>
+  Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button" title="menu">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button>
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>DELIN</p>
+          <span class="tagline">Hello, World!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+        <ul>
+          <li><a href="/guestbook/">Guestbook</a></li>
+        <li><a href="/about/">About</a></li>
+        </ul>
+    </li>
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-link fa-fw"></i>Friends</span>
+        <ul>
+          <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
+        </ul>
+    </li>
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script>
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'Uw10rKYdVtxgziHXLtKFjIQm-gzGzoHsz',
+    appKey: 'wckPTfmV3QJDVvus6l2oaTUn',
+    placeholder: 'Say something.',
+    avatar: 'identicon',
+    meta: guest,
+    pageSize: '10' || 10,
+    lang: 'zh-cn' || 'zh-cn'
+  });
+</script>
+
+</body>
+</html>
