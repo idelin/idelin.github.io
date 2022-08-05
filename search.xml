@@ -3763,6 +3763,8 @@ source  hadoop-env.sh</pre><br>
     <title>通用WEB框架的一些思考</title>
     <url>/2022/08/05/%E9%80%9A%E7%94%A8WEB%E6%A1%86%E6%9E%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</url>
     <content><![CDATA[<p>基础技术框架的研究和推广往往是很重要的动作，跟同事聊的过程中，产生了一些想法，分享如下。</p>
+<span id="more"></span>
+
 <h3 id="一、所需的功能点"><a href="#一、所需的功能点" class="headerlink" title="一、所需的功能点"></a>一、所需的功能点</h3><p>1、权限集成，登录登出、用户管理、角色管理、组织架构、认证安全（例如：验证码、多因子认证、二步验证、限制 IP 登录等）、单点登录、第三方认证接入认证（例如：oAuth3）、支持LDAP、支持应用授权（用于开放 OPENAPI 或其他对接） 等； </p>
 <p>2、接口规范类（如：Response），先有规范再有相关类，建议使用 标准 Restful 规范来定义标准接口相关类；</p>
 <p>3、migration管理，建议使用 flyway 做sql文件的版本管理；</p>

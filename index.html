@@ -105,37 +105,18 @@
 
   <div class="lx-entry padding">
     <div>
-      <h2 class="title"><a href="/2022/08/05/git%20patch%E4%BD%BF%E7%94%A8/">git patch使用</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-08-05 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/git/">git</a></span>
-      <p><p>Git 提供了两种补丁方案，一种是通过 git diff 生成的 .diff 文件，第二种是通过 git format-patch 生成的 .patch 文件。</p></p>
-      <div class="post-button"><a class="btn" href="/2022/08/05/git%20patch%E4%BD%BF%E7%94%A8/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <h2 class="title"><a href="/2022/08/05/%E9%80%9A%E7%94%A8WEB%E6%A1%86%E6%9E%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">通用WEB框架的一些思考</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-08-05 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></span>
+      <p><p>基础技术框架的研究和推广往往是很重要的动作，跟同事聊的过程中，产生了一些想法，分享如下。</p></p>
+      <div class="post-button"><a class="btn" href="/2022/08/05/%E9%80%9A%E7%94%A8WEB%E6%A1%86%E6%9E%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
     <div>
-      <h2 class="title"><a href="/2022/08/05/%E9%80%9A%E7%94%A8WEB%E6%A1%86%E6%9E%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">通用WEB框架的一些思考</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-08-05 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></span>
-      <p><p>基础技术框架的研究和推广往往是很重要的动作，跟同事聊的过程中，产生了一些想法，分享如下。</p>
-<h3 id="一、所需的功能点"><a href="#一、所需的功能点" class="headerlink" title="一、所需的功能点"></a>一、所需的功能点</h3><p>1、权限集成，登录登出、用户管理、角色管理、组织架构、认证安全（例如：验证码、多因子认证、二步验证、限制 IP 登录等）、单点登录、第三方认证接入认证（例如：oAuth3）、支持LDAP、支持应用授权（用于开放 OPENAPI 或其他对接） 等； </p>
-<p>2、接口规范类（如：Response），先有规范再有相关类，建议使用 标准 Restful 规范来定义标准接口相关类；</p>
-<p>3、migration管理，建议使用 flyway 做sql文件的版本管理；</p>
-<p>4、操作日志记录，安全产品必备功能点，可以考虑用注解形式来做；</p>
-<p>5、升级管理，支持全量、增量等升级模式，支持拓展升级类来适应不同产品自己的升级业务（例如：规则包的升级）；</p>
-<p>6、许可管理，各产品强需求，可以直接对接公司新的许可管理平台，一方面更好推广新的公司许可标准推广，另一方面新产品可以无需重复开发许可模块；</p>
-<p>7、配置管理，支持系统参数配置； </p>
-<p>8、OPENAPI框架，支持管理 OPEANAPI，监控调用次数、健康度、熔断等情况，支持开放动态接口文档（可以借用 Swagger，但安全性原因，建议自行开发页面）； </p>
-<p>9、常用工具类集成，集成IPUtils、HttpUtils、EhcacheUtils、Md5Utils 基础工具类–必备，操作ES、Kafka、HBase、Zookeeper等大数据组件的操作工具类–可选； </p>
-<p>10、集成脚本，集成 构建、安装、启停 等基础脚本。 </p>
-<h3 id="二、形态思考"><a href="#二、形态思考" class="headerlink" title="二、形态思考"></a>二、形态思考</h3><p>1、开发框架选型 </p>
-<p>大概率是不同语言会提供多个版本，Java 建议是基于 Springboot（流行、简单、易集成），Python建议是基于 Sanic（别问为什么不是 Django，因为它快）。 </p>
-<p>2、开发及部署模式 </p>
-<p>建议兼容微服务模式和单体模式。在如今的产品选型里，有相当多的产品采用微服务开发，支持微服务模式和单体模式 两种开发部署是很有必要的，代码维护可以是一套，注册中心可以支持几款主流（Eureka、ZooKeeper、Consul、Nacos） </p>
-<p>3、权限注册中心独立 </p>
-<p>功能点里有提到权限集成，这个是此基础框架是必要的且第一优先级的功能点，建议可以独立起来，一方面可以独立维护权限相关代码逻辑，一方面当各个产品做集成的时候可以直接切换到同一个权限服务（公司内产品集成痛点）。无论是否微服务形态，都可以是独立权限服务。</p>
-<h3 id="三、迭代开发模式"><a href="#三、迭代开发模式" class="headerlink" title="三、迭代开发模式"></a>三、迭代开发模式</h3><p>建议由公共研发团队来主导公司内开源+持续维护推进，业务部门研发提需求+提 issue+提 PR 做贡献。</p>
-<p>说实话到公司这个体量，各开发语言没有形成一个统一的开发框架确实也不多见，先从 基础WEB框架 入手也好的，也很期待公司可以统一牵头做这个事情，让大家快速实现产品业务。 </p>
-</p>
-      <div class="post-button"><a class="btn" href="/2022/08/05/%E9%80%9A%E7%94%A8WEB%E6%A1%86%E6%9E%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <h2 class="title"><a href="/2022/08/05/git%20patch%E4%BD%BF%E7%94%A8/">git patch使用</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2022-08-05 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/git/">git</a></span>
+      <p><p>Git 提供了两种补丁方案，一种是通过 git diff 生成的 .diff 文件，第二种是通过 git format-patch 生成的 .patch 文件。</p></p>
+      <div class="post-button"><a class="btn" href="/2022/08/05/git%20patch%E4%BD%BF%E7%94%A8/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
