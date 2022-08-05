@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>git patch使用 | DELIN</title>
+  <title>分类-开发 | DELIN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="DELIN">
   <meta name="keywords" content="">
@@ -63,7 +63,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
 <meta name="generator" content="Hexo 6.1.0"></head>
 <body>
-<div class="single">
+
+<div id="page">
 <div class="popup search-popup local-search-popup">
   <div class="local-search-header clearfix">
     <span class="search-icon">
@@ -81,16 +82,15 @@
   <div id="local-search-result"></div>
 </div>
 
-<div id="page">
 <div class="header">
-  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/cover.min.jpeg)">
     <div class="overlay">
       <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
-      <div class="page-title">
+      <div class="featured">
         <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
-        <span>2017-08-25</span>
-        <h2>git patch使用</h2>
-        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/git/" rel="tag">git</a></div>
+        <span>DELIN</span>
+        <h1>DELIN</h1>
+        <span>TO LEARN WELL,TO LIVE WELL.</span>
         <div class="social-links">
     <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
     <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
@@ -103,65 +103,21 @@
 </div>
 <div id="lx-main-content">
   <div class="lx-post">
-    <div class="lx-entry padding">
-      <div>
-        <p>Git 提供了两种补丁方案，一种是通过 git diff 生成的 .diff 文件，第二种是通过 git format-patch 生成的 .patch 文件。</p>
-<span id="more"></span>
-
-<p>通过 git diff 生成的文件不含有 commit 信息，可以指定文件生成 diff，也可以指定单个 commit， 多个 commit 生成 。</p>
-<p>通过 git format-patch 生成的 .patch 文件 含有 commmit 信息。一个 commit 对应一个 patch 文件，也可以整合到一个 patch 文件里。</p>
-<p>此方案只针对某一个 branch 的代码的迁移。</p>
-<h2 id="1-git-format-patch"><a href="#1-git-format-patch" class="headerlink" title="1. git format-patch"></a>1. git format-patch</h2><p>此命令用于生成 patch 文件。</p>
-<p>某次提交以后的所有 patch:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git format-patch [commitId]</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-git-am"><a href="#2-git-am" class="headerlink" title="2. git am"></a>2. git am</h2><p>此命令用于打 patch 文件入分支。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git am xxx.patch</span><br></pre></td></tr></table></figure>
+  <h2 class="pagehead">分类 开发</h2>
+    <div class="lx-entry padding"><div>
+    <span class="lx-post-detail">2022-08-05</span>
+    <h2 class="title"><a href="/2022/08/05/%E9%80%9A%E7%94%A8WEB%E6%A1%86%E6%9E%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">通用WEB框架的一些思考</a></h2>
+    <p><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/web/" rel="tag">web</a></p></div></div>
 
 
-<h2 id="3-Usage"><a href="#3-Usage" class="headerlink" title="3. Usage"></a>3. Usage</h2><p>使用流程：start -&gt; 云桌面查看待同步分支最新 commitId -&gt; 内网切换到需要同步的分支 -&gt; 内网 git format-patch -&gt; 打包 patch 文件内传外（包含代码，需要有高权限的人才可以传） -&gt; 云桌面解包 -&gt; git am -&gt; over。</p>
-
-      </div>
-    </div>
-  </div>
-</div>
-<div class="lx-navigation">
-	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="/2017/08/25/es%20%20UpdateByQuery%20%E5%87%BA%E7%8E%B0%20VersionConflictEngineException/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Next</span>
-						<h3>es  Upd...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
-		<div class="overlay"></div>
-		<a class="copy" href="/2017/08/25/disruptor%E9%AB%98%E6%80%A7%E8%83%BD%E6%A1%86%E6%9E%B6/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Prev</span>
-						<h3>disrupt...</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-</div>
-
-</div>
-<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
   Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
   </div>
 </footer>
 
+  </div>
+</div>
 </div>
 
 <button class="hamburger hamburger--arrow-r" type="button" title="menu">
@@ -187,18 +143,18 @@
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
+      <i class="fa fa-bookmark fa-fw"></i>页面</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>Friends</span>
+      <i class="fa fa-link fa-fw"></i>友链</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>
@@ -237,26 +193,7 @@
 }());
 </script>
 <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script>
-<script>
-  var GUEST = ['nick', 'mail', 'link'];
-  var guest = 'nick,mail,link';
-  guest = guest.split(',').filter(function(item) {
-    return GUEST.indexOf(item) > -1;
-  });
-  new Valine({
-    el: '#comments',
-    verify: false,
-    notify: false,
-    appId: 'Uw10rKYdVtxgziHXLtKFjIQm-gzGzoHsz',
-    appKey: 'wckPTfmV3QJDVvus6l2oaTUn',
-    placeholder: 'Say something.',
-    avatar: 'identicon',
-    meta: guest,
-    pageSize: '10' || 10,
-    lang: 'zh-cn' || 'zh-cn'
-  });
-</script>
+
 
 </body>
 </html>
