@@ -105,10 +105,18 @@
 
   <div class="lx-entry padding">
     <div>
+      <h2 class="title"><a href="/2016/12/28/sql%20%E5%90%8C%E4%B8%80%E5%88%97%E7%9A%84%E5%A4%9A%E8%A1%8C%E5%86%85%E5%AE%B9%E6%8B%BC%E6%8E%A5%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2/">sql 同一列的多行内容拼接成字符串</a></h2>
+      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-28 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/mysql-oracle/">mysql oracle</a></span>
+      <p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">SELECT</span><br><span class="line">L4.plan_id</span><br><span class="line">,MAX(SUBSTR(L4.分组内容,2)) display_theme</span><br><span class="line">FROM(</span><br><span class="line">        SELECT</span><br><span class="line">        L3.plan_id</span><br><span class="line">        ,SYS_CONNECT_BY_PATH(L3.theme_name,&#x27;；&#x27;) AS 分组内容</span><br><span class="line">        FROM(</span><br><span class="line">                SELECT</span><br><span class="line">                L2.plan_id</span><br><span class="line">                ,L2.theme_name</span><br><span class="line">                ,L2.plan_id||L2.分组内编号 AS 分组字段加编号,L2.plan_id||(L2.分组内编号-1) AS 上级分组字段加编号</span><br><span class="line">                FROM(</span><br><span class="line">                        SELECT</span><br><span class="line">                        L1.plan_id   -- 分组依据</span><br><span class="line">                        ,L1.theme_name    -- 同一列中 要合并的不同行 的值</span><br><span class="line">                        ,ROW_NUMBER() OVER (PARTITION BY L1.plan_id ORDER BY L1.theme_name ASC) 分组内编号</span><br><span class="line">                        FROM t_display_config_theme L1</span><br><span class="line">                ) L2</span><br><span class="line">        ) L3</span><br><span class="line">        START WITH L3.上级分组字段加编号 LIKE &#x27;%0&#x27;</span><br><span class="line">        CONNECT BY PRIOR L3.分组字段加编号=L3.上级分组字段加编号</span><br><span class="line">) L4</span><br><span class="line">GROUP BY L4.plan_id</span><br></pre></td></tr></table></figure></p>
+      <div class="post-button"><a class="btn" href="/2016/12/28/sql%20%E5%90%8C%E4%B8%80%E5%88%97%E7%9A%84%E5%A4%9A%E8%A1%8C%E5%86%85%E5%AE%B9%E6%8B%BC%E6%8E%A5%E6%88%90%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
+    </div>
+  </div>
+  <div class="lx-entry padding">
+    <div>
       <h2 class="title"><a href="/2016/12/28/%E6%9F%A5%E7%9C%8Bmysql%2032%E4%BD%8D64%E4%BD%8D/">查看mysql 32位64位</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-28 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/mysql/">mysql</a></span>
       <p><p>show variables like ‘%version_%’; </p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/28/%E6%9F%A5%E7%9C%8Bmysql%2032%E4%BD%8D64%E4%BD%8D/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/28/%E6%9F%A5%E7%9C%8Bmysql%2032%E4%BD%8D64%E4%BD%8D/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -116,7 +124,7 @@
       <h2 class="title"><a href="/2016/12/28/%E3%80%90oracle%E3%80%91%E8%8E%B7%E5%BE%97%E4%B8%A4%E4%B8%AA%E6%97%A5%E6%9C%9F%E4%B9%8B%E9%97%B4%E7%9A%84%E6%89%80%E6%9C%89%E6%97%A5%E6%9C%9F/">【oracle】获得两个日期之间的所有日期</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-28</span>
       <p><p>SELECT A.REMARK_NAME,<br>       A.REMARK_START_DATE,<br>       A.REMARK_END_DATE,<br>       A.REMARK_START_DATE + B.DIS - 1 H<br>  FROM B_REMARK_DETAIL A,<br>       (SELECT ROWNUM DIS<br>          FROM (SELECT MAX(REMARK_END_DATE - REMARK_START_DATE) + 1 GAP<br>                  FROM B_REMARK_DETAIL)<br>        CONNECT BY ROWNUM &lt;&#x3D; GAP) B<br>WHERE A.REMARK_END_DATE &gt;&#x3D; A.REMARK_START_DATE + B.DIS - 1<br>ORDER BY H</p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/28/%E3%80%90oracle%E3%80%91%E8%8E%B7%E5%BE%97%E4%B8%A4%E4%B8%AA%E6%97%A5%E6%9C%9F%E4%B9%8B%E9%97%B4%E7%9A%84%E6%89%80%E6%9C%89%E6%97%A5%E6%9C%9F/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/28/%E3%80%90oracle%E3%80%91%E8%8E%B7%E5%BE%97%E4%B8%A4%E4%B8%AA%E6%97%A5%E6%9C%9F%E4%B9%8B%E9%97%B4%E7%9A%84%E6%89%80%E6%9C%89%E6%97%A5%E6%9C%9F/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -124,7 +132,7 @@
       <h2 class="title"><a href="/2016/12/28/%E5%9C%A8oracle%E4%B8%ADvarchar%E5%92%8Cvarchar2%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/">在oracle中varchar和varchar2有什么区别？</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-28</span>
       <p><p>1.varchar2把所有字符都占两字节处理(一般情况下)，varchar只对汉字和全角等字符占两字节，数字，英文字符等都是一个字节；<br>2.VARCHAR2把空串等同于null处理，而varchar仍按照空串处理；<br>3.VARCHAR2字符要用几个字节存储，要看数据库使用的字符集，<br>大部分情况下建议使用varchar2类型，可以保证更好的兼容性搜索。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/28/%E5%9C%A8oracle%E4%B8%ADvarchar%E5%92%8Cvarchar2%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/28/%E5%9C%A8oracle%E4%B8%ADvarchar%E5%92%8Cvarchar2%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -132,7 +140,7 @@
       <h2 class="title"><a href="/2016/12/28/%E3%80%90Oracle%E3%80%91LGWR/">【Oracle】LGWR</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-28 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/oracle/">oracle</a></span>
       <p><p>LGWR，是Log Writer的缩写，也是一种后台进程。主要负责将日志缓冲内容写到磁盘的在线重做日志文件或组中。DBWn将dirty块写到磁盘之前，所有与buffer修改相关的redo log都需要由LGWR写入磁盘的在线重做日志文件(组)，如果未写完，那么DBWn会等待LGWR，也会产生一些相应的等待事件(例如：log file prarllel write，后面单独作为话题再聊)。总之，这样做的目的就是为了当crash时，可以有恢复之前操作的可能，也是Oracle在保持交易完整性方面的一个机制。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/28/%E3%80%90Oracle%E3%80%91LGWR/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/28/%E3%80%90Oracle%E3%80%91LGWR/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -140,7 +148,7 @@
       <h2 class="title"><a href="/2016/12/26/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B%EF%BC%88spark%202.0%20&%20kafka%200.10%EF%BC%89/">java8下spark-streaming结合kafka编程（spark 2.0 & kafka 0.10）</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-26 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop-spark/">hadoop spark</a></span>
       <p><p>前面有说道<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53689365">spark-streaming的简单demo</a>，也有说到<a target="_blank" rel="noopener" href="http://blog.csdn.net/jacklin929/article/details/53767622">kafka成功跑通的例子</a>，这里就结合二者，也是常用的使用之一。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/26/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B%EF%BC%88spark%202.0%20&%20kafka%200.10%EF%BC%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/26/java8%E4%B8%8Bspark-streaming%E7%BB%93%E5%90%88kafka%E7%BC%96%E7%A8%8B%EF%BC%88spark%202.0%20&%20kafka%200.10%EF%BC%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -148,7 +156,7 @@
       <h2 class="title"><a href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/">kafka初探 版本0.10 java编程</a></h2>
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-20</span>
       <p><p>之前一直有项目用到，不过我并不负责这一块，所以了解不多，这次趁机会学习下。<br>之前对kafka的了解其实仅限于知道它是一个分布式消息系统，这次详细了解了下，知道了一些关键概念(topic主题、broker服务、producers消息发布者、consumer消息订阅者消费者)，具体网上一大堆，这里不赘述，直接开始代码。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/20/kafka%E5%88%9D%E6%8E%A2%20%E7%89%88%E6%9C%AC0.10%20java%E7%BC%96%E7%A8%8B/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -170,7 +178,7 @@ azkaban.executorselector.comparator.CpuUsage=1
 </pre>
 <div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
 以确认使用的是分布式方式，随后提交的job会根据情况自行选择执行服务器，否则默认只使用本地执行服务器，切记！</div></p>
-      <div class="post-button"><a class="btn" href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -185,7 +193,7 @@ azkaban.executorselector.comparator.CpuUsage=1
 </div>
 </div>
 </div></p>
-      <div class="post-button"><a class="btn" href="/2016/12/19/Spark%E9%9B%86%E7%BE%A4%E7%A1%AC%E4%BB%B6%E6%8C%91%E9%80%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/19/Spark%E9%9B%86%E7%BE%A4%E7%A1%AC%E4%BB%B6%E6%8C%91%E9%80%89/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
   <div class="lx-entry padding">
@@ -194,15 +202,7 @@ azkaban.executorselector.comparator.CpuUsage=1
       <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-19 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/hadoop/">hadoop</a></span>
       <p><p style="margin-top:0px; margin-bottom:0px; word-wrap:break-word; padding-top:0px; padding-bottom:0px; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px; line-height:22px">
 <span style="word-wrap:break-word; color:rgb(0,0,0)"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">随着Apache Hadoop的起步，云客户的增多面临的首要问题就是如何为他们新的的Hadoop集群选择合适的硬件。</span></span></p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/19/Hadoop%20%E9%9B%86%E7%BE%A4%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%A1%AC%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
-    </div>
-  </div>
-  <div class="lx-entry padding">
-    <div>
-      <h2 class="title"><a href="/2016/12/16/java8%E5%AE%9E%E7%8E%B0spark%20streaming%E7%9A%84wordcount/">java8实现spark streaming的wordcount</a></h2>
-      <span class="lx-post-detail"><i class="fa fa-calendar-o"></i> 2016-12-16 | <i class="fa fa-folder-o"></i> <a class="category-link" href="/categories/spark/">spark</a></span>
-      <p><p>概念这里就不说了，从案例开始，惯例，hellowrod，哦不，wordcount。</p></p>
-      <div class="post-button"><a class="btn" href="/2016/12/16/java8%E5%AE%9E%E7%8E%B0spark%20streaming%E7%9A%84wordcount/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>阅读更多</a></div>
+      <div class="post-button"><a class="btn" href="/2016/12/19/Hadoop%20%E9%9B%86%E7%BE%A4%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%A1%AC%E4%BB%B6/" rel="noopener"><i class="fa fa-angle-double-right fa-fw"></i>Read More</a></div>
     </div>
   </div>
 
@@ -244,18 +244,18 @@ azkaban.executorselector.comparator.CpuUsage=1
   </div>
   <nav class="menu-container">
   <ul class="menu-items">
-    <li><a href="/"><i class="fa fa-home fa-fw"></i>首页</a></li>
-    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
     
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-bookmark fa-fw"></i>页面</span>
+      <i class="fa fa-bookmark fa-fw"></i>Pages</span>
         <ul>
           <li><a href="/guestbook/">Guestbook</a></li>
         <li><a href="/about/">About</a></li>
         </ul>
     </li>
     <li class="has-sub"><span class="dropdown-heading">
-      <i class="fa fa-link fa-fw"></i>友链</span>
+      <i class="fa fa-link fa-fw"></i>Friends</span>
         <ul>
           <li> <a href="https://lx.js.org" target="_blank">Theme-Lx</a></li>
         </ul>

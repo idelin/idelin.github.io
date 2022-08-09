@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>Archives | DELIN</title>
+  <title>垃圾回收器G1 | DELIN</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="DELIN">
   <meta name="keywords" content="">
@@ -63,8 +63,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
 <meta name="generator" content="Hexo 6.1.0"></head>
 <body>
-
-<div id="page">
+<div class="single">
 <div class="popup search-popup local-search-popup">
   <div class="local-search-header clearfix">
     <span class="search-icon">
@@ -82,15 +81,16 @@
   <div id="local-search-result"></div>
 </div>
 
+<div id="page">
 <div class="header">
-  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/cover.min.jpeg)">
+  <div id="lx-aside" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/post_cover.min.jpeg)" data-stellar-background-ratio="0.5">
     <div class="overlay">
       <a href="javascript:;" class="popup-trigger" title="search"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
-      <div class="featured">
+      <div class="page-title">
         <div class="avatar"><a href="/"><img src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/avatar.min.jpeg" alt="DELIN"></a></div>
-        <span>DELIN</span>
-        <h1>DELIN</h1>
-        <span>TO LEARN WELL,TO LIVE WELL.</span>
+        <span>2022-08-09</span>
+        <h2>垃圾回收器G1</h2>
+        <div class="tags"><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/java/" rel="tag">java</a></div>
         <div class="social-links">
     <a href="https://github.com/idelin" target="_blank" title="social-link"><i class="fa fa-github fa-fw"></i></a>
     <a href="mailto:zdl0929@gmail.com" target="_blank" title="social-link"><i class="fa fa-envelope fa-fw"></i></a>
@@ -103,21 +103,65 @@
 </div>
 <div id="lx-main-content">
   <div class="lx-post">
-  <h2 class="pagehead">Archives</h2>
-    <div class="lx-entry padding"><div>
-    <span class="lx-post-detail">2019-12-21</span>
-    <h2 class="title"><a href="/2019/12/21/kafka%E7%9A%84%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E8%84%9A%E6%9C%AC/">kafka的相关操作脚本</a></h2>
-    <p><i class="fa fa-tag"></i><a class="tag-none-link" href="/tags/kafka/" rel="tag">kafka</a></p></div></div>
+    <div class="lx-entry padding">
+      <div>
+        <p>G1运作步骤：</p>
+<ol>
+<li>初始标记(stop the world事件CPU停顿只处理垃圾)；</li>
+<li>并发标记(与用户线程并发执行)；</li>
+<li>最终标记(stop the world事件，CPU停顿处理垃圾)；</li>
+<li>筛选回收(stop the world事件根据用户期望的GC停顿时间回收)(注意：CMS在这一步不需要stop the world)（阿里问为何停顿时间可以设置，参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/aspirant/p/8663872.html">G1 垃圾收集器架构和如何做到可预测的停顿(阿里)</a></li>
+</ol>
+<span id="more"></span>
 
+<p>与其他GC收集器相比，G1具备如下特点：</p>
+<p>1、并行于并发：G1能充分利用CPU、多核环境下的硬件优势，使用多个CPU（CPU或者CPU核心）来缩短stop-The-World停顿时间。部分其他收集器原本需要停顿<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/java">Java</a>线程执行的GC动作，G1收集器仍然可以通过并发的方式让java程序继续执行。</p>
+<p>2、分代收集：虽然G1可以不需要其他收集器配合就能独立管理整个GC堆，但是还是保留了分代的概念。它能够采用不同的方式去处理新创建的对象和已经存活了一段时间，熬过多次GC的旧对象以获取更好的收集效果。</p>
+<p>3、空间整合：与CMS的“标记–清理”算法不同，G1从整体来看是基于“标记整理”算法实现的收集器；从局部上来看是基于“复制”算法实现的。</p>
+<p>4、可预测的停顿：这是G1相对于CMS的另一个大优势，降低停顿时间是G1和ＣＭＳ共同的关注点，但Ｇ１除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为M毫秒的时间片段内，</p>
+<p>上面几个步骤的运作过程和CMS有很多相似之处。初始标记阶段仅仅只是标记一下GC Roots能直接关联到的对象，并且修改TAMS的值，让下一个阶段用户程序并发运行时，能在正确可用的Region中创建新对象，这一阶段需要停顿线程，但是耗时很短，并发标记阶段是从GC Root开始对堆中对象进行可达性分析，找出存活的对象，这阶段时耗时较长，但可与用户程序并发执行。而最终标记阶段则是为了修正在并发标记期间因用户程序继续运作而导致标记产生变动的那一部分标记记录，虚拟机将这段时间对象变化记录在线程Remenbered Set Logs里面，最终标记阶段需要把Remembered Set Logs的数据合并到Remembered Set Logs里面，最终标记阶段需要把Remembered Set Logs的数据合并到Remembered Set中，这一阶段需要停顿线程，但是可并行执行。最后在筛选回收阶段首先对各个Region的回收价值和成本进行排序，根据用户所期望的GC停顿时间来制定回收计划。</p>
 
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover next lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-l.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="#">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>No newer post</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover prev lx-cover-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/images/footer-r.min.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2022/08/05/%E9%80%9A%E7%94%A8WEB%E6%A1%86%E6%9E%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>通用WEB框架...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+<div class="comment"><div id="comments"></div></div>
 <footer>
   <div>
   Copyright &copy; 2022.<a href="/">DELIN</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
   </div>
 </footer>
 
-  </div>
-</div>
 </div>
 
 <button class="hamburger hamburger--arrow-r" type="button" title="menu">
@@ -193,7 +237,26 @@
 }());
 </script>
 <script src="https://cdn.jsdelivr.net/npm/theme-lx@0.4.3/source/dist/js/local.search.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/valine@1.4.16/dist/Valine.min.js"></script>
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'Uw10rKYdVtxgziHXLtKFjIQm-gzGzoHsz',
+    appKey: 'wckPTfmV3QJDVvus6l2oaTUn',
+    placeholder: 'Say something.',
+    avatar: 'identicon',
+    meta: guest,
+    pageSize: '10' || 10,
+    lang: 'zh-cn' || 'zh-cn'
+  });
+</script>
 
 </body>
 </html>
