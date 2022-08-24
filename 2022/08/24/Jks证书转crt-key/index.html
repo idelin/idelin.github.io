@@ -16,24 +16,25 @@
   <meta name="author" content="DELIN">
   <meta name="keywords" content="">
   
-    <meta name="description" content="[ERROR] Terminal initialization failed; falling back to unsupported">
+    <meta name="description" content="jks -&gt; p121keytool -importkeystore -srckeystore server.key -srcstoretype JKS -deststoretype PKCS12 -destkeystore server.p12">
 <meta property="og:type" content="article">
-<meta property="og:title" content="启动hive报错：[ERROR] Terminal initialization failed; falling back to unsupported">
-<meta property="og:url" content="https://idelin.github.io/2016/05/12/%E5%90%AF%E5%8A%A8hive%E6%8A%A5%E9%94%99%EF%BC%9A[ERROR]%20Terminal%20initialization%20failed;%20falling%20back%20to%20unsupported/index.html">
+<meta property="og:title" content="Jks证书转crt&amp;key">
+<meta property="og:url" content="https://idelin.github.io/2022/08/24/Jks%E8%AF%81%E4%B9%A6%E8%BD%ACcrt-key/index.html">
 <meta property="og:site_name" content="DELIN">
-<meta property="og:description" content="[ERROR] Terminal initialization failed; falling back to unsupported">
+<meta property="og:description" content="jks -&gt; p121keytool -importkeystore -srckeystore server.key -srcstoretype JKS -deststoretype PKCS12 -destkeystore server.p12">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2016-05-12T12:54:00.000Z">
-<meta property="article:modified_time" content="2022-08-03T12:45:23.189Z">
+<meta property="article:published_time" content="2022-08-24T11:38:43.000Z">
+<meta property="article:modified_time" content="2022-08-24T11:49:21.991Z">
 <meta property="article:author" content="DELIN">
-<meta property="article:tag" content="hadoop hive">
+<meta property="article:tag" content="https">
+<meta property="article:tag" content="证书">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>启动hive报错：[ERROR] Terminal initialization failed; falling back to unsupported - DELIN</title>
+  <title>Jks证书转crt&amp;key - DELIN</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +227,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="启动hive报错：[ERROR] Terminal initialization failed; falling back to unsupported"></span>
+            <span id="subtitle" data-typed-text="Jks证书转crt&amp;key"></span>
           
         </div>
 
@@ -237,8 +238,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2016-05-12 20:54" pubdate>
-          2016年5月12日 晚上
+        <time datetime="2022-08-24 19:38" pubdate>
+          2022年8月24日 晚上
         </time>
       </span>
     
@@ -249,7 +250,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          undefined 字
+          571 字
         
       </span>
     
@@ -260,7 +261,7 @@
         
         
         
-          NaN 分钟
+          5 分钟
         
       </span>
     
@@ -306,20 +307,41 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">启动hive报错：[ERROR] Terminal initialization failed; falling back to unsupported</h1>
+            <h1 style="display: none">Jks证书转crt&amp;key</h1>
             
             
               <div class="markdown-body">
                 
-                <p>﻿﻿[ERROR] Terminal initialization failed; falling back to unsupported</p>
-<span id="more"></span>
+                <ol>
+<li>jks -&gt; p12<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">keytool -importkeystore -srckeystore server.key -srcstoretype JKS -deststoretype PKCS12 -destkeystore server.p12<br></code></pre></td></tr></table></figure></li>
+</ol>
+ <span id="more"></span>
 
-<p>java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface was expected<br>at jline.TerminalFactory.create(TerminalFactory.java:101)<br>at jline.TerminalFactory.get(TerminalFactory.java:158)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:229)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br>at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br>at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br>at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br>at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br>at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br>at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>at java.lang.reflect.Method.invoke(Method.java:606)<br>at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br>at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</p>
-<p>Exception in thread “main” java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:230)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br>at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br>at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br>at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br>at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br>at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br>at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br>at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>at java.lang.reflect.Method.invoke(Method.java:606)<br>at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br>at org.apache.hadoop.util.RunJar.main(RunJar.java:136)[ERROR] Terminal initialization failed; falling back to unsupported<br>java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface was expected<br> at jline.TerminalFactory.create(TerminalFactory.java:101)<br> at jline.TerminalFactory.get(TerminalFactory.java:158)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:229)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br> at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br> at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br> at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br> at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br> at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br> at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br> at java.lang.reflect.Method.invoke(Method.java:606)<br> at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br> at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</p>
-<p>Exception in thread “main” java.lang.IncompatibleClassChangeError: Found class jline.Terminal, but interface<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:230)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:221)<br> at jline.console.ConsoleReader.<init>(ConsoleReader.java:209)<br> at org.apache.hadoop.hive.cli.CliDriver.getConsoleReader(CliDriver.java:773)<br> at org.apache.hadoop.hive.cli.CliDriver.executeDriver(CliDriver.java:715)<br> at org.apache.hadoop.hive.cli.CliDriver.run(CliDriver.java:675)<br> at org.apache.hadoop.hive.cli.CliDriver.main(CliDriver.java:615)<br> at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br> at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)<br> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br> at java.lang.reflect.Method.invoke(Method.java:606)<br> at org.apache.hadoop.util.RunJar.run(RunJar.java:221)<br> at org.apache.hadoop.util.RunJar.main(RunJar.java:136)</p>
-<p>是因为jline版本太低造成，复制hive下的jline jar包到Hadoop下即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cp /home/hadoop/apache-hive-1.1.0-bin/lib/jline-2.12.jar /home/hadoop/hadoop-2.6.0/share/hadoop/yarn/lib</span><br><span class="line">stop-dfs.sh</span><br><span class="line">stop-yarn.sh</span><br><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br><span class="line">hive</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>p12 -&gt; pem</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">openssl pkcs12 -in server.p12 -out server.pem <br></code></pre></td></tr></table></figure>
 
+
+</li>
+<li><p>p12 -&gt; key、crt</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">openssl pkcs12 -in server.p12 -nocerts -out server.key<br>openssl pkcs12 -in server.p12 -nokeys -clcerts -out server.crt<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+<li><p>去除生成key文件时的口令，避免每次使用都要输入：</p>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cp server.key server.key.org<br>openssl rsa -in server.key.org -out server.key<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>配置nginx.conf，在server块下面添加以下配置：</li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssl</span> <span class="hljs-literal">on</span>;<br><span class="hljs-attribute">ssl_certificate</span> /usr/local/nginx/conf/server.crt; //证书<br><span class="hljs-attribute">ssl_certificate_key</span> /usr/local/nginx/conf/server.key; //私钥<br></code></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>重新加载配置: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">/usr/local/nginx/sbin/nginx -s reload<br></code></pre></td></tr></table></figure></li>
+</ol>
 
                 
               </div>
@@ -338,7 +360,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/hadoop-hive/" class="category-chain-item">hadoop hive</a>
+  <a href="/categories/https/" class="category-chain-item">https</a>
   
   
 
@@ -353,7 +375,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/hadoop-hive/">#hadoop hive</a>
+        <a href="/tags/https/">#https</a>
+      
+        <a href="/tags/%E8%AF%81%E4%B9%A6/">#证书</a>
       
     </div>
   
@@ -365,8 +389,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>启动hive报错：[ERROR] Terminal initialization failed; falling back to unsupported</div>
-      <div>https://idelin.github.io/2016/05/12/启动hive报错：[ERROR] Terminal initialization failed; falling back to unsupported/</div>
+      <div>Jks证书转crt&amp;key</div>
+      <div>https://idelin.github.io/2022/08/24/Jks证书转crt-key/</div>
     </div>
     <div class="license-meta">
       
@@ -378,7 +402,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2016年5月12日</div>
+          <div>2022年8月24日</div>
         </div>
       
       
@@ -408,18 +432,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2016/05/25/Hbase%E5%AE%89%E8%A3%85/" title="Hbase安装">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hbase安装</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2016/05/12/hadoop%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E8%AE%B0%E5%BD%95/" title="hadoop伪分布式环境搭建记录">
-                        <span class="hidden-mobile">hadoop伪分布式环境搭建记录</span>
+                      <a href="/2022/08/09/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8G1/" title="垃圾回收器G1">
+                        <span class="hidden-mobile">垃圾回收器G1</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

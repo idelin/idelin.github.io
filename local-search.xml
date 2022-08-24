@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>Jks证书转crt&amp;key</title>
+    <link href="/2022/08/24/Jks%E8%AF%81%E4%B9%A6%E8%BD%ACcrt-key/"/>
+    <url>/2022/08/24/Jks%E8%AF%81%E4%B9%A6%E8%BD%ACcrt-key/</url>
+    
+    <content type="html"><![CDATA[<ol><li>jks -&gt; p12<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">keytool -importkeystore -srckeystore server.key -srcstoretype JKS -deststoretype PKCS12 -destkeystore server.p12<br></code></pre></td></tr></table></figure></li></ol> <span id="more"></span><ol start="2"><li><p>p12 -&gt; pem</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">openssl pkcs12 -in server.p12 -out server.pem <br></code></pre></td></tr></table></figure></li><li><p>p12 -&gt; key、crt</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">openssl pkcs12 -in server.p12 -nocerts -out server.key<br>openssl pkcs12 -in server.p12 -nokeys -clcerts -out server.crt<br></code></pre></td></tr></table></figure></li><li><p>去除生成key文件时的口令，避免每次使用都要输入：</p></li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">cp server.key server.key.org<br>openssl rsa -in server.key.org -out server.key<br></code></pre></td></tr></table></figure><ol start="5"><li>配置nginx.conf，在server块下面添加以下配置：</li></ol><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssl</span> <span class="hljs-literal">on</span>;<br><span class="hljs-attribute">ssl_certificate</span> /usr/local/nginx/conf/server.crt; //证书<br><span class="hljs-attribute">ssl_certificate_key</span> /usr/local/nginx/conf/server.key; //私钥<br></code></pre></td></tr></table></figure><ol start="6"><li>重新加载配置: <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">/usr/local/nginx/sbin/nginx -s reload<br></code></pre></td></tr></table></figure></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>https</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>https</tag>
+      
+      <tag>证书</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>垃圾回收器G1</title>
     <link href="/2022/08/09/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8G1/"/>
     <url>/2022/08/09/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8G1/</url>
