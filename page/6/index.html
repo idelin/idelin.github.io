@@ -255,6 +255,60 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/" target="_self">
+          分析型数据库 ADS 报错 Query misses join index
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2016/04/05/%E5%88%86%E6%9E%90%E5%9E%8B%E6%95%B0%E6%8D%AE%E5%BA%93%20ADS%20%E6%8A%A5%E9%94%99%20Query%20misses%20join%20index/" target="_self">
+        <div>
+          查询了下，看到阿里官网解释的是 【目前分析型数据库中使用JOIN时若一方是物理表，那么物理表参与JOIN的列必须是分区列并且已建立HASH索引】 然后就按照要求把索引改为HASH索引，继续执行JOIN，但是还是报相同错误，遂问了下阿里的技术人员，得到答案： 确认表是实时更新表还是批量表，如果是批量表的话，是否在新增索引后有重新加载数据，如果是实时更新表是否已经做过表分析optimize table
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2016-04-05 20:28" pubdate>
+              2016-04-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%98%BF%E9%87%8C%E4%BA%91/" class="category-chain-item">阿里云</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2015/11/15/python%E5%AE%9E%E7%8E%B0windows%20ie%E4%BB%A3%E7%90%86%E5%88%87%E6%8D%A2/" target="_self">
           python实现windows ie代理切换
         </a>
