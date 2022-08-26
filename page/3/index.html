@@ -255,6 +255,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2017/04/20/HashMap%E9%87%8C%E7%9A%84equals%E5%AE%9E%E7%8E%B0/" target="_self">
+          HashMap里的equals实现
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2017/04/20/HashMap%E9%87%8C%E7%9A%84equals%E5%AE%9E%E7%8E%B0/" target="_self">
+        <div>
+          今天遇到一个问题，需要对List&lt;Map&gt;对象里的Map去重，然后想到是否可以使用Set去重，试了下是可以的，但是仔细想想，发现明明塞进Set的时候是新创建的Map对象，但是Set却认为是重复的塞不进去，想到应该是HashMap的equals里逻辑，遂看源码。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-04-20 20:10" pubdate>
+              2017-04-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/java/" class="category-chain-item">java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/hashmap/">#hashmap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2017/04/01/matplotlib%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" target="_self">
           matplotlib使用记录
         </a>
@@ -708,60 +769,6 @@
             </time>
           </div>
         
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" target="_self">
-          azkaban集群多节点模式配置
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2016/12/19/azkaban%E9%9B%86%E7%BE%A4%E5%A4%9A%E8%8A%82%E7%82%B9%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/" target="_self">
-        <div>
-          配置多节点执行服务器的时候，需要在AzkabanWebServer的配置文件azkaban.properties里添加 azkaban.use.multiple.executors&#x3D;true azkaban.executorselector.filters&#x3D;StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus azkaban.execut
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2016-12-19 16:28" pubdate>
-              2016-12-19
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/hadoop/" class="category-chain-item">hadoop</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
         
         
       </div>
