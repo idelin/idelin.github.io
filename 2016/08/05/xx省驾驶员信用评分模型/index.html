@@ -1,2 +1,917 @@
-<!DOCTYPE html><html lang="zh-CN" data-default-color-scheme="auto"><head><meta charset="UTF-8"><link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico"><link rel="icon" href="/img/favicon.ico"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,shrink-to-fit=no"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="theme-color" content="#2f4154"><meta name="author" content="DELIN"><meta name="keywords" content=""><meta name="description" content="&gt;公安项目有签订保密协议，敏感字段和与技术无关字段我已删减 &amp;nbsp;采用的是&amp;nbsp;信用评分卡模型，计算WOE&amp;#20540;获得最终评分。 所有计算过程在ODPS中完成！  1.“Y”变量定义  为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现："><meta property="og:type" content="article"><meta property="og:title" content="xx省驾驶员信用评分模型"><meta property="og:url" content="https://idelin.github.io/2016/08/05/xx%E7%9C%81%E9%A9%BE%E9%A9%B6%E5%91%98%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B/index.html"><meta property="og:site_name" content="DELIN"><meta property="og:description" content="&gt;公安项目有签订保密协议，敏感字段和与技术无关字段我已删减 &amp;nbsp;采用的是&amp;nbsp;信用评分卡模型，计算WOE&amp;#20540;获得最终评分。 所有计算过程在ODPS中完成！  1.“Y”变量定义  为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现："><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://img-blog.csdn.net/20160806135813967"><meta property="og:image" content="https://img-blog.csdn.net/20160806135831694"><meta property="og:image" content="https://img-blog.csdn.net/20160806135840655"><meta property="og:image" content="https://img-blog.csdn.net/20160806140102398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><meta property="og:image" content="https://img-blog.csdn.net/20160806140145508?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"><meta property="article:published_time" content="2016-08-05T09:46:23.000Z"><meta property="article:modified_time" content="2022-08-03T12:45:23.675Z"><meta property="article:author" content="DELIN"><meta property="article:tag" content="信用卡评分"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://img-blog.csdn.net/20160806135813967"><meta name="referrer" content="no-referrer-when-downgrade"><title>xx省驾驶员信用评分模型 - DELIN</title><link rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css"><link rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css"><link rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css"><link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css"><link rel="stylesheet" href="/css/main.css"><link id="highlight-css" rel="stylesheet" href="/css/highlight.css"><link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css"><script id="fluid-configs">var Fluid=window.Fluid||{};Fluid.ctx=Object.assign({},Fluid.ctx);var CONFIG={hostname:"idelin.github.io",root:"/",version:"1.9.2",typing:{enable:!0,typeSpeed:70,cursorChar:"_",loop:!1,scope:[]},anchorjs:{enable:!0,element:"h1,h2,h3,h4,h5,h6",placement:"left",visible:"hover",icon:""},progressbar:{enable:!0,height_px:3,color:"#29d",options:{showSpinner:!1,trickleSpeed:100}},code_language:{enable:!0,default:"TEXT"},copy_btn:!0,image_caption:{enable:!0},image_zoom:{enable:!0,img_url_replace:["",""]},toc:{enable:!0,placement:"right",headingSelector:"h1,h2,h3,h4,h5,h6",collapseDepth:0},lazyload:{enable:!0,loading_img:"/img/loading.gif",onlypost:!1,offset_factor:2},web_analytics:{enable:!0,follow_dnt:!0,baidu:"149854025cda86db9ae25f0af616dd21",google:null,gtag:null,tencent:{sid:null,cid:null},woyaola:null,cnzz:null,leancloud:{app_id:null,app_key:null,server_url:null,path:"window.location.pathname",ignore_local:!1}},search_path:"/local-search.xml"};if(CONFIG.web_analytics.follow_dnt){var dntVal=navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack;Fluid.ctx.dnt=dntVal&&(dntVal.startsWith("1")||dntVal.startsWith("yes")||dntVal.startsWith("on"))}</script><script src="/js/utils.js"></script><script src="/js/color-schema.js"></script><script async>if(!Fluid.ctx.dnt){var _hmt=_hmt||[];!function(){var t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?149854025cda86db9ae25f0af616dd21";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)}()}</script><meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="DELIN" type="application/atom+xml">
-</head><body><header><div class="header-inner" style="height:70vh"><nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar"><div class="container"><a class="navbar-brand" href="/"><strong>DELIN</strong> </a><button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon"><span></span><span></span><span></span></div></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav ml-auto text-center"><li class="nav-item"><a class="nav-link" href="/"><i class="iconfont icon-home-fill"></i> 首页</a></li><li class="nav-item"><a class="nav-link" href="/archives/"><i class="iconfont icon-archive-fill"></i> 归档</a></li><li class="nav-item"><a class="nav-link" href="/categories/"><i class="iconfont icon-category-fill"></i> 分类</a></li><li class="nav-item"><a class="nav-link" href="/tags/"><i class="iconfont icon-tags-fill"></i> 标签</a></li><li class="nav-item"><a class="nav-link" href="/about/"><i class="iconfont icon-user-fill"></i> 关于</a></li><li class="nav-item" id="search-btn"><a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">&nbsp;<i class="iconfont icon-search"></i>&nbsp;</a></li><li class="nav-item" id="color-toggle-btn"><a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a></li></ul></div></div></nav><div id="banner" class="banner" parallax="true" style="background:url(https://tva1.sinaimg.cn/large/e6c9d24ely1h5jvtq09f8j21hc0u0mxx.jpg) no-repeat center center;background-size:cover"><div class="full-bg-img"><div class="mask flex-center" style="background-color:rgba(0,0,0,.3)"><div class="banner-text text-center fade-in-up"><div class="h2"><span id="subtitle" data-typed-text="xx省驾驶员信用评分模型"></span></div><div class="mt-3"><span class="post-meta"><i class="iconfont icon-date-fill" aria-hidden="true"></i> <time datetime="2016-08-05 17:46" pubdate>2016年8月5日 下午</time></span></div><div class="mt-1"><span class="post-meta mr-2"><i class="iconfont icon-chart"></i> 1.1k 字 </span><span class="post-meta mr-2"><i class="iconfont icon-clock-fill"></i> 10 分钟 </span><span id="busuanzi_container_page_pv" style="display:none"><i class="iconfont icon-eye" aria-hidden="true"></i> <span id="busuanzi_value_page_pv"></span> 次</span></div></div></div></div></div></div></header><main><div class="container-fluid nopadding-x"><div class="row nomargin-x"><div class="side-col d-none d-lg-block col-lg-2"></div><div class="col-lg-8 nopadding-x-md"><div class="container nopadding-x-md" id="board-ctn"><div id="board"><article class="post-content mx-auto"><h1 style="display:none">xx省驾驶员信用评分模型</h1><div class="markdown-body"><p><span class="token md md-gt" style="font-family:&quot;line-height:29.7px;white-space:pre-wrap;outline:0!important">&gt;</span><span style="color:grey;font-family:&quot;line-height:29.7px;white-space:pre-wrap">公安项目有签订保密协议，敏感字段和与技术无关字段我已删减</span></p><p><span style="font-family:microsoft yahei;color:grey"><span style="font-size:18px;line-height:29.7px;white-space:pre-wrap">&nbsp;采用的是&nbsp;信用评分卡模型，计算WOE&#20540;获得最终评分。</span></span></p><p><span style="font-family:microsoft yahei;color:grey"><span style="font-size:18px;line-height:29.7px;white-space:pre-wrap">所有计算过程在ODPS中完成！</span></span></p><p><span style="color:grey;font-family:&quot;line-height:29.7px;white-space:pre-wrap"></span></p><h3>1.“Y”变量定义</h3><p></p><p>为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现：</p><span id="more"></span><table border="0" cellspacing="0" cellpadding="0" width="197"><tbody><tr><td nowrap style="background:#bfbfbf"><p align="left">是否发生事故</p></td><td nowrap style="background:#bfbfbf"><p align="left">计数</p></td></tr><tr><td nowrap><p align="left">0</p></td><td nowrap><p align="right">296058</p></td></tr><tr><td nowrap><p align="left">1</p></td><td nowrap><p align="right">3942</p></td></tr><tr><td nowrap style="background:#dce6f1"><p align="left"><strong>总计</strong></p></td><td nowrap style="background:#dce6f1"><p align="right"><strong>300000</strong></p></td></tr></tbody></table><br><p><span style="color:grey;font-family:&quot;line-height:29.7px;white-space:pre-wrap"></span></p><h3>2.建模算法</h3><p></p><p>现在采用的是WOE变量方式建模进行驾驶员评分,首先是获得各指标woe&#20540;，公式：</p><p><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="https://img-blog.csdn.net/20160806135813967" srcset="/img/loading.gif" lazyload alt=""><br></p><p><img src="" srcset="/img/loading.gif" lazyload alt="" style="color:grey;font-family:&quot;line-height:29.7px;white-space:pre-wrap"></p><p>(b­<sub>i</sub>：指标i纬度坏样本数，b<sub>c</sub>：总坏样本数，g­<sub>i</sub>：指标i纬度好样本数，g<sub>c</sub>：总好样本数)；</p><p>然后获得初始分数(0-1之间)：</p><p><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="https://img-blog.csdn.net/20160806135831694" srcset="/img/loading.gif" lazyload alt=""><br></p><p>(woe<sub>j</sub>：j指标woe&#20540;)</p><p>根据讨论结果，最低分取30分，做相应线性变换，得到真实分数：</p><p><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="https://img-blog.csdn.net/20160806135840655" srcset="/img/loading.gif" lazyload alt=""><br></p><p><br></p><p></p><h3>3.单字段性能—IV指标</h3><p></p><p>进一步验证各字段的IV&#20540;：<span style="line-height:29.7px"></span></p><p>得到结果如下：</p><p><table border="0" cellpadding="0" cellspacing="0" width="144" style="border-collapse:collapse;width:108pt"><tbody><tr height="23" style="height:17.25pt"><td height="23" class="xl67" width="72" style="height:17.25pt;width:54pt">序号</td><td class="xl65" width="72" style="width:54pt"><span lang="EN-US">IV&#20540;</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">1</td><td class="xl66"><span lang="EN-US">0.31722</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">2</td><td class="xl66"><span lang="EN-US">0.27158</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">3</td><td class="xl66"><span lang="EN-US">0.25169</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">4</td><td class="xl66"><span lang="EN-US">0.19057</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">5</td><td class="xl66"><span lang="EN-US">0.13439</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">6</td><td class="xl66"><span lang="EN-US">0.09315</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">7</td><td class="xl66"><span lang="EN-US">0.09128</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">8</td><td class="xl66"><span lang="EN-US">0.08199</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">9</td><td class="xl66"><span lang="EN-US">0.07267</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">10</td><td class="xl66"><span lang="EN-US">0.0669</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">11</td><td class="xl66"><span lang="EN-US">0.04222</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">12</td><td class="xl66"><span lang="EN-US">0.02809</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">13</td><td class="xl66"><span lang="EN-US">0.02797</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">14</td><td class="xl66"><span lang="EN-US">0.02783</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">15</td><td class="xl66"><span lang="EN-US">0.02665</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">16</td><td class="xl66"><span lang="EN-US">0.02352</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">17</td><td class="xl66"><span lang="EN-US">0.02059</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">18</td><td class="xl66"><span lang="EN-US">0.01752</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">19</td><td class="xl66"><span lang="EN-US">0.01541</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">20</td><td class="xl66"><span lang="EN-US">0.01458</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">21</td><td class="xl66"><span lang="EN-US">0.01439</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">22</td><td class="xl66"><span lang="EN-US">0.01439</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">23</td><td class="xl66"><span lang="EN-US">0.01439</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">24</td><td class="xl66"><span lang="EN-US">0.01439</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">25</td><td class="xl66"><span lang="EN-US">0.0134</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">26</td><td class="xl66"><span lang="EN-US">0.00827</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">27</td><td class="xl66"><span lang="EN-US">0.00383</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">28</td><td class="xl66"><span lang="EN-US">0.00139</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">29</td><td class="xl66"><span lang="EN-US">0.00132</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">30</td><td class="xl66"><span lang="EN-US">0.00044</span></td></tr><tr height="23" style="height:17.25pt"><td height="23" class="xl67" style="height:17.25pt">31</td><td class="xl66"><span lang="EN-US">0.00025</span></td></tr></tbody></table></p><p><span style="line-height:29.7px">IV是全称InformationValue，是衡量单自变量对于应变量显著程度的指标，通常IV&#20540;越高，变量的显著性越强；</span></p><p>此模型变量中IV&#20540;大于0.05以上的变量超过10个。</p><h3>4.模型整体性能--KS指标</h3><p>通过整体的评估，模型整体的KS指标如下：</p><p>KS = 0.303768</p><p><img src="https://img-blog.csdn.net/20160806140102398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" srcset="/img/loading.gif" lazyload alt=""><br></p><p><img src="" srcset="/img/loading.gif" lazyload alt=""></p><p>注：KS指标衡量的是好样本和坏样本的累计分布比例之间具体最大的差距。好样本和坏样本之间的距离越大，KS指标范围在0%-100%之间，KS指标越高，模型的区分能力越强；</p><p>该模型的KS达到30%&#43;，性能OK。</p><p>&nbsp;</p><h3>5.模型整体性能—ROC指标</h3><p>经计算：</p><p>AUC=0.703637</p><p><img src="" srcset="/img/loading.gif" lazyload alt=""></p><p><img src="https://img-blog.csdn.net/20160806140145508?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" srcset="/img/loading.gif" lazyload alt=""><br></p><p>注：ROC曲线及AUC系数为评估模型对客户进行正确区分的指标。ROC曲线描述了在一定累计好客户比例下的累计坏客户的比例， ROC曲线越往左上角靠近，模型的分别能力越强。AUC系数为ROC曲线下方的面积，数&#20540;范围在0.5-1之间，AUC系数越高，模型的区分能力越强。</p>该模型的AUC&gt;=0.7，性能较好。</div><hr><div><div class="post-metas my-3"><div class="post-meta"><i class="iconfont icon-tags"></i> <a href="/tags/%E4%BF%A1%E7%94%A8%E5%8D%A1%E8%AF%84%E5%88%86/">#信用卡评分</a></div></div><div class="license-box my-3"><div class="license-title"><div>xx省驾驶员信用评分模型</div><div>https://idelin.github.io/2016/08/05/xx省驾驶员信用评分模型/</div></div><div class="license-meta"><div class="license-meta-item"><div>作者</div><div>DELIN</div></div><div class="license-meta-item license-meta-date"><div>发布于</div><div>2016年8月5日</div></div><div class="license-meta-item"><div>许可协议</div><div><a target="_blank" href="https://creativecommons.org/licenses/by/4.0/"><span class="hint--top hint--rounded" aria-label="BY - 署名"><i class="iconfont icon-by"></i></span></a></div></div></div><div class="license-icon iconfont"></div></div><div class="post-prevnext my-3"><article class="post-prev col-6"><a href="/2016/08/11/%E5%BB%BA%E6%A8%A1%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0/" title="建模交流学习"><i class="iconfont icon-arrowleft"></i> <span class="hidden-mobile">建模交流学习</span> <span class="visible-mobile">上一篇</span></a></article><article class="post-next col-6"><a href="/2016/08/05/%E5%90%90%E6%A7%BD%E9%98%BF%E9%87%8C%E4%BA%91PAI/" title="吐槽阿里云PAI"><span class="hidden-mobile">吐槽阿里云PAI</span> <span class="visible-mobile">下一篇</span> <i class="iconfont icon-arrowright"></i></a></article></div></div><article id="comments" lazyload><div id="waline"></div><script type="text/javascript">Fluid.utils.loadComments("#waline",(function(){Fluid.utils.createCssLink("https://lib.baomitu.com/waline/2.5.1/waline.min.css"),Fluid.utils.createScript("https://lib.baomitu.com/waline/2.5.1/waline.min.js",(function(){var i=Object.assign({serverURL:"https://waline.0929.ltd",path:"window.location.pathname",meta:["nick","mail","link"],requiredMeta:["nick"],lang:"zh-CN",emoji:["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],dark:'html[data-user-color-scheme="dark"]',wordLimit:0,pageSize:10},{el:"#waline",path:window.location.pathname});Waline.init(i),Fluid.utils.waitElementVisible("#waline .vcontent",()=>{var i="#waline .vcontent img:not(.vemoji)";Fluid.plugins.imageCaption(i),Fluid.plugins.fancyBox(i)})}))}))</script><noscript>Please enable JavaScript to view the comments</noscript></article></article></div></div></div><div class="side-col d-none d-lg-block col-lg-2"><aside class="sidebar" style="margin-left:-1rem"><div id="toc"><p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p><div class="toc-body" id="toc-body"></div></div></aside></div></div></div><a id="scroll-top-button" aria-label="TOP" href="#" role="button"><i class="iconfont icon-arrowup" aria-hidden="true"></i></a><div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable modal-lg" role="document"><div class="modal-content"><div class="modal-header text-center"><h4 class="modal-title w-100 font-weight-bold">搜索</h4><button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body mx-3"><div class="md-form mb-5"><input type="text" id="local-search-input" class="form-control validate"> <label data-error="x" data-success="v" for="local-search-input">关键词</label></div><div class="list-group" id="local-search-result"></div></div></div></div></div></main><footer><div class="footer-inner"><div class="footer-content"><a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a></div><div class="statistics"><span id="busuanzi_container_site_pv" style="display:none">总访问量 <span id="busuanzi_value_site_pv"></span> 次 </span><span id="busuanzi_container_site_uv" style="display:none">总访客数 <span id="busuanzi_value_site_uv"></span> 人</span></div></div></footer><script src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js"></script><link rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css"><script>NProgress.configure({showSpinner:!1,trickleSpeed:100}),NProgress.start(),window.addEventListener("load",(function(){NProgress.done()}))</script><script src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js"></script><script src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script><script src="/js/events.js"></script><script src="/js/plugins.js"></script><script src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js"></script><script>!function(t,e){var i=Fluid.plugins.typing,n=e.getElementById("subtitle");n&&i&&i(n.getAttribute("data-typed-text"))}(window,document)</script><script src="/js/img-lazyload.js"></script><script>Fluid.utils.createScript("https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js",(function(){var t=jQuery("#toc");if(0!==t.length&&window.tocbot){var o=jQuery("#board-ctn").offset().top;window.tocbot.init({tocSelector:"#toc-body",contentSelector:".markdown-body",headingSelector:CONFIG.toc.headingSelector||"h1,h2,h3,h4,h5,h6",linkClass:"tocbot-link",activeLinkClass:"tocbot-active-link",listClass:"tocbot-list",isCollapsedClass:"tocbot-is-collapsed",collapsibleClass:"tocbot-is-collapsible",collapseDepth:CONFIG.toc.collapseDepth||0,scrollSmooth:!0,headingsOffset:-o}),t.find(".toc-list-item").length>0&&t.css("visibility","visible")}}))</script><script src="https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js"></script><script>Fluid.plugins.codeWidget()</script><script>Fluid.utils.createScript("https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js",(function(){window.anchors.options={placement:CONFIG.anchorjs.placement,visible:CONFIG.anchorjs.visible},CONFIG.anchorjs.icon&&(window.anchors.options.icon=CONFIG.anchorjs.icon);var o=(CONFIG.anchorjs.element||"h1,h2,h3,h4,h5,h6").split(","),n=[];for(var i of o)n.push(".markdown-body > "+i.trim());"left"===CONFIG.anchorjs.placement&&(window.anchors.options.class="anchorjs-link-left"),window.anchors.add(n.join(", "))}))</script><script>Fluid.utils.createScript("https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js",(function(){Fluid.plugins.fancyBox()}))</script><script>Fluid.plugins.imageCaption()</script><script src="/js/local-search.js"></script><script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="/js/boot.js"></script><noscript><div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div></noscript></body></html>
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="&gt;公安项目有签订保密协议，敏感字段和与技术无关字段我已删减 &amp;nbsp;采用的是&amp;nbsp;信用评分卡模型，计算WOE&amp;#20540;获得最终评分。 所有计算过程在ODPS中完成！  1.“Y”变量定义  为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xx省驾驶员信用评分模型">
+<meta property="og:url" content="https://idelin.github.io/2016/08/05/xx%E7%9C%81%E9%A9%BE%E9%A9%B6%E5%91%98%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="DELIN">
+<meta property="og:description" content="&gt;公安项目有签订保密协议，敏感字段和与技术无关字段我已删减 &amp;nbsp;采用的是&amp;nbsp;信用评分卡模型，计算WOE&amp;#20540;获得最终评分。 所有计算过程在ODPS中完成！  1.“Y”变量定义  为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20160806135813967">
+<meta property="og:image" content="https://img-blog.csdn.net/20160806135831694">
+<meta property="og:image" content="https://img-blog.csdn.net/20160806135840655">
+<meta property="og:image" content="https://img-blog.csdn.net/20160806140102398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20160806140145508?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="article:published_time" content="2016-08-05T09:46:23.000Z">
+<meta property="article:modified_time" content="2022-08-03T12:45:23.675Z">
+<meta property="article:author" content="DELIN">
+<meta property="article:tag" content="信用卡评分">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20160806135813967">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>xx省驾驶员信用评分模型 - DELIN</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"idelin.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"149854025cda86db9ae25f0af616dd21","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?149854025cda86db9ae25f0af616dd21";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="DELIN" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DELIN</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://tva1.sinaimg.cn/large/e6c9d24ely1h5jvtq09f8j21hc0u0mxx.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="xx省驾驶员信用评分模型"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2016-08-05 17:46" pubdate>
+          2016年8月5日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">xx省驾驶员信用评分模型</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><span class="token md md-gt" style="font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap; outline:none!important">&gt;</span><span style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap">公安项目有签订保密协议，敏感字段和与技术无关字段我已删减</span></p>
+<p><span style="font-family:microsoft yahei; color:#808080"><span style="font-size:18px; line-height:29.7px; white-space:pre-wrap">&nbsp;采用的是&nbsp;信用评分卡模型，计算WOE&#20540;获得最终评分。</span></span></p>
+<p><span style="font-family:microsoft yahei; color:#808080"><span style="font-size:18px; line-height:29.7px; white-space:pre-wrap">所有计算过程在ODPS中完成！</span></span></p>
+<p><span style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap"></span></p>
+<h3>1.“Y”变量定义</h3>
+<p></p>
+<p>为了综合评估普通驾驶员的道路交通能力，此次建模的目标为驾驶员是否有发生事故，若有则为坏样本，整体的坏样本率为1.314%，通过统计可以发现：</p>
+
+<span id="more"></span>
+
+<table border="0" cellspacing="0" cellpadding="0" width="197">
+<tbody>
+<tr>
+<td nowrap="nowrap" style="background:#BFBFBF">
+<p align="left">是否发生事故</p>
+</td>
+<td nowrap="nowrap" style="background:#BFBFBF">
+<p align="left">计数</p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left">0</p>
+</td>
+<td nowrap="nowrap">
+<p align="right">296058</p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left">1</p>
+</td>
+<td nowrap="nowrap">
+<p align="right">3942</p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap" style="background:#DCE6F1">
+<p align="left"><strong>总计</strong></p>
+</td>
+<td nowrap="nowrap" style="background:#DCE6F1">
+<p align="right"><strong>300000</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p><span style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap"></span></p>
+<h3>2.建模算法</h3>
+<p></p>
+<p>现在采用的是WOE变量方式建模进行驾驶员评分,首先是获得各指标woe&#20540;，公式：</p>
+<p><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="https://img-blog.csdn.net/20160806135813967" srcset="/img/loading.gif" lazyload alt=""><br>
+</p>
+<p><img src="" srcset="/img/loading.gif" lazyload alt="" style="color:rgb(128,128,128); font-family:&quot;microsoft yahei&quot;; font-size:18px; line-height:29.7px; white-space:pre-wrap"></p>
+<p>(b­<sub>i</sub>：指标i纬度坏样本数，b<sub>c</sub>：总坏样本数，g­<sub>i</sub>：指标i纬度好样本数，g<sub>c</sub>：总好样本数)；</p>
+<p>然后获得初始分数(0-1之间)：</p>
+<p><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="https://img-blog.csdn.net/20160806135831694" srcset="/img/loading.gif" lazyload alt=""><br>
+</p>
+<p>(woe<sub>j</sub>：j指标woe&#20540;)</p>
+<p>根据讨论结果，最低分取30分，做相应线性变换，得到真实分数：</p>
+<p><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="" srcset="/img/loading.gif" lazyload alt=""><img src="https://img-blog.csdn.net/20160806135840655" srcset="/img/loading.gif" lazyload alt=""><br>
+</p>
+<p><br>
+</p>
+<p></p>
+<h3>3.单字段性能—IV指标</h3>
+<p></p>
+<p>进一步验证各字段的IV&#20540;：<span style="line-height:29.7px"> </span></p>
+<p>得到结果如下：</p>
+<p>
+<table border="0" cellpadding="0" cellspacing="0" width="144" style="border-collapse:collapse; width:108pt">
+
+<tbody>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" width="72" style="height:17.25pt; width:54pt">序号</td>
+<td class="xl65" width="72" style="width:54pt"><span lang="EN-US">IV&#20540;</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">1</td>
+<td class="xl66"><span lang="EN-US">0.31722</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">2</td>
+<td class="xl66"><span lang="EN-US">0.27158</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">3</td>
+<td class="xl66"><span lang="EN-US">0.25169</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">4</td>
+<td class="xl66"><span lang="EN-US">0.19057</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">5</td>
+<td class="xl66"><span lang="EN-US">0.13439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">6</td>
+<td class="xl66"><span lang="EN-US">0.09315</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">7</td>
+<td class="xl66"><span lang="EN-US">0.09128</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">8</td>
+<td class="xl66"><span lang="EN-US">0.08199</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">9</td>
+<td class="xl66"><span lang="EN-US">0.07267</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">10</td>
+<td class="xl66"><span lang="EN-US">0.0669</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">11</td>
+<td class="xl66"><span lang="EN-US">0.04222</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">12</td>
+<td class="xl66"><span lang="EN-US">0.02809</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">13</td>
+<td class="xl66"><span lang="EN-US">0.02797</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">14</td>
+<td class="xl66"><span lang="EN-US">0.02783</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">15</td>
+<td class="xl66"><span lang="EN-US">0.02665</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">16</td>
+<td class="xl66"><span lang="EN-US">0.02352</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">17</td>
+<td class="xl66"><span lang="EN-US">0.02059</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">18</td>
+<td class="xl66"><span lang="EN-US">0.01752</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">19</td>
+<td class="xl66"><span lang="EN-US">0.01541</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">20</td>
+<td class="xl66"><span lang="EN-US">0.01458</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">21</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">22</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">23</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">24</td>
+<td class="xl66"><span lang="EN-US">0.01439</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">25</td>
+<td class="xl66"><span lang="EN-US">0.0134</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">26</td>
+<td class="xl66"><span lang="EN-US">0.00827</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">27</td>
+<td class="xl66"><span lang="EN-US">0.00383</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">28</td>
+<td class="xl66"><span lang="EN-US">0.00139</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">29</td>
+<td class="xl66"><span lang="EN-US">0.00132</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">30</td>
+<td class="xl66"><span lang="EN-US">0.00044</span></td>
+</tr>
+<tr height="23" style="height:17.25pt">
+<td height="23" class="xl67" style="height:17.25pt">31</td>
+<td class="xl66"><span lang="EN-US">0.00025</span></td>
+</tr>
+</tbody>
+</table>
+</p>
+<p><span style="line-height:29.7px">IV是全称InformationValue，是衡量单自变量对于应变量显著程度的指标，通常IV&#20540;越高，变量的显著性越强；</span></p>
+<p>此模型变量中IV&#20540;大于0.05以上的变量超过10个。</p>
+<h3>4.模型整体性能--KS指标</h3>
+<p>通过整体的评估，模型整体的KS指标如下：</p>
+<p>KS = 0.303768</p>
+<p><img src="https://img-blog.csdn.net/20160806140102398?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" srcset="/img/loading.gif" lazyload alt=""><br>
+</p>
+<p><img src="" srcset="/img/loading.gif" lazyload alt=""></p>
+<p>注：KS指标衡量的是好样本和坏样本的累计分布比例之间具体最大的差距。好样本和坏样本之间的距离越大，KS指标范围在0%-100%之间，KS指标越高，模型的区分能力越强；</p>
+<p>该模型的KS达到30%&#43;，性能OK。</p>
+<p>&nbsp;</p>
+<h3>5.模型整体性能—ROC指标</h3>
+<p>经计算：</p>
+<p>AUC=0.703637</p>
+<p><img src="" srcset="/img/loading.gif" lazyload alt=""></p>
+<p><img src="https://img-blog.csdn.net/20160806140145508?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" srcset="/img/loading.gif" lazyload alt=""><br>
+</p>
+<p>注：ROC曲线及AUC系数为评估模型对客户进行正确区分的指标。ROC曲线描述了在一定累计好客户比例下的累计坏客户的比例， ROC曲线越往左上角靠近，模型的分别能力越强。AUC系数为ROC曲线下方的面积，数&#20540;范围在0.5-1之间，AUC系数越高，模型的区分能力越强。</p>
+该模型的AUC&gt;=0.7，性能较好。
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BF%A1%E7%94%A8%E5%8D%A1%E8%AF%84%E5%88%86/">#信用卡评分</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>xx省驾驶员信用评分模型</div>
+      <div>https://idelin.github.io/2016/08/05/xx省驾驶员信用评分模型/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>DELIN</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2016年8月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2016/08/11/%E5%BB%BA%E6%A8%A1%E4%BA%A4%E6%B5%81%E5%AD%A6%E4%B9%A0/" title="建模交流学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">建模交流学习</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2016/08/05/%E5%90%90%E6%A7%BD%E9%98%BF%E9%87%8C%E4%BA%91PAI/" title="吐槽阿里云PAI">
+                        <span class="hidden-mobile">吐槽阿里云PAI</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline.0929.ltd","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
