@@ -1,0 +1,824 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DELIN">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="随着Apache Hadoop的起步，云客户的增多面临的首要问题就是如何为他们新的的Hadoop集群选择合适的硬件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop 集群如何选择合适的硬件">
+<meta property="og:url" content="https://www.920929.xyz/posts/9226d530.html">
+<meta property="og:site_name" content="DELIN">
+<meta property="og:description" content="随着Apache Hadoop的起步，云客户的增多面临的首要问题就是如何为他们新的的Hadoop集群选择合适的硬件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="file:///C:/Users/delin/Documents/My%20Knowledge/temp/fd3a6e75-d719-4855-b9fd-2dee0a624c27/4/index_files/0.15311841038055718.png">
+<meta property="article:published_time" content="2016-12-19T08:23:07.000Z">
+<meta property="article:modified_time" content="2022-08-03T12:45:23.189Z">
+<meta property="article:author" content="DELIN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="file:///C:/Users/delin/Documents/My%20Knowledge/temp/fd3a6e75-d719-4855-b9fd-2dee0a624c27/4/index_files/0.15311841038055718.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Hadoop 集群如何选择合适的硬件 - DELIN</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.920929.xyz","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"149854025cda86db9ae25f0af616dd21","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?149854025cda86db9ae25f0af616dd21";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="DELIN" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DELIN</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://jihulab.com/idelin/pic-bed/-/raw/main/pictures/2023/04/19_17_14_30_board.jpeg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Hadoop 集群如何选择合适的硬件"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2016-12-19 16:23" pubdate>
+          2016年12月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          47 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Hadoop 集群如何选择合适的硬件</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p style="margin-top:0px; margin-bottom:0px; word-wrap:break-word; padding-top:0px; padding-bottom:0px; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px; line-height:22px">
+<span style="word-wrap:break-word; color:rgb(0,0,0)"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">随着Apache Hadoop的起步，云客户的增多面临的首要问题就是如何为他们新的的Hadoop集群选择合适的硬件。</span></span></p>
+<span id="more"></span>
+<p style="margin-top:0px; margin-bottom:0px; word-wrap:break-word; padding-top:0px; padding-bottom:0px; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px; line-height:22px">
+<span style="word-wrap:break-word; color:rgb(0,0,0)"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">尽管Hadoop被设计为运行在行业标准的硬件上，提出一个理想的集群配置不想提供硬件规&#26684;列表那么简单。 选择硬件，为给定的负载在性能和经济性提供最佳平衡是需要测试和验证其有效性。（比如，IO密集型工作负载的用户将会为每个核心主轴投资更多）。</span></span></p>
+<p style="margin-top:0px; margin-bottom:0px; word-wrap:break-word; padding-top:0px; padding-bottom:0px; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px; line-height:22px">
+<span style="word-wrap:break-word; color:rgb(0,0,0)"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">在这个博客帖子中，你将会学到一些工作负载评估的原则和它在硬件选择中起着至关重要的作用。在这个过程中，你也将学到Hadoop管理员应该考虑到各种因素。</span></span></p>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">结合存储和计算</span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">过去的十年，IT组织已经标准化了刀片服务器和存储区域网(SAN)来满足联网和处理密集型的工作负载。尽管这个模型对于一些方面的标准程序是有相当意义 的，比如网站服务器，程序服务器，小型结构化数据库，数据移动等，但随着数据数量和用户数的增长，对于基础设施的要求也已经改变。网站服务器现在有了缓存
+ 层；数据库需要本地硬盘支持大规模地并行；数据迁移量也超过了本地可处理的数量。</span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><span style="word-wrap:break-word; font-weight:700">大部分的团队还没有弄清楚实际工作负载需求就开始搭建他们的Hadoop集群。</span></span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">硬 件提供商已经生产了创新性的产品系统来应对这些需求，包括存储刀片服务器，串行SCSI交换机，外部SATA磁盘阵列和大容量的机架单元。然 而，Hadoop是基于新的实现方法，来存储和处理复杂数据，并伴随着数据迁移的减少。 相对于依赖SAN来满足大容量存储和可靠性，Hadoop在软件层次处理大数据和可靠性。Hadoop在一簇平衡的节点间分派数据并使用同步复制来保证数据可用性和容错性。因为数据被分发到有计算能力的节点，数据的处理可以被直接发送到存储有数据的节点。由于Hadoop集群中的每一台节点都存储并处理数据，这些节点都需要配置来满足数据存储和运算的要求。</span></span><br style="word-wrap:break-word">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><span style="word-wrap:break-word; font-weight:700">工作负载很重要吗？</span></span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><br style="word-wrap:break-word">
+</span></span></div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">在几乎所有情形下，MapReduce要么会在从硬盘或者网络读取数据时遇到瓶颈（称为IO受限的应用），要么在处理数据时遇到瓶颈（CPU受限）。排序是一个IO受限的例子，它需要很少的CPU处理（仅仅是简单的比较操作），但是需要大量的从硬盘读写数据。模式分类是一个CPU受限的例子，它对数据进行复杂的处理，用来判定本体。下面是更多IO受限的工作负载的例子：</span></span>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+索引</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+分组</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+数据导入导出</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+数据移动和转换<br style="word-wrap:break-word">
+</li></ul>
+下面是更多CPU受限的工作负载的例子：
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+聚类/分类</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+复杂文本挖掘</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+自然语言处理</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+特征提取<br style="word-wrap:break-word">
+</li></ul>
+Cloudera的客户需要完全理解他们的工作负载，这样才能选择最优的Hadoop硬件，而这好像是一个鸡生蛋蛋生鸡的问题。大多数工作组在没有彻底剖析他们的工作负载时，就已经搭建好了Hadoop集群，通常Hadoop运行的工作负载随着他们的精通程度的提高而完全不同。而且，某些工作负载可能会被一些未预料的原因受限。例如，某些理论上是IO受限的工作负载却最终成为了CPU受限，这是可能是因为用户选择了不同的压缩算法，或者算法的不同实现改变了MapReduce任务的约束方式。基于这些原因，当工作组还不熟悉要运行任务的类型时，深入剖析它才是构建平衡的Hadoop集群之前需要做的最合理的工作。<br style="word-wrap:break-word">
+<br style="word-wrap:break-word">
+<span style="color:#000; word-wrap:break-word"><span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word">接下来需要在集群上运行MapReduce基准测试任务，分析它们是如何受限的。完成这个目标最直接的方法是在运行中的工作负载中的适当位置添加监视器来检测瓶颈。我们推荐在Hadoop集群上安装Cloudera Manager，它可以提供CPU，硬盘和网络负载的实时统计信息。（Cloudera
+ Manager是Cloudera 标准版和企业版的一个组件，其中企业版还支持滚动升级）Cloudera Manager安装之后，Hadoop管理员就可以运行MapReduce任务并且查看Cloudera Manager的仪表盘，用来监测每台机器的工作情况。</span></span><br style="word-wrap:break-word">
+</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">第一步是弄清楚你的作业组已经拥有了哪些硬件</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+在为你的工作负载构建合适的集群之外，我们建议客户和它们的硬件提供商合作确定电力和冷却方面的预算。由于Hadoop会运行在数十台，数百台到数千台节点上。通过使用高性能功耗比的硬件，作业组可以节省一大笔资金。硬件提供商通常都会提供监测功耗和冷却方面的工具和建议。</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700"><span style="word-wrap:break-word">为你的CDH(</span><span style="word-wrap:break-word"><span style="word-wrap:break-word"><span style="word-wrap:break-word">Cloudera</span>&nbsp;<span style="word-wrap:break-word">distribution</span>&nbsp;<span style="word-wrap:break-word">for</span></span>&nbsp;</span><span style="word-wrap:break-word"><span style="word-wrap:break-word">Hadoop</span></span><span style="word-wrap:break-word">)
+ Cluster选择硬件</span></span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+选择机器配置类型的第一步就是理解你的运维团队已经在管理的硬件类型。在购买新的硬件设备时，运维团队经常根据一定的观点或者强制需求来选择，并且他们倾向于工作在自己业已熟悉的平台类型上。Hadoop不是唯一的从规模效率上获益的系统。再一次强调，作为更通用的建议，如果集群是新建立的或者你并不能准确的预估你的极限工作负载，我们建议你选择均衡的硬件类型。Hadoop集群有四种基本任务角色:名称节点（包括备用名称节点），工作追踪节点，任务执行节点，和数据节点。节点是执行某一特定功能的工作站。大部分你的集群内的节点需要执行两个角色的任务，作为数据节点（数据存储）和任务执行节点（数据处理）。这是在一个平衡Hadoop集群中，为数据节点/任务追踪器提供的推荐规&#26684;：
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+在一个磁盘阵列中要有12到24个1~4TB硬盘</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+2个频率为2~2.5GHz的四核、六核或八核CPU</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+64~512GB的内存</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+有保障的千兆或万兆以太网（存储密度越大，需要的网络吞吐量越高）<br style="word-wrap:break-word">
+</li></ul>
+名字节点角色负责协调集群上的数据存储，作业追踪器协调数据处理（备用的名字节点不应与集群中的名字节点共存，并且运行在与之相同的硬件环境上。）。Cloudera推荐客户购买在RAID1或10配置上有足够功率和企业级磁盘数的商用机器来运行名字节点和作业追踪器。NameNode也会直接需要与群集中的数据块的数量成比列的RAM。一个好的但不精确的规则是对于存储在分布式文件系统里面的每一个1百万的数据块，分配1GB的NameNode内存。于在一个群集里面的100个DataNodes而言，NameNode上的64GB的RAM提供了足够的空间来保证群集的增长。我们也推荐把HA同时配置在NameNode和JobTracker上，这里就是为NameNode／JobTracker／Standby
+ NameNode节点群推荐的技术细节。驱动器的数量或多或少，将取决于冗余数量的需要。
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+4–6 1TB 硬盘驱动器 采用 一个&nbsp;&nbsp;JBOD 配置 (1个用于OS, 2个用于文件系统映像[RAID 1], 1个用于Apache ZooKeeper, 1个用于Journal节点)</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+2 4-/16-/8-核心 CPUs, 至少运行于 2-2.5GHz</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+64-128GB 随机存储器</li><li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+Bonded Gigabit 以太网卡 or 10Gigabit 以太网卡<br style="word-wrap:break-word">
+</li></ul>
+<span style="word-wrap:break-word; font-weight:700"><br style="word-wrap:break-word">
+记住, 在思想上，Hadoop 体系设计为用于一种并行环境。</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+如果你希望Hadoop集群扩展到20台机器以上，那么我们推荐最初配置的集群应分布在两个机架，而且每个机架都有一个位于机架顶部的10G的以太网交换。当这个集群跨越多个机架的时候，你将需要添加核心交换机使用40G的以太网来连接位于机架顶部的交换机。两个逻辑上分离的机架可以让维护团队更好地理解机架内部和机架间通信对网络需求。Hadoop集群安装好后，维护团队就可以开始确定工作负载，并准备对这些工作负载进行基准测试以确定硬件瓶颈。经过一段时间的基准测试和监视，维护团队将会明白如何配置添加的机器。异构的Hadoop集群是很常见的，尤其是在集群中用户机器的容量和数量不断增长的时候更常见-因此为你的工作负载所配置的“不理想”开始时的那组机器不是在浪费时间。Cloudera管理器提供了允许分组管理不同硬件配置的模板，通过这些模板你就可以简单地管理异构集群了。下面是针对不同的工作负载所采用对应的各种硬件配置的列表，包括我们最初推荐的“负载均衡”的配置：
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+轻量处理方式的配置(1U的机器）:两个16核的CPU，24-64GB的内存以及8张硬盘（每张1TB或者2TB)。<br style="word-wrap:break-word">
+</li></ul>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+负载均衡方式的配置(1U的机器）:两个16核的CPU，48-128GB的内存以及由主板控制器直接连接的12-16张硬盘（每张1TB或者2TB)。通常在一个2U的柜子里使用2个主板和24张硬盘实现相互备份。<br style="word-wrap:break-word">
+</li></ul>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+超大存储方式的配置(2U的机器）:两个16核的CPU，48-96GB的内存以及16-26张硬盘（每张2TB-4TB)。这种配置在多个节点/机架失效时会产生大量的网络流量。<br style="word-wrap:break-word">
+</li></ul>
+<ul style="margin:0px 0px 0px 14px; padding:0px; word-wrap:break-word">
+<li style="margin:0px 0px 0px 2em; word-wrap:break-word; padding:0px; list-style:disc">
+强力运算方式的配置(2U的机器）:两个16核的CPU，64-512GB的内存以及4-8张硬盘（每张1TB或者2TB)。<br style="word-wrap:break-word">
+</li></ul>
+（注意Cloudera期望你配置它可以使用的2x8,2x10和2x12核心CPU的配置。)下图向你展示了如何根据工作负载来配置一台机器：&nbsp;<img id="aimg_1979" src="file:///C:/Users/delin/Documents/My%20Knowledge/temp/fd3a6e75-d719-4855-b9fd-2dee0a624c27/4/index_files/0.15311841038055718.png" srcset="/img/loading.gif" lazyload class="zoom" width="500" alt="" style="border:0px; max-width:100%; margin:2px 0px; height:auto!important; word-wrap:break-word"></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">其他要考虑的</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+记住Hadoop生态系统的设计是考虑了并行环境这点非常重要。当购买处理器时，我们不建议购买最高频率(GHZ)的芯片，这些芯片都有很高的功耗（130瓦以上）。这么做会产生两个问题：电量消耗会更高和热量散发会更大。处在中间型号的CPU在频率、价&#26684;和核心数方面性价比是最好的。当我们碰到生成大量中间数据的应用时-也就是说输出数据的量和读入数据的量相等的情况-我们推荐在单个以太网接口卡上启用两个端口，或者捆绑两个以太网卡，让每台机器提供2Gbps的传输速率。绑定2Gbps的节点最多可容纳的数据量是12TB。一旦你传输的数据超过12TB，你将需要使用传输速率为捆绑方式实现的4Gbps(4x1Gbps)。另外，对哪些已经使用10Gb带宽的以太网或者无线网络用户来说，这样的方案可以用来按照网络带宽实现工作负载的分配。如果你正在考虑切换到10GB的以太网络上，那么请确认操作系统和BIOS是否兼容这样的功能。当计算需要多少内存的时候，记住Java本身要使用高达10%的内存来管理虚拟机。我们建议把Hadoop配置为只使用堆，这样就可以避免内存与磁盘之间的切换。切换大大地降低MapReduce任务的性能，并且可以通过给机器配置更多的内存以及给大多数Linux发布版以适当的内核设置就可以避免这种切换。优化内存的通道宽度也是非常重要的。例如，当我们使用双通道内存时，每台机器就应当配置成对内存模块（DIMM）。当我们使用三通道的内存时，每台机器都应当使用三的倍数个内存模块（DIMM）。类&#20284;地，四通道的内存模块（DIMM)就应当按四来分组使用内存。</div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="word-wrap:break-word; font-weight:700">超越MapReduce</span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+Hadoop不仅仅是HDFS和MapReduce；它是一个无所不包的数据平台。因此CDH包含许多不同的生态系统产品（实际上很少仅仅做为MapReduce使用）。当你在为集群选型的时候，需要考虑的附加软件组件包括Apache HBase、Cloudera Impala和Cloudera Search。它们应该都运行在DataNode中来维护数据局部性。</div>
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<span style="font-family:微软雅黑,Verdana,sans-serif,宋体; word-wrap:break-word"><span style="font-size:18px; word-wrap:break-word"><span style="color:#000000; word-wrap:break-word"><span style="word-wrap:break-word; font-weight:700">关注资源管理是你成功的关键。</span></span></span></span></div>
+<br style="word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+<div align="left" style="margin:0px; word-wrap:break-word; color:rgb(68,68,68); font-family:Tahoma,&quot;Microsoft Yahei&quot;,Simsun; font-size:14px">
+HBase是一个可靠的列数据存储系统，它提供一致性、低延迟和随机读写。Cloudera Search解决了CDH中存储内容的全文本搜索的需求，为新类型用户简化了访问，但是也为Hadoop中新类型数据存储提供了机会。Cloudera Search基于Apache Lucene/Solr Cloud和Apache Tika，并且为与CDH广泛集成的搜索扩展了有价&#20540;的功能和灵活性。基于Apache协议的Impala项目为Hadoop带来了可扩展的并行数据库技术，使得用户可以向HDFS和HBase中存储的数据发起低延迟的SQL查询，而且不需要数据移动或转换。由于垃圾回收器（GC）的超时，HBase的用户应该留意堆的大小的限制。别的JVM列存储也面临这个问题。因此，我们推荐每一个区域服务器的堆最大不超过16GB。HBase不需要太多别的资源而运行于Hadoop之上，但是维护一个实时的SLAs，你应该使用多个调度器，比如使用fair
+ and capacity 调度器，并协同Linux Cgroups使用。Impala使用内存以完成其大多数的功能，在默认的配置下，将最多使用80％的可用RAM资源，所以我们推荐，最少每一个节点使用96GB的RAM。与MapReduce一起使用Impala的用户，可以参考我们的建议 －&nbsp;<span style="color:#3e62a6; word-wrap:break-word"><a target="_blank" href="http://blog.cloudera.com/blog/2013/06/configuring-impala-and-mapreduce-for-multi-tenant-performance/" target="_blank" style="word-wrap:break-word; color:rgb(51,102,153)">“Configuring
+ Impala and MapReduce for Multi-tenant Performance.”</a></span>&nbsp;也可以为Impala指定特定进程所需的内存或者特定查询所需的内存。 搜索是最有趣的订制大小的组件。推荐的订制大小的实践操作是购买一个节点，安装Solr和Lucene，然后载入你的文档群。一旦文档群被以期望的方式来索引和搜索，可伸缩性将开始作用。持续不断的载入文档群，直到索引和查询的延迟，对于项目而言超出了必要的数&#20540; － 此时，这让你得到了在可用的资源上每一个节点所能处理的最大文档数目的基数，以及不包括欲期的集群复制此因素的节点的数量总计基数。<span style="word-wrap:break-word; font-weight:700">结论</span>购买合适的硬件，对于一个Hapdoop群集而言，需要性能测试和细心的计划，从而全面理解工作负荷。然而，Hadoop群集通常是一个形态变化的系统，而Cloudera建议，在开始的时候，使用负载均衡的技术文档来部署启动的硬件。重要的是，记住，当使用多种体系组件的时候，资源的使用将会是多样的，而专注与资源管理将会是你成功的关键。我们鼓励你在留言中，加入你关于配置Hadoop生产群集服务器的经验！Kevin
+ O‘Dell 是一个工作于Cloudera的系统工程师。<br style="word-wrap:break-word">
+</div>
+<br style="font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1">
+<div style="margin:0px; font-family:Helvetica,&quot;Hiragino Sans GB&quot;,微软雅黑,&quot;Microsoft YaHei UI&quot;,SimSun,SimHei,arial,sans-serif; font-size:15px; line-height:24px; widows:1; color:gray">
+<small>来源：&nbsp;<a target="_blank" href="http://www.aboutyun.com/thread-6549-1-1.html">http://www.aboutyun.com/thread-6549-1-1.html</a></small></div>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/hadoop/" class="category-chain-item">hadoop</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Hadoop 集群如何选择合适的硬件</div>
+      <div>https://www.920929.xyz/posts/9226d530.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>DELIN</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2016年12月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/posts/7ab66401.html" title="Spark集群硬件挑选">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Spark集群硬件挑选</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/posts/87632208.html" title="java8实现spark streaming的wordcount">
+                        <span class="hidden-mobile">java8实现spark streaming的wordcount</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments" lazyload>
+    
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.5.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.5.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://waline.920929.xyz","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
