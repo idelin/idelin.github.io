@@ -256,6 +256,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/posts/b5e0b31d.html" target="_self">
+          disruptor高性能框架
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/posts/b5e0b31d.html" target="_self">
+        <div>
+          最近项目里需要写模型，然后数据是从es取，不同人负责写不同模型，这里遇到一个问题，就是数据的读其实公用，没必要各自取一次数据浪费带宽、内存、cpu…遂想是否可以提取公用部分做数据读，下发给各个模型，然后开发老大说用disruptor试试，调研了下确实可行，就稍加记录下。
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2017-08-25 14:58" pubdate>
+              2017-08-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/java/" class="category-chain-item">java</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E9%AB%98%E6%80%A7%E8%83%BD/">#高性能</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/posts/d76b710e.html" target="_self">
           【Storm初探】wordcount demo
         </a>
@@ -730,67 +791,6 @@
             </time>
           </div>
         
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/oracle/">#oracle</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/posts/c4c5ec89.html" target="_self">
-          【Oracle】LGWR
-        </a>
-      </h1>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/posts/c4c5ec89.html" target="_self">
-        <div>
-          LGWR，是Log Writer的缩写，也是一种后台进程。主要负责将日志缓冲内容写到磁盘的在线重做日志文件或组中。DBWn将dirty块写到磁盘之前，所有与buffer修改相关的redo log都需要由LGWR写入磁盘的在线重做日志文件(组)，如果未写完，那么DBWn会等待LGWR，也会产生一些相应的等待事件(例如：log file prarllel write，后面单独作为话题再聊)。总之，这样
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2016-12-28 10:57" pubdate>
-              2016-12-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/oracle/" class="category-chain-item">oracle</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
         
         
           <div class="post-meta">
