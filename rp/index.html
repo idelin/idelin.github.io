@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安恒OTP - 兼容Google Authenticator，安全更专属</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-white min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <img src="logo.png" alt="安恒 Logo" class="h-12" />
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区 -->
+    <main class="container mx-auto px-6 py-12">
+        <!-- 英雄区域 -->
+        <div class="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
+            <div class="text-center md:text-left md:flex-1">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">安恒OTP</h1>
+                <h2 class="text-xl md:text-2xl text-gray-600 mb-8">兼容Google Authenticator，安全更专属</h2>
+                <p class="text-lg text-gray-600 max-w-2xl">
+                    微信小程序首发 | 支持标准OTP协议 | 安恒多款产品已适配
+                </p>
+            </div>
+            <div class="md:flex-1 relative">
+                <div class="carousel relative w-full max-w-full md:max-w-lg mx-auto rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="carousel-inner relative overflow-hidden rounded-3xl aspect-[4/3] md:aspect-[3/4] bg-gradient-to-br from-blue-50/50 to-white/50 p-4">
+                        <div class="carousel-item absolute inset-0 transition-opacity duration-1000 ease-out opacity-0" id="slide1">
+                            <img src="./hero-image.jpeg" alt="安恒OTP产品展示1" class="w-full h-full object-contain">
+                        </div>
+                        <div class="carousel-item absolute inset-0 transition-opacity duration-1000 ease-out opacity-0" id="slide2">
+                            <img src="./hero-image2.jpeg" alt="安恒OTP产品展示2" class="w-full h-full object-contain">
+                        </div>
+                        <div class="carousel-item absolute inset-0 transition-opacity duration-1000 ease-out opacity-0" id="slide3">
+                            <img src="./hero-image3.jpeg" alt="安恒OTP产品展示3" class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    <button onclick="prevSlide()" class="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-gray-800/50 backdrop-blur-md hover:bg-gray-700/60 text-white p-2 md:p-3 rounded-full transition-all duration-300 z-20 shadow-lg hover:scale-110">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 md:w-6 md:h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button onclick="nextSlide()" class="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-gray-800/50 backdrop-blur-md hover:bg-gray-700/60 text-white p-2 md:p-3 rounded-full transition-all duration-300 z-20 shadow-lg hover:scale-110">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 md:w-6 md:h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <div class="absolute bottom-6 left-0 right-0 flex justify-center space-x-3 z-10">
+                        <button class="w-2.5 h-2.5 rounded-full bg-gray-800/50 hover:bg-gray-700/60 transition-all duration-300 transform hover:scale-125" onclick="showSlide(1)"></button>
+                        <button class="w-2.5 h-2.5 rounded-full bg-gray-800/50 hover:bg-gray-700/60 transition-all duration-300 transform hover:scale-125" onclick="showSlide(2)"></button>
+                        <button class="w-2.5 h-2.5 rounded-full bg-gray-800/50 hover:bg-gray-700/60 transition-all duration-300 transform hover:scale-125" onclick="showSlide(3)"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 特性区域 -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <!-- 无缝兼容 -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="text-4xl mb-4">🔄</div>
+                <h3 class="text-xl font-semibold mb-2">无缝兼容</h3>
+                <p class="text-gray-600">支持Google Authenticator密钥扫码或表单录入，零成本迁移，可完成替换使用。</p>
+            </div>
+
+            <!-- 双重保障 -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="text-4xl mb-4">🔒</div>
+                <h3 class="text-xl font-semibold mb-2">双重保障</h3>
+                <p class="text-gray-600">基于RFC 6238/4226标准，支持 TOTP、HOTP 标准协议，与标准 OTP 生态完全兼容。</p>
+            </div>
+
+            <!-- 微信轻量化 -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div class="text-4xl mb-4">📱</div>
+                <h3 class="text-xl font-semibold mb-2">微信轻量化</h3>
+                <p class="text-gray-600">无需额外APP，扫码即用，动态密码同步生成。</p>
+            </div>
+        </div>
+
+        <!-- 支持的产品 -->
+        <div class="text-center mb-16">
+            <h3 class="text-2xl font-bold mb-6">⚡ 已支持产品</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full">WAF</span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full">防火墙</span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full">堡垒机</span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full">零信任</span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full">UES</span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full">EDR</span>
+                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full">AiLPHA</span>
+            </div>
+        </div>
+
+        <!-- 行动号召 -->
+        <div class="text-center mb-16">
+            <div class="bg-white p-8 rounded-xl shadow-lg inline-block">
+                <div class="mb-4">
+                    <div class="w-48 h-48 mx-auto mb-4">
+                        <p class="text-gray-600 mb-2">微信扫码进入小程序</p>
+                        <img src="otp-qr.jpg" alt="安恒OTP小程序码" class="w-full h-full object-contain rounded-lg">
+                    </div>
+                    <button class="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors duration-300">
+                        立即使用
+                    </button>
+                </div>
+                <p class="text-gray-600">保留Google Authenticator习惯，享受安恒专属安全</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-50 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>多端 APP 适配中 ｜ 统一 OTP SDK开发中 ｜ 云端同步规划中，敬请期待</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // 轮播图功能
+        let currentSlide = 1;
+        const totalSlides = 3;
+        const autoPlayDelay = 5000; // 5秒切换一次
+
+        function showSlide(slideNumber) {
+            // 隐藏所有幻灯片
+            document.querySelectorAll('.carousel-item').forEach(item => {
+                item.style.opacity = '0';
+                item.style.zIndex = '0';
+            });
+
+            // 显示当前幻灯片
+            const currentSlideElement = document.getElementById(`slide${slideNumber}`);
+            currentSlideElement.style.opacity = '1';
+            currentSlideElement.style.zIndex = '1';
+            currentSlide = slideNumber;
+        }
+
+        function nextSlide() {
+            let next = currentSlide + 1;
+            if (next > totalSlides) next = 1;
+            showSlide(next);
+        }
+
+        function prevSlide() {
+            let prev = currentSlide - 1;
+            if (prev < 1) prev = totalSlides;
+            showSlide(prev);
+        }
+
+        // 初始化显示第一张幻灯片
+        showSlide(1);
+
+        // 自动播放
+        setInterval(nextSlide, autoPlayDelay);
+    </script>
+
+    <style>
+        .carousel-item {
+            opacity: 0;
+            transition: opacity 1000ms ease-out, transform 500ms ease-out;
+        }
+        .carousel-item.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        @keyframes breathe {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .carousel-item img {
+            animation: breathe 6s ease-in-out infinite;
+        }
+    </style>
+</body>
+</html>
